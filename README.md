@@ -1,2 +1,3 @@
 # OnlineHotelBooking
-Hacettepe University Institute of Informatics - Software Engineering, Term Project
+##Hacettepe University Institute of Informatics
+Software Engineering, Term Project
