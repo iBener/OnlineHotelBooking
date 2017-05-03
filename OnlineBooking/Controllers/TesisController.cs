@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace OnlineBooking.Controllers
 {
+    /// <summary>
+    /// Tesis tanýmlama class'ý. Bu class ile otel/tesis yetkileri kendi tesislerini sisteme 
+    /// tanýmlayabilirler.
+    /// </summary>
     public class TesisController : Controller
     {
         // GET: Tesis
@@ -15,22 +19,32 @@ namespace OnlineBooking.Controllers
             return View();
         }
 
-        // GET: Tesis/Details/5
-        public ActionResult Details(int id)
+        /// <summary>
+        /// Tesis detaylarýný görüntüleme metodu.
+        /// </summary>
+        /// <param name="id">Tesis id'si.</param>
+        // GET: Tesis/Detay/5
+        public ActionResult Detay(int id)
         {
             return View();
         }
 
-        // GET: Tesis/Create
-        public ActionResult Create()
+        /// <summary>
+        /// Yeni tesis tanýmlama metodu.
+        /// </summary>
+        // GET: Tesis/Yeni
+        public ActionResult Yeni()
         {
             return View();
         }
 
-        // POST: Tesis/Create
+        /// <summary>
+        /// Yeni tesis kaydetme metodu
+        /// </summary>
+        // POST: Tesis/Yeni
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Yeni(IFormCollection collection)
         {
             try
             {
@@ -44,16 +58,16 @@ namespace OnlineBooking.Controllers
             }
         }
 
-        // GET: Tesis/Edit/5
-        public ActionResult Edit(int id)
+        // GET: Tesis/Duzelt/5
+        public ActionResult Duzelt(int id)
         {
             return View();
         }
 
-        // POST: Tesis/Edit/5
+        // POST: Tesis/Duzelt/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Duzelt(int id, IFormCollection collection)
         {
             try
             {
@@ -67,16 +81,16 @@ namespace OnlineBooking.Controllers
             }
         }
 
-        // GET: Tesis/Delete/5
-        public ActionResult Delete(int id)
+        // GET: Tesis/Sil/5
+        public ActionResult Sil(int id)
         {
             return View();
         }
 
-        // POST: Tesis/Delete/5
+        // POST: Tesis/Sil/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Sil(int id, IFormCollection collection)
         {
             try
             {

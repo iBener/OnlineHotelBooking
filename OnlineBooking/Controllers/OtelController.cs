@@ -15,23 +15,23 @@ namespace OnlineBooking.Controllers
             return View();
         }
 
-        // GET: Otel/Details/5
-        public ActionResult Details(int id)
+        // GET: Otel/Detay/5
+        public ActionResult Detay(int id)
         {
             
             return View();
         }
 
-        // GET: Otel/Create
-        public ActionResult Create()
+        // GET: Otel/Yeni
+        public ActionResult Yeni()
         {
             return View();
         }
 
-        // POST: Otel/Create
+        // POST: Otel/Yeni
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Yeni(IFormCollection collection)
         {
             try
             {
@@ -45,16 +45,16 @@ namespace OnlineBooking.Controllers
             }
         }
 
-        // GET: Otel/Edit/5
-        public ActionResult Edit(int id)
+        // GET: Otel/Duzelt/5
+        public ActionResult Duzelt(int id)
         {
             return View();
         }
 
-        // POST: Otel/Edit/5
+        // POST: Otel/Duzelt/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Duzelt(int id, IFormCollection collection)
         {
             try
             {
@@ -68,16 +68,16 @@ namespace OnlineBooking.Controllers
             }
         }
 
-        // GET: Otel/Delete/5
-        public ActionResult Delete(int id)
+        // GET: Otel/Sil/5
+        public ActionResult Sil(int id)
         {
             return View();
         }
 
-        // POST: Otel/Delete/5
+        // POST: Otel/Sil/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Sil(int id, IFormCollection collection)
         {
             try
             {

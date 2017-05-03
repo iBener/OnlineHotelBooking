@@ -21,6 +21,9 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="1.1.0" />
+    <PackageReference Include="ServiceStack.OrmLite.Core" Version="1.0.40" />
+    <PackageReference Include="ServiceStack.OrmLite.PostgreSQL.Core" Version="1.0.40" />
+    <PackageReference Include="ServiceStack.OrmLite.SqlServer.Core" Version="1.0.40" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
@@ -28,6 +31,9 @@
   <ItemGroup>
     <Folder Include="Views\Tesis\" />
     <Folder Include="Views\Otel\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OnlineBooking.Models\OnlineBooking.Models.csproj" />
   </ItemGroup>
 
 </Project>
