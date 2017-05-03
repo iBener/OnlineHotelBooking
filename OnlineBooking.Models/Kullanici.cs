@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Models
+namespace OnlineBooking.Models
 {
     [Table(name: "Kullanici")]
     public class Kullanici
