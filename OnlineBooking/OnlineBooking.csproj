@@ -9,6 +9,8 @@
     <RootNamespace>OnlineBooking</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.50.2" />
+    <PackageReference Include="Dapper.FastCrud" Version="2.4.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
@@ -24,7 +26,8 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OnlineBooking.Models\OnlineBooking.Models.csproj" />
+    <Folder Include="Views\Tesis\" />
+    <Folder Include="Views\Otel\" />
   </ItemGroup>
 
 </Project>

@@ -6,28 +6,28 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace OnlineBooking.Controllers
 {
-    public class HomeController : Controller
+    public class AnaSayfaController : Controller
     {
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult Hakkinda()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "Online Hotel Booking";
 
             return View();
         }
 
-        public IActionResult Contact()
+        public IActionResult Iletisim()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = "İletişim bilgileri:";
 
             return View();
         }
 
-        public IActionResult Error()
+        public IActionResult Hata()
         {
             return View();
         }

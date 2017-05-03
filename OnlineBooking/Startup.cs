@@ -44,7 +44,7 @@ namespace OnlineBooking
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/AnaSayfa/Hata");
             }
 
             app.UseStaticFiles();
@@ -53,7 +53,7 @@ namespace OnlineBooking
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=AnaSayfa}/{action=Index}/{id?}");
             });
         }
     }
