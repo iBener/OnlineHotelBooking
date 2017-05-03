@@ -2,46 +2,46 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="search-form-container clearfix">
+<div class="clearfix">
     <div class="container">
-        <div class="hotel-search-form col-lg-6 col-md-7 col-sm-12">
+        <div class="col-lg-6 col-md-7 col-sm-12">
             <h1>Aradığınız oteli bulun</h1>
 
-            <form name="otelSearch" role="form" novalidate="" autocomplete="off" id="search-form" class="row">
-                <div class="form-group autocomplete-container search-city-name  col-xs-12">
-                    <label class="search-form-label" for="otel-region">Şehir ya da otel adı:</label>
-                    <input required="" type="text" class="form-control ui-autocomplete-input" id="otel-region" placeholder="Şehir, bölge ya da otel adı" data-slug="istanbul-1639" data-detail-id="" data-toggle="popover" data-placement="bottom" data-content="Şehir, bölge ya da otel adı girin" data-trigger="manual" data-original-title="" title="" autocomplete="off" data-label="İstanbul, Türkiye">
+            <form name="otelAra" role="form" autocomplete="off" id="ara-form" class="row">
+                <div class="form-group autocomplete-container col-xs-12">
+                    <label for="otel-region">Şehir ya da otel adı:</label>
+                    <input type="text" class="form-control" id="otel-bolge" placeholder="Şehir, bölge ya da otel adı" autocomplete="off">
                 </div>
 
-                <div class="form-group checkin-checkout col-sm-6 col-xs-12">
-                    <label class="search-form-label" for="checkin-checkout-date">
+                <div class="form-group col-sm-6 col-xs-12">
+                    <label for="giris-cikis-tarih">
                         Giriş - Çıkış Tarihi
                     </label>
-                    <div class="datepicker-box">
-                        <input required="" class="form-control" type="button" id="checkin-checkout-date" name="checkInCheckOutRange" data-checkin="11.05.2017" data-checkout="13.05.2017" value="11 Mayıs 2017 - 13 Mayıs 2017">
+                    <div>
+                        <input class="form-control" type="button" id="giris-cikis-tarih" value="11 Mayıs 2017 - 13 Mayıs 2017">
                         <i class="fa fa-calendar"></i>
                     </div>
                 </div>
 
-                <div class="form-group dropdown guestSelector col-sm-6 col-xs-12">
-                    <label class="search-form-label">Oda ve misafir sayısı</label>
-                    <button id="room-guest" type="button" class="form-control dropdown-toggle guest-room-box" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">1 oda, 2 yetişkin</button>
+                <div class="form-group dropdown col-sm-6 col-xs-12">
+                    <label>Oda ve misafir sayısı</label>
+                    <button id="oda-misafir" type="button" class="form-control dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">1 oda, 2 yetişkin</button>
 
                     <!-- dropdown -->
-                    <div class="dropdown-menu" id="roomSelectionDropdown" aria-labelledby="room-guest">
-                        <div id="guest-room-selector" class="child-0">
+                    <div class="dropdown-menu" id="odaSecimDropdown" aria-labelledby="oda-misafir">
+                        <div id="misafir-oda-secim">
                             <div class="header clearfix">
                                 Oda sayısı
                             </div>
-                            <ul id="room-list" class="eu-rooms"><li id="room-1" class="room clearfix" data-room-id="1"><div class="room-count-box"><div class="room-input-counter remove-room hidden"><div class="dec room-dec"><i class="fa fa-minus-circle"></i></div></div><div class="room-count">1. Oda</div></div><div class="guest-inc-dec-box" data-toggle="popover" data-content="Bir odada en fazla 4 misafir olabilir." data-placement="bottom" data-trigger="manual" data-original-title="" title=""><div class="adult-container"><label class="room-label">Yetişkin Sayısı (18+)</label><div class="adult input-counter"><div class="dec" data-room-id="1"><i class="fa fa-minus-circle"></i></div><input type="text" class="small-input adult-value" value="1" readonly=""><div class="inc" data-room-id="1"><i class="fa fa-plus-circle"></i></div></div></div><div class="juvenile-container"><label class="room-label">Çocuk Sayısı (0-17)</label><div class="juvenile input-counter"><div class="dec" data-room-id="1"><i class="fa fa-minus-circle"></i></div><input type="text" class="small-input juvenile-value" value="0" readonly=""><div class="inc" data-room-id="1"><i class="fa fa-plus-circle"></i></div></div></div><div class="kid-age-box" data-room-id="1"></div></div></li></ul>
+                            <ul id="oda-listesi"><li id="oda-1" class="clearfix" data-oda-id="1"><div><div class="hidden"><div><i class="fa fa-minus-circle"></i></div></div><div>1. Oda</div></div><div data-toggle="popover" data-content="Bir odada en fazla 4 misafir olabilir." data-placement="bottom" data-trigger="manual"><div><label>Yetişkin Sayısı (18+)</label><div><div data-room-id="1"><i class="fa fa-minus-circle"></i></div><input type="text" value="1" readonly=""><div data-room-id="1"><i class="fa fa-plus-circle"></i></div></div></div><div><label>Çocuk Sayısı (0-17)</label><div><div data-room-id="1"><i class="fa fa-minus-circle"></i></div><input type="text" value="0" readonly=""><div data-room-id="1"><i class="fa fa-plus-circle"></i></div></div></div><div data-room-id="1"></div></div></li></ul>
                             <div class="footer">
-                                <div id="add-room" class="" data-toggle="popover" data-content="Tek seferde en fazla 4 oda için rezervasyon yapılabilir." data-placement="bottom" data-trigger="manual" data-original-title="" title="">
+                                <div id="oda-ekle" data-toggle="popover" data-content="Tek seferde en fazla 4 oda için rezervasyon yapılabilir." data-placement="bottom" data-trigger="manual">
                                     Oda Ekle <i class="fa fa-plus-circle"></i>
                                 </div>
-                                <button class="btn btn-empty close-guest-selector">Kapat</button>
+                                <button class="btn btn-empty">Kapat</button>
                             </div>
                             <div class="footer bottom">
-                                <p class="child-age-notify hide">* Çocuk yaşları girilmeli.</p>
+                                <p class="hide">* Çocuk yaşları girilmeli.</p>
                                 <p>* Her oda için en az bir yetişkin seçilmeli.</p>
                             </div>
                         </div>
@@ -50,11 +50,10 @@
 
                 <div class="col-xs-12  btn-container">
                     <button type="button" class="btn btn-success btn-search-hotel pull-right">
-                        En uygun fiyatları bul            <i class="fa fa-angle-double-right search-angle"></i> <i class="fa fa-spin fa-spinner hidden search-spinner"></i>
+                        Otel bul            <i class="fa fa-angle-double-right"></i> <i class="fa fa-spin fa-spinner hidden"></i>
                     </button>
                 </div>
             </form>
-            <div class="page-overlay"></div>
         </div>
     </div>
 </div>
