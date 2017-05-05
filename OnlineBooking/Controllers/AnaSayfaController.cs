@@ -10,6 +10,14 @@ namespace OnlineBooking.Controllers
     {
         public IActionResult Index()
         {
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Index(IFormCollection collection)
+        {
+            
             return View();
         }
 
