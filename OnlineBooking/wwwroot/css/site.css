@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 75px;
     padding-bottom: 20px;
 }
 
@@ -10,28 +10,114 @@
     padding-right: 15px;
 }
 
+.btn-otel-bul {
+    /*margin-top: 45px;*/
+    position: absolute;
+    bottom: 15px;
+    right: 0px;
+}
+
+.lbl-otel-bul {
+    color: white;
+}
+
+#misafir-secim-dropdown {
+    margin-left: 15px;
+}
+
+#misafir-oda-secim {
+    min-width: 400px;
+    -webkit-transition: min-width .2s;
+    -moz-transition: min-width .2s;
+    -ms-transition: min-width .2s;
+    -o-transition: min-width .2s;
+    transition: min-width .2s;
+}
+
+    #misafir-oda-secim.child-1 {
+        min-width: 565px
+    }
+
+    #misafir-oda-secim.child-2 {
+        min-width: 660px
+    }
+
+    #misafir-oda-secim.child-3 {
+        min-width: 780px
+    }
+
+    #misafir-oda-secim .room-count-box {
+        float: left;
+        padding: 37px 20px 0 0
+    }
+
+    #misafir-oda-secim .guest-inc-dec-box {
+        float: left
+    }
+
+        #misafir-oda-secim .guest-inc-dec-box .popover .arrow, #misafir-oda-secim .guest-inc-dec-box + .popover .arrow {
+            display: none
+        }
+
+    #misafir-oda-secim .header {
+        padding: 10px 15px;
+        border-bottom: 1px solid #BEC3C8;
+        font-size: 16px;
+    }
+
+    #misafir-oda-secim .footer {
+        position: relative;
+        padding: 15px 50px 15px 15px
+    }
+
+        #misafir-oda-secim .footer.bottom {
+            border-top: 1px solid #BEC3C8
+        }
+
+        #misafir-oda-secim .footer .close-guest-selector {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            padding: 10px 15px;
+            font-weight: 700
+        }
+
+    #misafir-oda-secim .room-count {
+        font-size: 14px;
+        font-weight: 700;
+        display: inline-block
+    }
+
+    #misafir-oda-secim .room-label {
+        display: block;
+        font-weight: 400
+    }
+
+#oda-listesi {
+    padding: 15px 15px 0;
+    margin-bottom: 0;
+    list-style-type: none
+}
+
 /* Set widths on the form inputs since otherwise they're 100% wide */
-input,
+/*input,
 select,
 textarea {
     max-width: 280px;
-}
-
+}*/
 /* Carousel */
-.carousel-caption p {
+/*.carousel-caption p {
     font-size: 20px;
     line-height: 1.4;
-}
-
+}*/
 /* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
+/*.carousel-inner .item img[src$=".svg"] {
     width: 100%;
-}
-
+}*/
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */
-    .carousel-caption {
+    /*.carousel-caption {
         display: none;
-    }
+    }*/
 }
