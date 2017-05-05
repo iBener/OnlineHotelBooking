@@ -5,7 +5,7 @@ using System.Text;
 
 namespace OnlineBooking.Models.Base
 {
-    abstract class Kisi
+    public abstract class Kisi
     {
         [Display(Name = "Ad")]
         public string Adi { get; set; }

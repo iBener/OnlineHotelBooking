@@ -7,7 +7,7 @@ using System.Text;
 namespace OnlineBooking.Models
 {
     [Table(name: "Musteri")]
-    class Musteri : Base.Kisi
+    public class Musteri : Base.Kisi
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]

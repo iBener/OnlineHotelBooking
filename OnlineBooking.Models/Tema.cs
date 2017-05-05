@@ -7,7 +7,7 @@ using System.Text;
 namespace OnlineBooking.Models
 {
     [Table(name: "Tema")]
-    class Tema
+    public class Tema
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]

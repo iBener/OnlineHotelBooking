@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using OnlineBooking.Helpers;
+using Dapper.FastCrud;
+using System.IO;
 
 namespace OnlineBooking
 {
@@ -19,6 +22,7 @@ namespace OnlineBooking
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
+
             Configuration = builder.Build();
         }
 
@@ -29,6 +33,10 @@ namespace OnlineBooking
         {
             // Add framework services.
             services.AddMvc();
+
+            // Ayarlar classı yapılandırması:
+            services.AddOptions();
+            services.Configure<VeriTabani>(Configuration.GetSection("VeriTabani"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +63,20 @@ namespace OnlineBooking
                     name: "default",
                     template: "{controller=AnaSayfa}/{action=Index}/{id?}");
             });
+
+            ConfigureDataBase();
+        }
+
+        private void ConfigureDataBase()
+        {
+            // Dapper.FastCRUD
+            var providerName = Configuration["VeriTabani:ProviderName"];
+
+            var validDialect = Enum.TryParse<SqlDialect>(providerName, out SqlDialect dialect);
+            if (!validDialect)
+                throw new Exception($"'{ providerName }' is not a valid dialect name.");
+
+            OrmConfiguration.DefaultDialect = dialect;
         }
     }
 }
