@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using OnlineBooking.Helpers;
+using OnlineBooking.Models;
 
 namespace OnlineBooking.Controllers
 {
@@ -11,12 +14,20 @@ namespace OnlineBooking.Controllers
     /// Tesis tanýmlama class'ý. Bu class ile otel/tesis yetkileri kendi tesislerini sisteme 
     /// tanýmlayabilirler.
     /// </summary>
-    public class TesisController : Controller
+    public class TesisController : BaseController
     {
+        public TesisController(IOptions<VeriTabani> ayarlar) : base(ayarlar)
+        {
+        }
+
         // GET: Tesis
         public ActionResult Index()
         {
-            return View();
+            using (var db = new DbModel(VeriTabani))
+            {
+                
+                return View();
+            }
         }
 
         /// <summary>

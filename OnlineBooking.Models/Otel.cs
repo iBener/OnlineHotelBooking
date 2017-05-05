@@ -33,5 +33,8 @@ namespace OnlineBooking.Models
 
         [Display(Name = "Yıldız")]
         public int Yildiz { get; set; }
+
+        [Display(Name = "Denize Mesafesi")]
+        public int DenizMesafesi { get; set; }
     }
 }
