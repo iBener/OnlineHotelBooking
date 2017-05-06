@@ -5,6 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using Dapper.FastCrud;
+using System.Reflection;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace OnlineBooking.Models
 {
@@ -18,6 +21,27 @@ namespace OnlineBooking.Models
 
         public DbModel Model { get; set; }
         public DbConnection Connection { get; set; }
+
+        private string GetTabloAdi()
+        {
+            //var att = (TableAttribute)Attribute.GetCustomAttribute(typeof(T), typeof(TableAttribute));
+            var typInfo = typeof(T).GetTypeInfo();
+            var att = typInfo.GetCustomAttribute<TableAttribute>();
+            return att.Name;
+        }
+
+        private string GetKeyColumnName()
+        {
+            foreach (var item in typeof(T).GetProperties())
+            {
+                var key = item.GetCustomAttributes(typeof(KeyAttribute), true).FirstOrDefault();
+                if (key != null)
+                {
+                    return item.Name;
+                }
+            }
+            throw new Exception("Key kolon adı bulunamadı.");
+        }
 
         public bool Delete(T entity)
         {
@@ -36,7 +60,10 @@ namespace OnlineBooking.Models
 
         public T FindWithId(int id)
         {
-            throw new NotImplementedException();
+            var tabloAdi = GetTabloAdi();
+            var keyKolon = GetKeyColumnName();
+            var query = $"SELECT * FROM { tabloAdi } WHERE { keyKolon } = { id }";
+            return Connection.QueryFirst<T>(query);
         }
 
         public void Insert(T entity)

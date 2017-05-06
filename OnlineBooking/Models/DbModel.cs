@@ -15,12 +15,14 @@ namespace OnlineBooking.Models
         {
             Connection = veriTabani.GetConnection(open: true);
 
-            
-            
+
+            Tesis = new TesisCommands(this, Connection);
         }
 
         protected DbConnection Connection { get; }
         protected DbTransaction transaction;
+
+        public TesisCommands Tesis { get; }
 
         public void BeginTransaction()
         {

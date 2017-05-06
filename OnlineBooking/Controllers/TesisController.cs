@@ -25,7 +25,7 @@ namespace OnlineBooking.Controllers
         {
             using (var db = new DbModel(VeriTabani))
             {
-                
+                var item = db.Tesis.FindWithId(1);
                 return View();
             }
         }
