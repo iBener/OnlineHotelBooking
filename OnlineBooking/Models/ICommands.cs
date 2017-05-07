@@ -9,6 +9,8 @@ namespace OnlineBooking.Models
     {
         IEnumerable<T> Query(object param);
 
+        IEnumerable<dynamic> Query(string kolonlar, object param);
+
         T FindWithId(int id);
 
         void Insert(T entity);
@@ -19,6 +21,6 @@ namespace OnlineBooking.Models
 
         bool DeleteWithId(int id);
 
-        int Execute(string command, object param = null);
+        object Execute(string command, object param = null);
     }
 }

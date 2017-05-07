@@ -19,8 +19,8 @@ namespace OnlineBooking.Models
             Connection = connection;
         }
 
-        public DbModel Model { get; set; }
-        public DbConnection Connection { get; set; }
+        protected DbModel Model { get; set; }
+        protected DbConnection Connection { get; set; }
 
         private string GetTabloAdi()
         {
@@ -45,40 +45,64 @@ namespace OnlineBooking.Models
 
         public bool Delete(T entity)
         {
-            throw new NotImplementedException();
+            return Connection.Delete<T>(entity); ;
         }
 
         public bool DeleteWithId(int id)
         {
-            throw new NotImplementedException();
+            var tabloAdi = GetTabloAdi();
+            var keyKolon = GetKeyColumnName();
+            var query = $"DELETE FROM { tabloAdi } WHERE { keyKolon } = @id ";
+            return Connection.Execute(query) > 0;
         }
 
-        public int Execute(string command, object param = null)
+        public object Execute(string command, object param = null)
         {
-            throw new NotImplementedException();
+            return Connection.ExecuteScalar(command, param);
         }
 
         public T FindWithId(int id)
         {
             var tabloAdi = GetTabloAdi();
             var keyKolon = GetKeyColumnName();
-            var query = $"SELECT * FROM { tabloAdi } WHERE { keyKolon } = { id }";
-            return Connection.QueryFirst<T>(query);
+            var query = $"SELECT * FROM { tabloAdi } WHERE { keyKolon } = @id ";
+            return Connection.QueryFirst<T>(query, new { id = id });
         }
 
         public void Insert(T entity)
         {
-            throw new NotImplementedException();
+            Connection.Insert<T>(entity);
         }
 
         public IEnumerable<T> Query(object param)
         {
-            throw new NotImplementedException();
+            var query = BuildQuery("SELECT *", param);
+            return Connection.Query<T>(query, param);
+        }
+
+        public IEnumerable<dynamic> Query(string kolonlar, object param)
+        {
+            var query = BuildQuery($"SELECT { kolonlar }", param);
+            return Connection.Query<dynamic>(query, param);
+        }
+
+        private string BuildQuery(string kolonlar, object param)
+        {
+            var tabloAdi = GetTabloAdi();
+            var keyKolon = GetKeyColumnName();
+            var whereKosul = new List<string>();
+            foreach (var item in param.GetType().GetProperties())
+            {
+                whereKosul.Add(String.Join(" = ", new string[] { item.Name, item.GetValue(param).ToString() }));
+            }  
+            var query = $"{ kolonlar } FROM { tabloAdi } \n" +
+                        $"WHERE { String.Join(" AND ", whereKosul) }\n";
+            return query;
         }
 
         public bool Update(T entity)
         {
-            throw new NotImplementedException();
+            return Connection.Update<T>(entity);
         }
     }
 }
