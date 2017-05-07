@@ -32,7 +32,7 @@ namespace OnlineBooking.Models
         public int OdaSayisi { get; set; }
 
         [Display(Name = "Yıldız")]
-        public int Yildiz { get; set; }
+        public float Yildiz { get; set; }
 
         [Display(Name = "Denize Mesafesi")]
         public int DenizMesafesi { get; set; }

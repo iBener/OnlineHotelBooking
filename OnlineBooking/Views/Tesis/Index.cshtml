@@ -1,6 +1,36 @@
 ﻿@model OnlineBooking.Models.Otel
 
 @{
-    ViewData["Title"] = "Tesis";
+    ViewData["Title"] = "Tesis Tanımı";
 }
 
+<h1>@Model.OtelAdi</h1>
+<div class="mrg-btm-10">
+    @for (int i = 0; i < Model.Yildiz; i++)
+    {
+        <i class="fa fa-star"></i>
+    }
+</div>
+<div class="mrg-btm-10"><i class="fa fa-map-marker"></i> @Model.IlAdi, @Model.IlceAdi</div>
+<div class="row">
+    <div class="col-sm-2">
+        <h4>Oda Sayısı</h4>
+        <p>@Model.OdaSayisi</p>
+    </div>
+    <div class="col-sm-2">
+        <h4>Alan (m²)</h4>
+        <p>@Model.AlanM2</p>
+    </div>
+    <div class="col-sm-8">
+        <h4>Denize Mesafe</h4>
+        <p>@Model.DenizMesafesi</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <h4>Genel Tanıtım</h4>
+        <p id="tesis-aciklama">@Model.Aciklama</p>
+    </div>
+</div>
+
+@Html.ActionLink("Düzelt", "Detay", new { id = Model.OtelId }, new { id = "btn-tesis-duzelt" })

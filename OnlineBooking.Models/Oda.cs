@@ -13,5 +13,8 @@ namespace OnlineBooking.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public int OdaId { get; set; }
 
+        public int OtelId { get; set; }
+
+        public string Adi { get; set; }
     }
 }

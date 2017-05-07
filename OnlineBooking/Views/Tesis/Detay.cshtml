@@ -1,0 +1,14 @@
+﻿@model OnlineBooking.Models.Otel
+
+@{
+    ViewData["Title"] = "Tesis Tanımı - " + ViewBag.Islem;
+}
+
+<h1>Tesis Tanımı <span class="label label-success">@ViewBag.Islem</span></h1>
+
+@Html.Partial("_HataMesaji", (string)ViewBag.HataMesaji ?? "")
+
+<form asp-controller="Tesis" asp-action="Detay">
+    @Html.EditorFor(m => Model)
+    <button type="submit" class="btn btn-default"><i class="fa fa-floppy-o"></i> Kaydet</button>
+</form>

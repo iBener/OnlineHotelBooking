@@ -20,82 +20,57 @@ namespace OnlineBooking.Controllers
         {
         }
 
-        // GET: Tesis
-        public ActionResult Index()
+        private Otel GetOtelById(int id)
         {
             using (var db = new DbModel(VeriTabani))
             {
-                var item = db.Tesis.FindWithId(1);
-                return View();
+                return db.Tesis.FindWithId(id);
             }
         }
 
-        /// <summary>
-        /// Tesis detaylarýný görüntüleme metodu.
-        /// </summary>
-        /// <param name="id">Tesis id'si.</param>
-        // GET: Tesis/Detay/5
+        // GET: Tesis
+        public ActionResult Index(int id)
+        {
+            return View(GetOtelById(id));
+        }
+
         public ActionResult Detay(int id)
         {
-            return View();
+            ViewBag.Islem = "Düzelt";
+            return View(GetOtelById(id));
         }
 
-        /// <summary>
-        /// Yeni tesis tanýmlama metodu.
-        /// </summary>
-        // GET: Tesis/Yeni
-        public ActionResult Yeni()
-        {
-            return View();
-        }
-
-        /// <summary>
-        /// Yeni tesis kaydetme metodu
-        /// </summary>
-        // POST: Tesis/Yeni
+        // POST: Tesis/Kayit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Yeni(IFormCollection collection)
+        public ActionResult Detay(Otel tesis)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(tesis);
+            }
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                using (var db = new DbModel(VeriTabani))
+                {
+                    if (tesis.OtelId == 0)
+                        db.Tesis.Insert(tesis);
+                    else
+                        db.Tesis.Update(tesis);
+                }
+                return RedirectToAction("Index", new { id = tesis.OtelId });
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.HataMesaji = ex.Message;
             }
-        }
-
-        // GET: Tesis/Duzelt/5
-        public ActionResult Duzelt(int id)
-        {
-            return View();
-        }
-
-        // POST: Tesis/Duzelt/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Duzelt(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return View(tesis);
         }
 
         // GET: Tesis/Sil/5
         public ActionResult Sil(int id)
         {
-            return View();
+            return View(GetOtelById(id));
         }
 
         // POST: Tesis/Sil/5
@@ -105,14 +80,17 @@ namespace OnlineBooking.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
-
+                using (var db = new DbModel(VeriTabani))
+                {
+                    db.Tesis.DeleteWithId(id);
+                }
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.HataMesaji = ex.Message;
             }
+            return View();
         }
     }
 }
