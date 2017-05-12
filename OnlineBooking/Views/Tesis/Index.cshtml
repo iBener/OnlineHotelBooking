@@ -1,36 +1,126 @@
 ﻿@model OnlineBooking.Models.Otel
 
 @{
-    ViewData["Title"] = "Tesis Tanımı";
+    ViewData["Title"] = "Otel Tesis Profili";
 }
 
-<h1>@Model.OtelAdi</h1>
-<div class="mrg-btm-10">
-    @for (int i = 0; i < Model.Yildiz; i++)
-    {
-        <i class="fa fa-star"></i>
-    }
-</div>
-<div class="mrg-btm-10"><i class="fa fa-map-marker"></i> @Model.IlAdi, @Model.IlceAdi</div>
+<h1>Otel Tesis Profili</h1>
+
+@*@Html.ActionLink("Düzelt", "Detay", new { id = Model.OtelId }, new { id = "btn-tesis-duzelt" })*@
+
 <div class="row">
-    <div class="col-sm-2">
-        <h4>Oda Sayısı</h4>
-        <p>@Model.OdaSayisi</p>
+    <div class="col-sm-6">
+        <h3 style="display:inline-block">Otel Bilgileri</h3>
+        <a class="btn btn-link ohb-btn-duzelt">Düzenle</a>
+        <hr />
+
+        <div class="ohb-txt">@Model.OtelAdi</div>
+        <div>Otel Adı</div>
+
+        <div class="ohb-txt-fs14" style="color:#ffa800">
+            @for (int i = 0; i < Model.Yildiz; i++)
+            {
+                <i class="fa fa-star"></i>
+            }
+        </div>
+        <div>Yıldız</div>
+
+        <div class="ohb-txt">@Model.IlAdi, @Model.IlceAdi <i class="fa fa-map-marker"></i></div>
+        <div>Konum</div>
+
+        <div class="ohb-txt">@Model.Adres</div>
+        <div>Adres</div>
+
+        <div class="ohb-txt">@Model.Telefon</div>
+        <div>Telefon</div>
+
+        <h3 style="display:inline-block">Oda Tipleri</h3>
+        <hr />
+        <div class="ohb-txt" style="font-size:16px;">
+            <div>
+                <a class="fa fa-toggle-off ohb-btn-toggle" data-odatipi="junior"></a>
+                Junior Oda
+            </div>
+            <div>
+                <a class="fa fa-toggle-on ohb-btn-toggle" data-odatipi="standart"></a>
+                Standart Oda
+            </div>
+            <div>
+                <a class="fa fa-toggle-on ohb-btn-toggle" data-odatipi="aile"></a>
+                Aile Odası
+            </div>
+            <div>
+                <a class="fa fa-toggle-on ohb-btn-toggle" data-odatipi="suit"></a>
+                Suit Oda
+            </div>
+            <div>
+                <a class="fa fa-toggle-off ohb-btn-toggle" data-odatipi="kral"></a>
+                Kral Odası
+            </div>
+        </div>
+
+        <h3 style="display:inline-block">Tesis Özellikleri</h3>
+        <hr />
+        <div class="row ohb-txt" style="font-size:16px;">
+            <div class="col-sm-6">
+                <div>
+                    <a class="fa fa-toggle-on ohb-btn-toggle" data-ozellik="havaalani-servisi"></a>
+                    Havaalanı Servisi
+                </div>
+                <div>
+                    <a class="fa fa-toggle-on ohb-btn-toggle" data-ozellik="acik-restoran"></a>
+                    Açık Restoran
+                </div>
+                <div>
+                    <a class="fa fa-toggle-on ohb-btn-toggle" data-ozellik="kapali-restoran"></a>
+                    Kapalı Restoran
+                </div>
+                <div>
+                    <a class="fa fa-toggle-on ohb-btn-toggle" data-ozellik="acik-havuz"></a>
+                    Açık Havuz
+                </div>
+                <div>
+                    <a class="fa fa-toggle-off ohb-btn-toggle" data-ozellik="kapali-havuz"></a>
+                    Kapalı Havuz
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div>
+                    <a class="fa fa-toggle-on ohb-btn-toggle" data-ozellik="cocuk-havuzu"></a>
+                    Çocuk Havuzu
+                </div>
+                <div>
+                    <a class="fa fa-toggle-on ohb-btn-toggle" data-ozellik="wifi"></a>
+                    Ücretsiz Wifi
+                </div>
+                <div>
+                    <a class="fa fa-toggle-on ohb-btn-toggle" data-ozellik="guzellik-merkezi"></a>
+                    Güzellik Merkezi
+                </div>
+                <div>
+                    <a class="fa fa-toggle-on ohb-btn-toggle" data-ozellik="otopark"></a>
+                    Otopark
+                </div>
+                <div>
+                    <a class="fa fa-toggle-on ohb-btn-toggle" data-ozellik="lobi-bar"></a>
+                    Lobi / Bar
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-sm-2">
-        <h4>Alan (m²)</h4>
-        <p>@Model.AlanM2</p>
-    </div>
-    <div class="col-sm-8">
-        <h4>Denize Mesafe</h4>
-        <p>@Model.DenizMesafesi</p>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-12">
-        <h4>Genel Tanıtım</h4>
-        <p id="tesis-aciklama">@Model.Aciklama</p>
+    <div class="col-sm-6">
+        <div>
+            <h3 style="display:inline-block">Resim Galerisi</h3>
+            <a class="btn btn-link ohb-btn-duzelt">Düzenle</a>
+        </div>
     </div>
 </div>
 
-@Html.ActionLink("Düzelt", "Detay", new { id = Model.OtelId }, new { id = "btn-tesis-duzelt" })
+@section Scripts {
+<script src="~/js/toggleButton.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".ohb-btn-toggle").toggleButton();
+    });
+</script>
+}

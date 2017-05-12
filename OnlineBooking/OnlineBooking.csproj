@@ -9,6 +9,10 @@
     <RootNamespace>OnlineBooking</RootNamespace>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\js\toggleButton.js" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="bootstrap.daterangepicker" Version="2.1.24.1" />
     <PackageReference Include="Dapper" Version="1.50.2" />

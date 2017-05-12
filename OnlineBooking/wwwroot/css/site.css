@@ -112,7 +112,31 @@
 }
 
 hr {
-    margin-top: 75px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.ohb-btn-duzelt {
+    display: inline-block;
+    padding-bottom: 10px;
+    text-decoration: underline !important
+}
+
+.ohb-txt {
+    font-size: 19px;
+    padding-top:7px;
+}
+
+.ohb-txt-fs14 {
+    font-size: 14px;
+    padding-top: 7px;
+}
+
+.ohb-btn-toggle {
+    text-decoration: none !important;
+    cursor: pointer;
+    margin-right: 4px;
+    color: black;
 }
 
 /* Set widths on the form inputs since otherwise they're 100% wide */

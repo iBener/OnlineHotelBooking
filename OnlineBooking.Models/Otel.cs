@@ -25,16 +25,16 @@ namespace OnlineBooking.Models
         [Display(Name = "İlçesi")]
         public string IlceAdi { get; set; }
 
-        [Display(Name = "Alanı(m2)")]
-        public int AlanM2 { get; set; }
+        [Display(Name = "Adres")]
+        public string Adres { get; set; }
 
-        [Display(Name = "Oda Sayısı")]
-        public int OdaSayisi { get; set; }
+        [Display(Name = "Telefon")]
+        public string Telefon { get; set; }
 
         [Display(Name = "Yıldız")]
-        public float Yildiz { get; set; }
+        public int Yildiz { get; set; }
 
-        [Display(Name = "Denize Mesafesi")]
-        public int DenizMesafesi { get; set; }
+        [Display(Name = "Değerlendirme")]
+        public byte Degerlendirme { get; set; }
     }
 }
