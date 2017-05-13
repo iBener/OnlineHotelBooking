@@ -93,7 +93,7 @@ namespace OnlineBooking.Controllers
             return View();
         }
 
-        public JsonResult OdaTipiAcKapa(int otelId, string odaTipi, bool acKapa)
+        public JsonResult OdaTipiAcKapa(int otelId, string odatipi, string ozellik, bool acKapa)
         {
 
             return Json("ok");

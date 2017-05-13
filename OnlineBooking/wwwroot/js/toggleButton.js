@@ -1,15 +1,39 @@
 ﻿(function ($) {
-    $.fn.toggleButton = function () {
+    $.fn.toggleButton = function (options ) {
         return this.each(function () {
             var $this = $(this);
             $this.click(function () {
-                $.get("OdaTipiAcKapa?otelId=3", function () {
-                    if ($(this).hasClass("fa-toggle-on")) {
-                        $(this).removeClass("fa-toggle-on");
-                        $(this).addClass("fa-toggle-off");
-                    } else {
-                        $(this).removeClass("fa-toggle-off");
-                        $(this).addClass("fa-toggle-on");
+                var data = JSON.stringify({
+                    otelId: 3,
+                    odatipi: "tip",
+                    ozellik: "ozellik",
+                    acKapa: true
+                });
+                var dis = $(this);
+                var acKapa = dis.hasClass("fa-toggle-on");
+                $.ajax({
+                    type: "POST",
+                    url: "/Tesis/OdaTipiAcKapa",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    //data: JSON.stringify({
+                    //    otelId: 3,
+                    //    odatipi: "tip",
+                    //    ozellik: "ozellik",
+                    //    acKapa: true
+                    //}),
+                    data: data,
+                    success: function (result) {
+                        if (dis.hasClass("fa-toggle-on")) {
+                            dis.removeClass("fa-toggle-on");
+                            dis.addClass("fa-toggle-off");
+                        } else {
+                            dis.removeClass("fa-toggle-off");
+                            dis.addClass("fa-toggle-on");
+                        }
+                    },
+                    error: function (r) {
+                        alert(r.status);
                     }
                 });
             });
