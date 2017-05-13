@@ -6,15 +6,15 @@ using System.Text;
 
 namespace OnlineBooking.Models
 {
-    [Table(name: "Oda")]
-    public class Oda
+    [Table(name: "OdaTipi")]
+    public class OdaTipi
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public int OdaId { get; set; }
+        public int OdaTipiId { get; set; }
 
-        public int OtelId { get; set; }
-
-        public string Adi { get; set; }
+        [Column("OdaTipi")]
+        [Display(Name = "Oda Tipi")]
+        public string OdaTipiAdi { get; set; }
     }
 }
