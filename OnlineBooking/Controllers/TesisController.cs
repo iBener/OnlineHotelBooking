@@ -8,6 +8,7 @@ using Microsoft.Extensions.Options;
 using OnlineBooking.Helpers;
 using OnlineBooking.Models;
 using OnlineBooking.Data;
+using OnlineBooking.ViewModels;
 
 namespace OnlineBooking.Controllers
 {
@@ -68,11 +69,37 @@ namespace OnlineBooking.Controllers
             return View(tesis);
         }
 
-        public ActionResult Fiyat(int id)
+        public ActionResult Fiyat(int id, int konaklamaId)
         {
-
-            return View();
+            using (var db = new DbModel(VeriTabani))
+            {
+                return View(db.Tesis.GetFiyatListesi(id, konaklamaId));
+            }
         }
+
+        // POST: Tesis/Detay/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Fiyat(OtelFiyatViewModel fiyat)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(fiyat);
+            }
+            try
+            {
+                using (var db = new DbModel(VeriTabani))
+                {
+                    db.Tesis.FiyatListesiKaydet(fiyat);
+                }
+                return RedirectToAction("Index", new { id = fiyat.OtelId });
+            }
+            catch (Exception ex)
+            {
+                ViewBag.HataMesaji = ex.Message;
+            }
+            return View(fiyat);
+        } 
 
         // GET: Tesis/Sil/5
         public ActionResult Sil(int id)

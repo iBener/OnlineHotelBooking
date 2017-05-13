@@ -1,0 +1,61 @@
+﻿@model OnlineBooking.ViewModels.OtelFiyatViewModel
+
+@{
+    ViewData["Title"] = "Fiyatlar";
+}
+
+<h1>Tesis Tanımı</h1>
+<h3>@Model?.Konaklama Odalama Fiyat Listesi</h3>
+<div class="row"><div class="col-sm-6"><hr /></div></div>
+
+@Html.Partial("_HataMesaji", (string)ViewBag.HataMesaji ?? "")
+
+<div class="row">
+    <form asp-controller="Tesis" asp-action="Fiyat" role="form" class="col-sm-6">
+        <fieldset>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="width:50%">Oda Tipi</th>
+                        <th style="width:25%">Yetkişkin</th>
+                        <th style="width:25%">9 - 14 Yaş</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        for (int i = 0; i < Model.Fiyatlar.Count; i++)
+                        {
+                            var item = Model.Fiyatlar[i];
+                            <tr>
+                                <td>
+                                    @item.OdaTipi
+                                    <input name="Fiyatlar[@i].OdaTipi" value="@item.OdaTipi" type="hidden" />
+                                    <input name="Fiyatlar[@i].OdaTipiId" value="@item.OdaTipiId" type="hidden" />
+                                    <input name="Fiyatlar[@i].OtelFiyatId" value="@item.OtelFiyatId" type="hidden" />
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <input name="Fiyatlar[@i].FiyatYetiskin" value="@item.FiyatYetiskin" type="number" class="form-control text-right" /> 
+                                        <div class="input-group-addon">TL</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <input name="Fiyatlar[@i].FiyatCocuk" value="@item.FiyatCocuk" type="number" class="form-control text-right" />
+                                        <div class="input-group-addon">TL</div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            <input asp-for="OtelId" type="hidden" />
+            <input asp-for="KonaklamaId" type="hidden" />
+            <input asp-for="Konaklama" type="hidden" />
+            <button style="margin-top:20px;" type="submit" class="btn btn-default"><i class="fa fa-floppy-o"></i> Kaydet</button>
+        </fieldset>
+    </form>
+
+</div>

@@ -4,11 +4,68 @@
     ViewData["Title"] = "Tesis Tanımı - " + ViewBag.Islem;
 }
 
-<h1>Tesis Tanımı <span class="label label-success">@ViewBag.Islem</span></h1>
+<h1>Tesis Tanımı</h1>
+<h3>Otel Bilgileri</h3>
+<hr />
 
 @Html.Partial("_HataMesaji", (string)ViewBag.HataMesaji ?? "")
 
-<form asp-controller="Tesis" asp-action="Detay">
-    @Html.EditorFor(m => Model)
-    <button type="submit" class="btn btn-default"><i class="fa fa-floppy-o"></i> Kaydet</button>
-</form>
+<div class="row">
+    <form class="col-sm-6" role="form" asp-controller="Tesis" asp-action="Detay">
+        <fieldset>
+            <div class="form-group">
+                <label asp-for="OtelAdi" class="control-label"></label>
+                <input asp-for="OtelAdi" class="form-control" placeholder="Otel adı">
+            </div>
+            <div class="form-group">
+                <label for="yildizedit" class="control-label">Yıldız</label>
+                <div id="yildizedit" class="starrr" data-rating='@Model.Yildiz'></div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="IlAdi" class="control-label"></label>
+                    <input asp-for="IlAdi" class="form-control" placeholder="İli">
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="IlceAdi" class="control-label"></label>
+                    <input asp-for="IlceAdi" class="form-control" placeholder="İlçesi">
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Adres" class="control-label"></label>
+                <input asp-for="Adres" class="form-control" placeholder="Adresi">
+            </div>
+            <div class="form-group">
+                <label asp-for="Telefon" class="control-label"></label>
+                <input asp-for="Telefon" class="form-control" placeholder="Telefon">
+            </div>
+            <input asp-for="OtelId" type="hidden" />
+            <input asp-for="Yildiz" type="hidden" />
+            <input asp-for="Aciklama" type="hidden" />
+            <input asp-for="Degerlendirme" type="hidden" />
+        </fieldset>
+        <button style="margin-top:20px;" type="submit" class="btn btn-default"><i class="fa fa-floppy-o"></i> Kaydet</button>
+    </form>
+</div>
+
+@section Styles {
+<style>
+    #yildizedit {
+        color: #ffa800;
+    }
+</style>
+}
+
+@section Scripts {
+<script src="~/js/starr.js"></script>
+<script>
+    $(function () {
+        return $("#yildizedit").starrr();
+    });
+    $(document).ready(function () {
+        $('#yildizedit').on('starrr:change', function (e, value) {
+            $('#Yildiz').val(value);
+        });
+    });
+</script>
+}
