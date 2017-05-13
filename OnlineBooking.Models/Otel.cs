@@ -36,5 +36,6 @@ namespace OnlineBooking.Models
 
         [Display(Name = "Değerlendirme")]
         public byte Degerlendirme { get; set; }
+
     }
 }
