@@ -118,8 +118,19 @@ hr {
 
 .ohb-btn-duzelt {
     display: inline-block;
-    padding-bottom: 10px;
+    padding-bottom: 8px;
     text-decoration: underline !important
+}
+
+.ohb-select {
+    display: inline-block;
+    margin-bottom: 10px;
+    width: auto;
+    margin-left: 50px;
+    border: none;
+    background: inherit;
+    min-width: 200px;
+    box-shadow: none;
 }
 
 .ohb-txt {
@@ -132,11 +143,36 @@ hr {
     padding-top: 7px;
 }
 
+.ohb-inline {
+    display: inline-block;
+}
+
 .ohb-btn-toggle {
     text-decoration: none !important;
     cursor: pointer;
     margin-right: 4px;
     color: black;
+}
+
+.ohb-imgwrapper {
+    width: 98%;
+    /*height: 110%;
+    min-height: 300px;*/
+    min-height: 120px;
+    max-height: auto;
+    margin: 3px;
+    padding: 3px;
+}
+
+.ohb-tesis-alan {
+    background-color: #eeeeee;
+    padding-left: 8px;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+}
+
+.ohb-label-islem {
+    margin-left:10px;
 }
 
 /* Set widths on the form inputs since otherwise they're 100% wide */
