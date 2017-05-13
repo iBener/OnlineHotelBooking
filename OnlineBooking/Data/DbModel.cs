@@ -5,7 +5,7 @@ using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OnlineBooking.Models
+namespace OnlineBooking.Data
 {
     public class DbModel : IDisposable
     {

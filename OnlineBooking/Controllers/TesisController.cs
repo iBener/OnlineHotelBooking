@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using OnlineBooking.Helpers;
 using OnlineBooking.Models;
+using OnlineBooking.Data;
 
 namespace OnlineBooking.Controllers
 {
@@ -40,7 +41,7 @@ namespace OnlineBooking.Controllers
             return View(GetOtelById(id));
         }
 
-        // POST: Tesis/Kayit/5
+        // POST: Tesis/Detay/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Detay(Otel tesis)
@@ -65,6 +66,12 @@ namespace OnlineBooking.Controllers
                 ViewBag.HataMesaji = ex.Message;
             }
             return View(tesis);
+        }
+
+        public ActionResult Fiyat(int id)
+        {
+
+            return View();
         }
 
         // GET: Tesis/Sil/5
@@ -93,7 +100,13 @@ namespace OnlineBooking.Controllers
             return View();
         }
 
-        public JsonResult OdaTipiAcKapa(int otelId, string odatipi, string ozellik, bool acKapa)
+        public JsonResult OdaTipiAcKapa(int otelId, int id, bool acKapa)
+        {
+
+            return Json("ok");
+        }
+
+        public JsonResult OzellikAcKapa(int otelId, int id, bool acKapa)
         {
 
             return Json("ok");

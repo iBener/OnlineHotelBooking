@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OnlineBooking.Models
+namespace OnlineBooking.Data
 {
     internal interface ICommands<T>
     {

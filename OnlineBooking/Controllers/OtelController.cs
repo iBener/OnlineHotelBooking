@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineBooking.Models;
 using OnlineBooking.Helpers;
 using Microsoft.Extensions.Options;
+using OnlineBooking.Data;
 
 namespace OnlineBooking.Controllers
 {

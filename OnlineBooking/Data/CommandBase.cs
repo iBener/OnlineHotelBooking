@@ -9,7 +9,7 @@ using System.Reflection;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace OnlineBooking.Models
+namespace OnlineBooking.Data
 {
     public class CommandBase<T> : ICommands<T>
     {
