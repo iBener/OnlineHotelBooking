@@ -27,11 +27,11 @@ namespace OnlineBooking.Controllers
         // POST: Otel
         public ActionResult Index(IFormCollection collection)
         {
-            var bolge = collection["bolge"].ToString();
-            var giris = collection["giris"].ToString();
-            var cikis = collection["cikis"].ToString();
-            var yetiskin = collection["yetiskin"].ToString();
-            var cocuk = collection["cocuk"].ToString();
+            ViewBag.Bolge = collection["bolge"].ToString();
+            ViewBag.Giris = collection["giris"].ToString();
+            ViewBag.Cikis = collection["cikis"].ToString();
+            ViewBag.Yetiskin = collection["yetiskin"].ToString();
+            ViewBag.Cocuk = collection["cocuk"].ToString();
             return View();
         }
 

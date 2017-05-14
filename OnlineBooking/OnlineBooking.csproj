@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\js\otelAra.js" />
     <Content Include="wwwroot\js\starr.js" />
     <Content Include="wwwroot\js\toggleButton.js" />
   </ItemGroup>

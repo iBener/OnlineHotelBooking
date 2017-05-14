@@ -1,3 +1,178 @@
 ﻿@model OnlineBooking.Models.Otel
+@{
+    ViewData["Title"] = "Otel Arama Sonuçları";
 
-<h1>Hello World</h1>
+    var giris = GetNextWeekday(DateTime.Today, DayOfWeek.Monday);
+    var cikis = GetNextWeekday(GetNextWeekday(DateTime.Today, DayOfWeek.Monday), DayOfWeek.Sunday);
+
+    if (!String.IsNullOrEmpty(ViewBag.Giris))
+    {
+        giris = DateTime.Parse(ViewBag.Giris);
+    }
+    if (!String.IsNullOrEmpty(ViewBag.Cikis))
+    {
+        cikis = DateTime.Parse(ViewBag.Cikis);
+    }
+    if (!String.IsNullOrEmpty(ViewBag.Yetiskin))
+    {
+        ViewBag.Yetiskin = 2;
+    }
+    if (!String.IsNullOrEmpty(ViewBag.Cocuk))
+    {
+        ViewBag.Cocuk = 0;
+    }
+}
+
+<div class="row">
+    <div class="col-sm-10">
+        <h1 style="margin-bottom:27px">Otel Arama Sonuçları</h1>
+        <div class="row">
+            <div class="col-sm-4">
+                <form asp-controller="Otel" asp-action="Index" name="otelAra" role="form" autocomplete="off" id="ara-form">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            Arama Kriterleri
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="otel-bolge">Şehir ya da otel adı</label>
+                                <input type="text" class="form-control" id="otel-bolge" name="bolge" placeholder="Şehir, bölge ya da otel adı" autocomplete="off" value="@ViewBag.Bolge">
+                            </div>
+                            <div class="form-group">
+                                <label for="girisCikis" class="control-label">Giriş - Çıkış Tarihi</label>
+                                <div class='input-group date' id='daterangepicker1'>
+                                    <input id="giris-cikis-tarih" type='text' class="form-control" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group dropdown">
+                                <label for="misafir-sayisi">Misafir sayısı</label>
+                                <button id="misafir-sayisi" type="button" class="form-control dropdown-toggle" data-toggle="dropdown">@ViewBag.Yetiskin yetişkin, @ViewBag.Cocuk çocuk</button>
+
+                                <!-- dropdown -->
+                                <div class="dropdown-menu" id="misafir-secim-dropdown">
+                                    <div id="misafir-secim">
+                                        <div class="header clearfix">
+                                            Misafir sayısı
+                                        </div>
+                                        <div class="row" style="margin-top:10px;margin-bottom:10px;">
+                                            <div class="col-sm-4 col-sm-offset-1">
+                                                <label>Yetişkin</label>
+                                                <input id="yetiskin" name="yetiskin" class="form-control" type="number" value="@ViewBag.Yetiskin" min="0" />
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label>Çocuk</label>
+                                                <input id="cocuk" name="cocuk" class="form-control" type="number" value="@ViewBag.Cocuk" min="0" />
+                                            </div>
+                                        </div>
+                                        <!--<div class="footer">
+                                            <button class="btn btn-empty">Kapat</button>
+                                        </div>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-search-hotel btn-block">
+                                Otel Bul
+                                <i class="fa fa-angle-double-right"></i> <i class="fa fa-spin fa-spinner hidden"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="background:#dddddd">
+                            Filtreler
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label>Gecelik Oda Fiyatı</label>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="">
+                                        0 - 249 TL
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="">
+                                        250 - 499 TL
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="">
+                                        500+
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Konaklama Türü</label>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="">
+                                        Yarım Pansiyon
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="">
+                                        Tam Pansiyon
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="">
+                                        Herşey Dahil
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="">
+                                        Ultra Herşey Dahil
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-search-hotel btn-block">
+                                Uygula
+                                <i class="fa fa-angle-double-right"></i> <i class="fa fa-spin fa-spinner hidden"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-8">
+                <ul style="margin:0px;padding:0px;">
+                    <li>
+                        Otel 1
+                    </li>
+                    <li>
+                        Otel 2
+                    </li>
+                    <li>
+                        Otel 3
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/otelAra.js"></script>
+    <script>
+        startDate = "@giris.ToString("dd.MM.yyyy")";
+        endDate = "@cikis.ToString("dd.MM.yyyy")";
+        yetiskin = @ViewBag.Yetiskin;
+        cocuk = @ViewBag.Cocuk;
+    </script>
+}
+
+@functions {
+    public DateTime GetNextWeekday(DateTime start, DayOfWeek day)
+    {
+        int daysToAdd = ((int)day - (int)start.DayOfWeek + 7) % 7;
+        return start.AddDays(daysToAdd);
+    }
+}
