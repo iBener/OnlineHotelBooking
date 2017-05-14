@@ -183,17 +183,15 @@
                             <th>9 - 14 Yaş</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Junior Oda</td>
-                            <td>0 TL</td>
-                            <td>0 TL</td>
-                        </tr>
-                        <tr>
-                            <td>Standart Oda</td>
-                            <td>400 TL</td>
-                            <td>200 TL</td>
-                        </tr>
+                    <tbody id="fiyatlar">
+                        @foreach (var item in Model.Fiyatlar.Where(x => x.KonaklamaId == 3).OrderBy(x => x.OdaTipiId))
+                        {
+                            <tr>
+                                <td>@item.OdaTipi</td>
+                                <td>@item.FiyatYetiskin</td>
+                                <td>@item.FiyatCocuk</td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -204,6 +202,11 @@
 @section Scripts {
 <script src="~/js/toggleButton.js"></script>
 <script>
+    var fiyatlar1 = "@Html.Raw(FiyatOlustur(1))";
+    var fiyatlar2 = "@Html.Raw(FiyatOlustur(2))";
+    var fiyatlar3 = "@Html.Raw(FiyatOlustur(3))";
+    var fiyatlar4 = "@Html.Raw(FiyatOlustur(4))";
+
     var otelId = @Model.OtelId;
     $(document).ready(function () {
         $("#odatipleri .ohb-btn-toggle").toggleButton({
@@ -218,6 +221,32 @@
 
     function setKonaklamaId(select) {
         $("#fiyatduzenle").attr("href", "/Tesis/Fiyat/" + otelId + "?konaklamaId=" + select.value);
+        $("#fiyatlar").empty();
+        if (select.value == "1") {
+            $("#fiyatlar").html(fiyatlar1);
+        } else if (select.value == "2") {
+            $("#fiyatlar").html(fiyatlar2);
+        } else if (select.value == "3") {
+            $("#fiyatlar").html(fiyatlar3);
+        } else if (select.value == "4") {
+            $("#fiyatlar").html(fiyatlar4);
+        }
+        
     }
+
 </script>
+}
+
+@functions { 
+    public string FiyatOlustur(int konaklamaId)
+    {
+        var tbody = "";
+        foreach(var item in Model.Fiyatlar.Where(x => x.KonaklamaId == konaklamaId).OrderBy(x => x.OdaTipiId))
+        {
+            tbody += "<tr>" +
+                        "<td>" + item.OdaTipi + "</td><td>" + item.FiyatYetiskin + "</td><td>" + item.FiyatCocuk + "</td>" +
+                     "</tr>";
+        }
+        return tbody;
+    }
 }

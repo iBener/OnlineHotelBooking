@@ -20,6 +20,8 @@ namespace OnlineBooking.ViewModels
 
     public class OtelFiyatItemViewModel
     {
+        public int? KonaklamaId { get; set; }
+
         public int? OtelFiyatId { get; set; }
 
         public int OdaTipiId { get; set; }

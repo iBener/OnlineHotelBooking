@@ -16,24 +16,60 @@ namespace OnlineBooking.Data
         {
         }
 
+        public OtelViewModel GetOtelViewModel(int id)
+        {
+            var otel = FindWithId(id);
+            var konaklama = Query<KonaklamaTuru>(null);
+
+            var otelModel = new OtelViewModel()
+            {
+                OtelId = otel.OtelId,
+                OtelAdi = otel.OtelAdi,
+                Aciklama = otel.Aciklama,
+                Adres = otel.Adres,
+                Telefon = otel.Telefon,
+                IlAdi = otel.IlAdi,
+                IlceAdi = otel.IlceAdi,
+                Yildiz = otel.Yildiz,
+                Degerlendirme = otel.Degerlendirme,
+                Fiyatlar = new List<OtelFiyatItemViewModel>(),
+            };
+            foreach (var item in konaklama)
+            {
+                var fiyatlar = FiyatOlustur(id, item.KonaklamaTuruId);
+                foreach (var fiyat in fiyatlar)
+                {
+                    otelModel.Fiyatlar.Add(fiyat);
+                }
+            }
+            return otelModel;
+        }
+
         public OtelFiyatViewModel GetFiyatListesi(int otelId, int konaklamaId)
         {
             var konaklama = FindWithId<KonaklamaTuru>(konaklamaId);
-            var odatipleri = Query<OdaTipi>(null);
-            var fiyatlar = Query<OtelFiyat>(new { OtelId = otelId, KonaklamaId = konaklamaId });
 
             var item = new OtelFiyatViewModel()
             {
                 OtelId = otelId,
                 KonaklamaId = konaklama.KonaklamaTuruId,
                 Konaklama = konaklama.KonaklamaTuruAdi,
-                Fiyatlar = new List<OtelFiyatItemViewModel>()
+                Fiyatlar = FiyatOlustur(otelId, konaklamaId),
             };
+            return item;
+        }
+
+        private List<OtelFiyatItemViewModel> FiyatOlustur(int otelId, int konaklamaId)
+        {
+            var odatipleri = Query<OdaTipi>(null);
+            var fiyatlar = Query<OtelFiyat>(new { OtelId = otelId, KonaklamaId = konaklamaId });
+            var odaFiyatlari = new List<OtelFiyatItemViewModel>();
             foreach (var odatipi in odatipleri.OrderBy(x => x.OdaTipiId))
             {
                 var fiyat = fiyatlar.FirstOrDefault(x => x.OdaTipiId == odatipi.OdaTipiId);
-                item.Fiyatlar.Add(new OtelFiyatItemViewModel()
+                odaFiyatlari.Add(new OtelFiyatItemViewModel()
                 {
+                    KonaklamaId = fiyat?.KonaklamaId,
                     OtelFiyatId = fiyat?.OtelFiyatId,
                     OdaTipiId = odatipi.OdaTipiId,
                     OdaTipi = odatipi.OdaTipiAdi,
@@ -41,7 +77,7 @@ namespace OnlineBooking.Data
                     FiyatCocuk = fiyat?.FiyatCocuk,
                 });
             }
-            return item;
+            return odaFiyatlari;
         }
 
         public void FiyatListesiKaydet(OtelFiyatViewModel fiyat)
