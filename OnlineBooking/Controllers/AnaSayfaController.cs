@@ -15,13 +15,6 @@ namespace OnlineBooking.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Index(IFormCollection collection)
-        {
-            
-            return View();
-        }
-
         public IActionResult Hakkinda()
         {
             ViewData["Message"] = "Online Hotel Booking";

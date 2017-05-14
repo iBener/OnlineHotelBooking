@@ -1,63 +1,151 @@
 ﻿@{
     ViewData["Title"] = "Otel Ara";
+
+    var giris = GetNextWeekday(DateTime.Today, DayOfWeek.Monday);
+    var cikis = GetNextWeekday(GetNextWeekday(DateTime.Today, DayOfWeek.Monday), DayOfWeek.Sunday);
 }
 
 <div class="clearfix">
     <div class="container col-lg-6 col-md-7 col-sm-12">
         <h1>Aradığınız oteli bulun</h1>
 
-        <form asp-controller="AnaSayfa" asp-action="Index" name="otelAra" role="form" autocomplete="off" id="ara-form" class="row">
+        <form asp-controller="Otel" asp-action="Index" name="otelAra" role="form" autocomplete="off" id="ara-form" class="row">
             <div class="form-group autocomplete-container col-sm-12">
                 <label for="otel-bolge">Şehir ya da otel adı</label>
-                <input type="text" class="form-control" id="otel-bolge" placeholder="Şehir, bölge ya da otel adı" autocomplete="off">
+                <input type="text" class="form-control" id="otel-bolge" name="bolge" placeholder="Şehir, bölge ya da otel adı" autocomplete="off">
             </div>
 
-            <div class="form-group col-sm-6">
+            @*<div class="form-group col-sm-6">
                 <label for="giris-cikis-tarih">
                     Giriş - Çıkış Tarihi
                 </label>
-                <div>
-                    <input class="form-control" type="button" id="giris-cikis-tarih" value="11 Mayıs 2017 - 13 Mayıs 2017">
+                <div class="input-group">
+                    <input class="form-control" type="text" id="giris-cikis-tarih" value="11 Mayıs 2017 - 13 Mayıs 2017">
                     <i class="fa fa-calendar"></i>
+                </div>
+            </div>*@
+
+            <div class="form-group col-sm-6">
+                <label for="girisCikis" class="control-label">Giriş - Çıkış Tarihi</label>
+                <div class='input-group date' id='daterangepicker1'>
+                    <input id="giris-cikis-tarih" type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
                 </div>
             </div>
 
             <div class="form-group dropdown col-sm-6">
-                <label for="oda-misafir">Misafir sayısı</label>
-                <button id="oda-misafir" type="button" class="form-control dropdown-toggle" data-toggle="dropdown">1 oda, 2 yetişkin</button>
+                <label for="misafir-sayisi">Misafir sayısı</label>
+                <button id="misafir-sayisi" type="button" class="form-control dropdown-toggle" data-toggle="dropdown">2 yetişkin, 0 çocuk</button>
 
                 <!-- dropdown -->
                 <div class="dropdown-menu" id="misafir-secim-dropdown">
-                    <div id="misafir-oda-secim">
+                    <div id="misafir-secim">
                         <div class="header clearfix">
                             Misafir sayısı
                         </div>
-                        <ul id="oda-listesi">
-                            <li id="oda-1" class="clearfix" data-oda-id="1">
-
-                            </li>
-                        </ul>
-                        <div class="footer">
-                            <button class="btn btn-empty">Kapat</button>
+                        <div class="row" style="margin-top:10px;margin-bottom:10px;">
+                            <div class="col-sm-4 col-sm-offset-1">
+                                <label>Yetişkin</label>
+                                <input id="yetiskin" name="yetiskin" class="form-control" type="number" value="2" min="0" />
+                            </div>
+                            <div class="col-sm-4">
+                                <label>Çocuk</label>
+                                <input id="cocuk" name="cocuk" class="form-control" type="number" value="0" min="0" />
+                            </div>
                         </div>
+                        <!--<div class="footer">
+                            <button class="btn btn-empty">Kapat</button>
+                        </div>-->
                     </div>
                 </div>
             </div>
 
             <div class="col-xs-12 btn-container">
-                <button type="button" class="btn btn-success btn-search-hotel pull-right">
+                <button type="submit" class="btn btn-success btn-search-hotel pull-right" style="margin-top:20px;">
                     Otel Bul
                     <i class="fa fa-angle-double-right"></i> <i class="fa fa-spin fa-spinner hidden"></i>
                 </button>
             </div>
+
+            <input id="giris" name="giris" type="hidden" value="@giris.ToString("yyyy-MM-dd")" />
+            <input id="cikis" name="cikis" type="hidden" value="@cikis.ToString("yyyy-MM-dd")"/>
         </form>
     </div>
 </div>
 
 @section Scripts {
     <script>
+        var yetiskin = 2;
+        var cocuk = 0;
+
+        $(function () {
+            $('#giris-cikis-tarih').daterangepicker({
+                "autoApply": true,
+                "locale": {
+                    "format": "DD.MM.YYYY",
+                    "separator": " - ",
+                    "applyLabel": "Tamam",
+                    "cancelLabel": "Vazgeç",
+                    "fromLabel": "From",
+                    "toLabel": "To",
+                    "customRangeLabel": "Custom",
+                    "weekLabel": "W",
+                    "daysOfWeek": [
+                        "Pz",
+                        "Pt",
+                        "Sl",
+                        "Çr",
+                        "Pr",
+                        "Cu",
+                        "Ct"
+                    ],
+                    "monthNames": [
+                        "Ocak",
+                        "Şubat",
+                        "Mart",
+                        "Nisan",
+                        "Mayıs",
+                        "Haziran",
+                        "Temmuz",
+                        "Auğustos",
+                        "Eylül",
+                        "Ekim",
+                        "Kasım",
+                        "Aralık"
+                    ],
+                    "firstDay": 1
+                },
+                "startDate": "@giris.ToString("dd.MM.yyyy")",
+                "endDate": "@cikis.ToString("dd.MM.yyyy")"
+            }, function (giris, cikis, label) {
+                //console.log("New date range selected: " + start.format('YYYY-MM-DD') + " to " + end.format('YYYY-MM-DD') + " (predefined range: " + label + ")");
+                $("#giris").val(giris.format("YYYY-MM-DD"));
+                $("#cikis").val(cikis.format("YYYY-MM-DD"));
+            });
+
+            $("#yetiskin").change(function (a) {
+                yetiskin = $("#yetiskin").val();
+                $("#misafir-sayisi").html(yetiskin + " yetişkin, " + cocuk + " çocuk");
+            });
+
+            $("#cocuk").change(function (a) {
+                cocuk = $("#cocuk").val();
+                $("#misafir-sayisi").html(yetiskin + " yetişkin, " + cocuk + " çocuk");
+            });
+
+        });
         $("#misafir-secim-dropdown").click(function (e) {
             e.stopPropagation();
         });
     </script>
+}
+
+@functions {
+    public DateTime GetNextWeekday(DateTime start, DayOfWeek day)
+    {
+        int daysToAdd = ((int)day - (int)start.DayOfWeek + 7) % 7;
+        return start.AddDays(daysToAdd);
+    }
 }

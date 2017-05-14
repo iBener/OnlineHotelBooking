@@ -25,8 +25,8 @@
     margin-left: 15px;
 }
 
-#misafir-oda-secim {
-    min-width: 400px;
+#misafir-secim {
+    /*min-width: 400px;*/
     -webkit-transition: min-width .2s;
     -moz-transition: min-width .2s;
     -ms-transition: min-width .2s;
@@ -34,47 +34,47 @@
     transition: min-width .2s;
 }
 
-    #misafir-oda-secim.child-1 {
+    #misafir-secim.child-1 {
         min-width: 565px
     }
 
-    #misafir-oda-secim.child-2 {
+    #misafir-secim.child-2 {
         min-width: 660px
     }
 
-    #misafir-oda-secim.child-3 {
+    #misafir-secim.child-3 {
         min-width: 780px
     }
 
-    #misafir-oda-secim .room-count-box {
+    #misafir-secim .room-count-box {
         float: left;
         padding: 37px 20px 0 0
     }
 
-    #misafir-oda-secim .guest-inc-dec-box {
+    #misafir-secim .guest-inc-dec-box {
         float: left
     }
 
-        #misafir-oda-secim .guest-inc-dec-box .popover .arrow, #misafir-oda-secim .guest-inc-dec-box + .popover .arrow {
+        #misafir-secim .guest-inc-dec-box .popover .arrow, #misafir-secim .guest-inc-dec-box + .popover .arrow {
             display: none
         }
 
-    #misafir-oda-secim .header {
+    #misafir-secim .header {
         padding: 10px 15px;
         border-bottom: 1px solid #BEC3C8;
         font-size: 16px;
     }
 
-    #misafir-oda-secim .footer {
+    #misafir-secim .footer {
         position: relative;
         padding: 15px 50px 15px 15px
     }
 
-        #misafir-oda-secim .footer.bottom {
+        #misafir-secim .footer.bottom {
             border-top: 1px solid #BEC3C8
         }
 
-        #misafir-oda-secim .footer .close-guest-selector {
+        #misafir-secim .footer .close-guest-selector {
             position: absolute;
             bottom: 15px;
             right: 15px;
@@ -82,13 +82,13 @@
             font-weight: 700
         }
 
-    #misafir-oda-secim .room-count {
+    #misafir-secim .room-count {
         font-size: 14px;
         font-weight: 700;
         display: inline-block
     }
 
-    #misafir-oda-secim .room-label {
+    #misafir-secim .room-label {
         display: block;
         font-weight: 400
     }
