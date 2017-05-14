@@ -99,7 +99,43 @@ namespace OnlineBooking.Controllers
                 ViewBag.HataMesaji = ex.Message;
             }
             return View(fiyat);
-        } 
+        }
+
+        public ActionResult Resim(int id)
+        {
+            ViewBag.OtelId = id;
+            using (var db = new DbModel(VeriTabani))
+            {
+                return View(db.Tesis.GetOtelResimleri(id));
+            }
+        }
+
+        public ActionResult ResimEkle(int id, OdaTipleri odatipi)
+        {
+            ViewBag.OtelId = id;
+            ViewBag.OdaTipiId = odatipi;
+            if (odatipi == OdaTipleri.JuniorOda)
+            {
+                ViewBag.OdaTipi = "Junior Oda Resmi";
+            }
+            else if (odatipi == OdaTipleri.StandartOda)
+            {
+                ViewBag.OdaTipi = "Standar Oda Resmi";
+            }
+            else if (odatipi == OdaTipleri.AileOdasi)
+            {
+                ViewBag.OdaTipi = "Aile Odasý Resmi";
+            }
+            else if (odatipi == OdaTipleri.KralDairesi)
+            {
+                ViewBag.OdaTipi = "Kral Dairesi Resmi";
+            }
+            else
+            {
+                ViewBag.OdaTipi = "Otel Tesis Resmi";
+            }
+            return View();
+        }
 
         // GET: Tesis/Sil/5
         public ActionResult Sil(int id)

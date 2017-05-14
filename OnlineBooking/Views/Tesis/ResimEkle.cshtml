@@ -1,0 +1,22 @@
+﻿<div class="row">
+    <form method="post" enctype="multipart/form-data" asp-controller="UploadFiles" asp-action="Index" class="col-sm-6">
+        <input name="OtelId" value="@ViewBag.OtelId" type="hidden" />
+        <input name="OdaTipiId" value="@ViewBag.OdaTipiId" type="hidden" />
+        <div class="form-group">
+            <div class="col-md-10">
+                <h3>@ViewBag.OdaTipi Ekle</h3>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                <p>Yüklemek için bir veya daha fazla resim seçebilirsiniz:</p>
+                <input type="file" name="files" multiple />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10" style="margin-top:12px;">
+                <input type="submit" value="Yükle" />
+            </div>
+        </div>
+    </form>
+</div>

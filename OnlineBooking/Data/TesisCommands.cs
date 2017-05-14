@@ -19,8 +19,6 @@ namespace OnlineBooking.Data
         public OtelViewModel GetOtelViewModel(int id)
         {
             var otel = FindWithId(id);
-            var konaklama = Query<KonaklamaTuru>(null);
-
             var otelModel = new OtelViewModel()
             {
                 OtelId = otel.OtelId,
@@ -32,17 +30,25 @@ namespace OnlineBooking.Data
                 IlceAdi = otel.IlceAdi,
                 Yildiz = otel.Yildiz,
                 Degerlendirme = otel.Degerlendirme,
-                Fiyatlar = new List<OtelFiyatItemViewModel>(),
+                Fiyatlar = OtelFiyatlariOlustur(id),
+                Resimler = GetOtelResimleri(id),
             };
+            return otelModel;
+        }
+
+        private IEnumerable<OtelFiyatItemViewModel> OtelFiyatlariOlustur(int id)
+        {
+            var konaklama = Query<KonaklamaTuru>(null);
+            var fiyatlar = new List<OtelFiyatItemViewModel>();
             foreach (var item in konaklama)
             {
-                var fiyatlar = FiyatOlustur(id, item.KonaklamaTuruId);
-                foreach (var fiyat in fiyatlar)
+                var konaklamaFiyatlari = KonaklamaFiyatOlustur(id, item.KonaklamaTuruId);
+                foreach (var fiyat in konaklamaFiyatlari)
                 {
-                    otelModel.Fiyatlar.Add(fiyat);
+                    fiyatlar.Add(fiyat);
                 }
             }
-            return otelModel;
+            return fiyatlar;
         }
 
         public OtelFiyatViewModel GetFiyatListesi(int otelId, int konaklamaId)
@@ -54,12 +60,12 @@ namespace OnlineBooking.Data
                 OtelId = otelId,
                 KonaklamaId = konaklama.KonaklamaTuruId,
                 Konaklama = konaklama.KonaklamaTuruAdi,
-                Fiyatlar = FiyatOlustur(otelId, konaklamaId),
+                Fiyatlar = KonaklamaFiyatOlustur(otelId, konaklamaId),
             };
             return item;
         }
 
-        private List<OtelFiyatItemViewModel> FiyatOlustur(int otelId, int konaklamaId)
+        private List<OtelFiyatItemViewModel> KonaklamaFiyatOlustur(int otelId, int konaklamaId)
         {
             var odatipleri = Query<OdaTipi>(null);
             var fiyatlar = Query<OtelFiyat>(new { OtelId = otelId, KonaklamaId = konaklamaId });
@@ -95,6 +101,11 @@ namespace OnlineBooking.Data
                 };
                 InsertOrUpdate<OtelFiyat>(oda, oda.OtelFiyatId);
             }
+        }
+
+        public IEnumerable<OtelResim> GetOtelResimleri(int id)
+        {
+            return Query<OtelResim>(new { OtelId = id });
         }
     }
 }
