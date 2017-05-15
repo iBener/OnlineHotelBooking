@@ -22,7 +22,7 @@ namespace OnlineBooking.Controllers
         {
         }
 
-        private OtelViewModel GetOtelById(int id)
+        private OtelTesisViewModel GetOtelById(int id)
         {
             using (var db = new DbModel(VeriTabani))
             {

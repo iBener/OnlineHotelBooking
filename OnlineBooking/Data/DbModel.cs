@@ -17,12 +17,14 @@ namespace OnlineBooking.Data
 
 
             Tesis = new TesisCommands(this, Connection);
+            Otel = new OtelBulCommands(this, Connection);
         }
 
         protected DbConnection Connection { get; }
         protected DbTransaction transaction;
 
         public TesisCommands Tesis { get; }
+        public OtelBulCommands Otel { get; }
 
         public void BeginTransaction()
         {

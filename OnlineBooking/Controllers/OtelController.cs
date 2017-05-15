@@ -18,21 +18,17 @@ namespace OnlineBooking.Controllers
         }
 
         // GET: Otel
-        public ActionResult Index()
+        public ActionResult Index(string bolge, string giris, string cikis, int yetiskin, int cocuk)
         {
-            return View();
-        }
-
-        [HttpPost]
-        // POST: Otel
-        public ActionResult Index(IFormCollection collection)
-        {
-            ViewBag.Bolge = collection["bolge"].ToString();
-            ViewBag.Giris = collection["giris"].ToString();
-            ViewBag.Cikis = collection["cikis"].ToString();
-            ViewBag.Yetiskin = collection["yetiskin"].ToString();
-            ViewBag.Cocuk = collection["cocuk"].ToString();
-            return View();
+            ViewBag.Bolge = bolge;
+            ViewBag.Giris = giris;
+            ViewBag.Cikis = cikis;
+            ViewBag.Yetiskin = yetiskin;
+            ViewBag.Cocuk = cocuk;
+            using (var db = new DbModel(VeriTabani))
+            {
+                return View(db.Otel.Query(null));
+            }
         }
 
         // GET: Otel/Detay/5

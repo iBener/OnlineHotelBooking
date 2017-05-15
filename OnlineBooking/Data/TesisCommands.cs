@@ -16,10 +16,10 @@ namespace OnlineBooking.Data
         {
         }
 
-        public OtelViewModel GetOtelViewModel(int id)
+        public OtelTesisViewModel GetOtelViewModel(int id)
         {
             var otel = FindWithId(id);
-            var otelModel = new OtelViewModel()
+            var otelModel = new OtelTesisViewModel()
             {
                 OtelId = otel.OtelId,
                 OtelAdi = otel.OtelAdi,
