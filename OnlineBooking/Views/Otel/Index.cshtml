@@ -1,10 +1,13 @@
-﻿@model IEnumerable<OnlineBooking.Models.Otel>
+﻿@using OnlineBooking.Helpers
+@model IEnumerable<OnlineBooking.Models.Otel>
 
 @{
     ViewData["Title"] = "Otel Arama Sonuçları";
 
     var giris = GetNextWeekday(DateTime.Today, DayOfWeek.Monday);
     var cikis = GetNextWeekday(GetNextWeekday(DateTime.Today, DayOfWeek.Monday), DayOfWeek.Sunday);
+    Dictionary<string, string> fiyatlar = ViewBag.Fiyatlar;
+    Dictionary<string, string> konaklama = ViewBag.Konaklamalar;
 
     if (ViewBag.Giris != null && !String.IsNullOrEmpty(ViewBag.Giris))
     {
@@ -42,7 +45,6 @@
     .left-border {
         border-left: 1px solid grey !important;
     }
-
 
     /* Resposive table: */
     @@media screen and (max-width: 750px) {
@@ -122,19 +124,19 @@
                             <label>Gecelik Oda Fiyatı</label>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" value="">
+                                    <input type="checkbox" name="fiyat" value="0-249" @fiyatlar["1"]>
                                     0 - 249 TL
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" value="">
+                                    <input type="checkbox" name="fiyat" value="250-499" @fiyatlar["2"]>
                                     250 - 499 TL
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" value="">
+                                    <input type="checkbox" name="fiyat" value="500+" @fiyatlar["3"]>
                                     500+
                                 </label>
                             </div>
@@ -144,25 +146,25 @@
                             <label>Konaklama Türü</label>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" value="">
+                                    <input type="checkbox" value="@((int)KonaklamaTipleri.YarimPansiyon)" name="konaklama" @konaklama["1"]>
                                     Yarım Pansiyon
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" value="">
+                                    <input type="checkbox" value="@((int)KonaklamaTipleri.TamPansiyon)" name="konaklama" @konaklama["2"]>
                                     Tam Pansiyon
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" value="">
+                                    <input type="checkbox" value="@((int)KonaklamaTipleri.HerseyDahil)" name="konaklama" @konaklama["3"]>
                                     Herşey Dahil
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" value="">
+                                    <input type="checkbox" value="@((int)KonaklamaTipleri.Ultra)" name="konaklama" @konaklama["4"]>
                                     Ultra Herşey Dahil
                                 </label>
                             </div>
