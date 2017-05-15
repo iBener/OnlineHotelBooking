@@ -126,7 +126,11 @@ namespace OnlineBooking.Controllers
             {
                 ViewBag.OdaTipi = "Aile Odasý Resmi";
             }
-            else if (odatipi == OdaTipleri.KralDairesi)
+            else if (odatipi == OdaTipleri.SuitOda)
+            {
+                ViewBag.OdaTipi = "Suit Oda Resmi";
+            }
+            if (odatipi == OdaTipleri.KralDairesi)
             {
                 ViewBag.OdaTipi = "Kral Dairesi Resmi";
             }

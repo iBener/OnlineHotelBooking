@@ -79,6 +79,22 @@
     </div>
 </div>
 
+<!-- Suit oda resimleri -->
+<h3>Suit Oda Resim Galerisi</h3>
+<a asp-controller="Tesis" asp-action="ResimEkle" asp-route-id="@ViewBag.OtelId" asp-route-odatipi="@OdaTipleri.SuitOda">Resim Ekle</a>
+<div class="row"><div class="col-sm-9"><hr /></div></div>
+
+<div class="row">
+    <div class="col-sm-9">
+        @foreach (var item in Model.Where(x => x.OdaTipiId == (int)OdaTipleri.SuitOda))
+        {
+            <div class="col-sm-4 thumbnail">
+                <img src="@item.Path" style="width:100%;height:100%" />
+            </div>
+        }
+    </div>
+</div>
+
 <!-- Kral odası resimleri -->
 <h3>Kral Odası Resim Galerisi</h3>
 <a asp-controller="Tesis" asp-action="ResimEkle" asp-route-id="@ViewBag.OtelId" asp-route-odatipi="@OdaTipleri.KralDairesi">Resim Ekle</a>

@@ -11,6 +11,16 @@ namespace OnlineBooking.Helpers
         JuniorOda = 1,
         StandartOda = 2,
         AileOdasi = 3,
-        KralDairesi = 4
+        SuitOda = 4,
+        KralDairesi = 5
+    }
+
+    public enum KonaklamaTipleri
+    {
+        Yok = 0,
+        YarimPansiyon = 1,
+        TamPansiyon = 2,
+        HerseyDahil = 3,
+        Ultra = 4
     }
 }
