@@ -1,5 +1,5 @@
 ﻿@using OnlineBooking.Helpers
-@model IEnumerable<OnlineBooking.Models.Otel>
+@model IEnumerable<OnlineBooking.ViewModels.OtelViewModel>
 
 @{
     ViewData["Title"] = "Otel Arama Sonuçları";
@@ -186,7 +186,7 @@
                         <div class="row">
                             <div class="col-sm-3 right-border">
                                 <div style="height:120px;">
-                                    <img src="~/images/beach.jpg" style="width:100%;height:100%" />
+                                    <img src="@otel.Resim" style="width:100%;height:100%" />
                                 </div>
                             </div>
                             <div class="col-sm-5">
@@ -206,10 +206,11 @@
                                 </div>
                                 <div>@otel.IlAdi, @otel.IlceAdi <i class="fa fa-map-marker"></i></div>
                                 <div>@otel.Adres</div>
+                                <div>@otel.Telefon</div>
                             </div>
                             <div class="col-sm-2 left-border right-border">
                                 <div style="width:120px;height:120px;">
-                                    <h2 class="text-center" style="padding-left:0px;">300 TL</h2>
+                                    <h2 class="text-center" style="padding-left:0px;">@otel.Fiyat TL</h2>
                                     <div class="text-center">Herşey dahil</div>
                                     <button class="btn btn-warning" style="position:absolute;bottom:0px;left:7px;width:90%">
                                         Detaylar
