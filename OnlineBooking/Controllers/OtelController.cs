@@ -46,11 +46,15 @@ namespace OnlineBooking.Controllers
         }
 
         // GET: Otel/Detay/5
-        public ActionResult Detay(int id)
+        public ActionResult Detay(int id, string giris, string cikis, int yetiskin, int cocuk)
         {
+            ViewBag.Giris = giris;
+            ViewBag.Cikis = cikis;
+            ViewBag.Yetiskin = yetiskin;
+            ViewBag.Cocuk = cocuk;
             using (var db = new DbModel(VeriTabani))
             {
-                return View(db.Tesis.FindWithId(id));
+                return View(db.Otel.OtelOda(id, giris, cikis, yetiskin, cocuk));
             }
         }
 

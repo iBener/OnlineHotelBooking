@@ -1,11 +1,10 @@
-﻿@using OnlineBooking.Helpers
-@model IEnumerable<OnlineBooking.ViewModels.OtelViewModel>
+﻿@model IEnumerable<OnlineBooking.Models.Otel>
 
 @{
     ViewData["Title"] = "Otel Arama Sonuçları";
 
-    var giris = GetNextWeekday(DateTime.Today, DayOfWeek.Monday);
-    var cikis = GetNextWeekday(GetNextWeekday(DateTime.Today, DayOfWeek.Monday), DayOfWeek.Sunday);
+    var giris = Helper.GetSonrakiGun(DayOfWeek.Monday, DateTime.Today);
+    var cikis = Helper.GetSonrakiGun(DayOfWeek.Sunday, giris);
     Dictionary<string, string> fiyatlar = ViewBag.Fiyatlar;
     Dictionary<string, string> konaklama = ViewBag.Konaklamalar;
 
@@ -17,11 +16,11 @@
     {
         cikis = DateTime.Parse(ViewBag.Cikis);
     }
-    if (ViewBag.Yetiskin != null)
+    if (ViewBag.Yetiskin == null || ViewBag.Yetiskin == 0)
     {
         ViewBag.Yetiskin = 2;
     }
-    if (ViewBag.Cocuk != null)
+    if (ViewBag.Cocuk == null || ViewBag.Cocuk == 0)
     {
         ViewBag.Cocuk = 0;
     }
@@ -212,10 +211,10 @@
                                 <div style="width:120px;height:120px;">
                                     <h2 class="text-center" style="padding-left:0px;">@otel.Fiyat TL</h2>
                                     <div class="text-center">Herşey dahil</div>
-                                    <button class="btn btn-warning" style="position:absolute;bottom:0px;left:7px;width:90%">
+                                    <a class="btn btn-warning" href="/Otel/Detay/@otel.OtelId" style="position:absolute;bottom:0px;left:7px;width:90%">
                                         Detaylar
                                         <i class="fa fa-angle-double-right"></i> <i class="fa fa-spin fa-spinner hidden"></i>
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -234,12 +233,4 @@
         yetiskin = @ViewBag.Yetiskin;
         cocuk = @ViewBag.Cocuk;
     </script>
-}
-
-@functions {
-    public DateTime GetNextWeekday(DateTime start, DayOfWeek day)
-    {
-        int daysToAdd = ((int)day - (int)start.DayOfWeek + 7) % 7;
-        return start.AddDays(daysToAdd);
-    }
 }
