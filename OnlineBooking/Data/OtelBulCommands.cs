@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Data.Common;
 using OnlineBooking.Helpers;
-using OnlineBooking.ViewModels;
 using Dapper;
 
 namespace OnlineBooking.Data
@@ -63,6 +62,7 @@ namespace OnlineBooking.Data
                 "where f.OtelId=1 and f.FiyatYetiskin<>0 order by f.KonaklamaId,f.OdaTipiId \n";
 
             model.Odalar = Connection.Query<OtelOdaTipleri>(query);
+            model.Resimler = Query<OtelResim>(new { OtelId = id });
 
             return model;
         }

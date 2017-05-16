@@ -9,6 +9,7 @@ namespace OnlineBooking.ViewModels
     public class OtelOdalarViewModel : Otel
     {
         public IEnumerable<OtelOdaTipleri> Odalar { get; set; }
+        public IEnumerable<OtelResim> Resimler { get; internal set; }
 
         public OtelOdalarViewModel()
         {

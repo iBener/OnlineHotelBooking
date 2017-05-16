@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using OnlineBooking.Helpers;
 using OnlineBooking.Data;
 using OnlineBooking.Models;
+using ImageSharp;
 
 namespace OnlineBooking.Controllers
 {
@@ -36,7 +37,7 @@ namespace OnlineBooking.Controllers
 
 
         [HttpPost("UploadFiles")]
-        public async Task<IActionResult> Post(List<IFormFile> files, int OtelId, OdaTipleri OdaTipiId)
+        public IActionResult Post(List<IFormFile> files, int OtelId, OdaTipleri OdaTipiId)
         {
             long size = files.Sum(f => f.Length);
 
@@ -58,12 +59,22 @@ namespace OnlineBooking.Controllers
                             Path = String.Join("/", "/images", dosyaAdi)
                         };
 
-                        db.Tesis.Insert<OtelResim>(resim);
+                        db.Tesis.Insert(resim);
+
+                        byte[] bytes = null; ;
+                        using (var fileStream = formFile.OpenReadStream())
+                        using (var ms = new MemoryStream())
+                        {
+                            fileStream.CopyTo(ms);
+                            bytes = ms.ToArray();
+                        }
 
                         var tamYol = Path.Combine(wwwrootPath, "images", dosyaAdi);
-                        using (var stream = new FileStream(tamYol, FileMode.Create))
+                        using (FileStream output = System.IO.File.OpenWrite(tamYol))
+                        using (Image<Rgba32> image = Image.Load<Rgba32>(bytes))
                         {
-                            await formFile.CopyToAsync(stream);
+                            image.Resize(480, 280)
+                                 .Save(output);
                         }
                     }
                 }

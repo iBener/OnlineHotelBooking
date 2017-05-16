@@ -20,6 +20,7 @@
     {
         ViewBag.Cocuk = 0;
     }
+    var resimler = Model.Resimler.ToArray();
 }
 
 <style>
@@ -33,15 +34,31 @@
             display: block
         }
     }*/
+    .carouselImg img {
+        /*height: 240px;
+        max-height: 240px;*/
+    }
+
+    .pd5 {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
 </style>
 
 @Html.Partial("_HataMesaji", (string)ViewBag.HataMesaji ?? "")
 
 <h1>@Model.OtelAdi</h1>
-<div class="mrg-btm-10">
-    @for (int i = 0; i < Model.Yildiz; i++)
+<div class="mrg-btm-10" style="color:#ffa800">
+    @for (int i = 0; i < 5; i++)
     {
-        <i class="fa fa-star" style="color:#ffa800"></i>
+        if (i < Model.Yildiz)
+        {
+    <i class="fa fa-star"></i>
+        }
+        else
+        {
+    <i class="fa fa-star-o"></i>
+        }
     }
 </div>
 <div class="mrg-btm-10"><i class="fa fa-map-marker"></i> @Model.IlAdi, @Model.IlceAdi</div>
@@ -49,39 +66,31 @@
 <div id="myCarousel" class="carousel slide" data-ride="carousel" style="width:480px">
     <!-- Indicators -->
     <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-        <li data-target="#myCarousel" data-slide-to="3"></li>
+        @for (int i = 0; i <= resimler.Length - 1; i++)
+        {
+        <li data-target="#myCarousel" data-slide-to="0" @((i == 0) ? "class=active" : "")></li>
+        }
     </ol>
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
-        <div class="item active">
-            <img src="~/images/la.jpg" alt="Los Angeles">
+        @for (int i = 0; i <= resimler.Length - 1; i++)
+        {
+            var resim = resimler[i];
+        <div class="item@(i == 0 ? " active" : "") carouselImg">
+            <img src="@resim.Path">
         </div>
-
-        <div class="item">
-            <img src="~/images/chicago.jpg" alt="Chicago">
-        </div>
-
-        <div class="item">
-            <img src="~/images/ny.jpg" alt="New York">
-        </div>
-
-        <div class="item">
-            <img src="~/images/beach.jpg" alt="Mexico">
-        </div>
+        }
     </div>
 
     <!-- Left and right controls -->
     <a class="left carousel-control" href="#myCarousel" data-slide="prev">
         <span class="glyphicon glyphicon-chevron-left"></span>
-        <span class="sr-only">Previous</span>
+        <span class="sr-only">Önceki</span>
     </a>
     <a class="right carousel-control" href="#myCarousel" data-slide="next">
         <span class="glyphicon glyphicon-chevron-right"></span>
-        <span class="sr-only">Next</span>
+        <span class="sr-only">Sonraki</span>
     </a>
 </div>
 
@@ -90,7 +99,7 @@
 </header>
 
 <form method="get" asp-controller="Otel" asp-action="Detay" class="row" style="background: #f7f7f7;border: 1px solid #eee;padding: 10px; padding-top:20px; margin-left:0px; max-width:720px">
-    <div class="form-group col-sm-5">
+    <div class="form-group col-sm-4 pd5">
         <label for="girisCikis" class="control-label">Giriş - Çıkış Tarihi</label>
         <div class='input-group date' id='daterangepicker1'>
             <input id="giris-cikis-tarih" type='text' class="form-control" />
@@ -100,12 +109,12 @@
         </div>
     </div>
 
-    <div class="form-group dropdown col-sm-4">
+    <div class="form-group dropdown col-sm-3 pd5">
         <label for="misafir-sayisi">Misafir sayısı</label>
         <button id="misafir-sayisi" type="button" class="form-control dropdown-toggle" data-toggle="dropdown">@ViewBag.Yetiskin yetişkin, @ViewBag.Cocuk çocuk</button>
 
         <!-- dropdown -->
-        <div class="dropdown-menu" id="misafir-secim-dropdown">
+        <div class="dropdown-menu" id="misafir-secim-dropdown" style="min-width:250px;margin-left:5px">
             <div id="misafir-secim">
                 <div class="header clearfix">
                     Misafir sayısı
@@ -127,7 +136,19 @@
         </div>
     </div>
 
-    <div class="form-group col-sm-3">
+    <div class="form-group col-sm-3 pd5">
+        <label for="girisCikis" class="control-label">Konaklama Türü</label>
+        <div class='input-group date' id='daterangepicker1'>
+            <select class="form-control">
+                <option>Yarım Pansiyon</option>
+                <option>Tam Pansion</option>
+                <option>Herşey Dahil</option>
+                <option>Ultra Herşey Dahil</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group col-sm-2 pd5">
         <label style="color:white">.</label>
         <div>
             <button type="submit" class="btn btn-success btn-search-hotel">
@@ -146,138 +167,72 @@
         <div id="pricing-table" class="clear">
             <div class="plan">
                 <h3>Enterprise<span>$59</span></h3>
+                <img src="~/images/la.jpg" style="width:138px;height:80px;" />
                 <a class="signup" href="">Sign up</a>
-                <ul>
-                    <li><b>10GB</b> Disk Space</li>
-                    <li><b>100GB</b> Monthly Bandwidth</li>
-                    <li><b>20</b> Email Accounts</li>
-                    <li><b>Unlimited</b> subdomains</li>
-                </ul>
             </div>
             <div class="plan">
                 <h3>Professional<span>$29</span></h3>
                 <a class="signup" href="">Sign up</a>
-                <ul>
-                    <li><b>5GB</b> Disk Space</li>
-                    <li><b>50GB</b> Monthly Bandwidth</li>
-                    <li><b>10</b> Email Accounts</li>
-                    <li><b>Unlimited</b> subdomains</li>
-                </ul>
             </div>
             <div class="plan">
                 <h3>Standard<span>$17</span></h3>
                 <a class="signup" href="">Sign up</a>
-                <ul>
-                    <li><b>3GB</b> Disk Space</li>
-                    <li><b>25GB</b> Monthly Bandwidth</li>
-                    <li><b>5</b> Email Accounts</li>
-                    <li><b>Unlimited</b> subdomains</li>
-                </ul>
             </div>
             <div class="plan">
                 <h3>Basic<span>$9</span></h3>
                 <a class="signup" href="">Sign up</a>
-                <ul>
-                    <li><b>1GB</b> Disk Space</li>
-                    <li><b>10GB</b> Monthly Bandwidth</li>
-                    <li><b>2</b> Email Accounts</li>
-                    <li><b>Unlimited</b> subdomains</li>
-                </ul>
-            </div>
-        </div>
-
-        <div id="pricing-table" class="clear">
-            <div class="plan">
-                <h3>Enterprise<span>$59</span></h3>
-                <a class="signup" href="">Sign up</a>
-                <ul>
-                    <li><b>10GB</b> Disk Space</li>
-                    <li><b>100GB</b> Monthly Bandwidth</li>
-                    <li><b>20</b> Email Accounts</li>
-                    <li><b>Unlimited</b> subdomains</li>
-                </ul>
-            </div>
-            <div class="plan">
-                <h3>Professional<span>$29</span></h3>
-                <a class="signup" href="">Sign up</a>
-                <ul>
-                    <li><b>5GB</b> Disk Space</li>
-                    <li><b>50GB</b> Monthly Bandwidth</li>
-                    <li><b>10</b> Email Accounts</li>
-                    <li><b>Unlimited</b> subdomains</li>
-                </ul>
-            </div>
-            <div class="plan">
-                <h3>Standard<span>$17</span></h3>
-                <a class="signup" href="">Sign up</a>
-                <ul>
-                    <li><b>3GB</b> Disk Space</li>
-                    <li><b>25GB</b> Monthly Bandwidth</li>
-                    <li><b>5</b> Email Accounts</li>
-                    <li><b>Unlimited</b> subdomains</li>
-                </ul>
-            </div>
-            <div class="plan">
-                <h3>Basic<span>$9</span></h3>
-                <a class="signup" href="">Sign up</a>
-                <ul>
-                    <li><b>1GB</b> Disk Space</li>
-                    <li><b>10GB</b> Monthly Bandwidth</li>
-                    <li><b>2</b> Email Accounts</li>
-                    <li><b>Unlimited</b> subdomains</li>
-                </ul>
             </div>
         </div>
 
         @*<table class="table table-bordered" style="max-width:700px;">
-            <thead>
-                <tr><th><h4>Oda Tipi</h4></th><th><h4>Konaklama Türü</h4></th><th><h4>Oda Fiyatı</h4></th></tr>
-            </thead>
-            <tbody>
-                @foreach (var oda in Model.Odalar)
-                {
-                     <tr>
-                         <td><img src="@oda.ImageUrl" style="width:100%;height:100%" /></td>
-                         <td><h3>@oda.KonaklamaTuruAdi</h3></td>
-                         <td><h2>@oda.FiyatYetiskin TL</h2></td>
-                     </tr>
-                }
-            </tbody>
-        </table>*@
+                <thead>
+                    <tr><th><h4>Oda Tipi</h4></th><th><h4>Konaklama Türü</h4></th><th><h4>Oda Fiyatı</h4></th></tr>
+                </thead>
+                <tbody>
+                    @foreach (var oda in Model.Odalar)
+                    {
+                         <tr>
+                             <td><img src="@oda.ImageUrl" style="width:100%;height:100%" /></td>
+                             <td><h3>@oda.KonaklamaTuruAdi</h3></td>
+                             <td><h2>@oda.FiyatYetiskin TL</h2></td>
+                         </tr>
+                    }
+                </tbody>
+            </table>*@
         @*<ul style="margin:0px;padding:0px;list-style:none">
-            <li>
-                @foreach (var oda in Model.Odalar)
-                {
-                    <div class="row">
-                        <div class="col-sm-3 right-border">
-                            <div style="height:120px;">
-                                <img src="@oda.ImageUrl" style="width:100%;height:100%" />
+                <li>
+                    @foreach (var oda in Model.Odalar)
+                    {
+                        <div class="row">
+                            <div class="col-sm-3 right-border">
+                                <div style="height:120px;">
+                                    <img src="@oda.ImageUrl" style="width:100%;height:100%" />
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <h3>@oda.OdaTipiAdi</h3>
+                                <div style="color:#ffa800">
+                                    @for (int i = 0; i < 5; i++)
+                                    {
+                                        <i class="fa fa-star-o"></i>
+                                    }
+                                </div>
+                                <div>@oda.KonaklamaTuruAdi<i class="fa fa-map-marker"></i></div>
+                            </div>
+                            <div class="col-sm-2 left-border right-border">
+                                <div style="width:120px;height:120px;">
+                                    <h2 class="text-center" style="padding-left:0px;">300 TL</h2>
+                                    <div class="text-center">Herşey dahil</div>
+                                    <a class="btn btn-warning" href="/Otel/Detay/@oda.FiyatCocuk" style="position:absolute;bottom:0px;left:7px;width:90%">
+                                        Detaylar
+                                        <i class="fa fa-angle-double-right"></i> <i class="fa fa-spin fa-spinner hidden"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-sm-5">
-                            <h3>@oda.OdaTipiAdi</h3>
-                            <div style="color:#ffa800">
-                                @for (int i = 0; i < 5; i++)
-                                {
-                                    <i class="fa fa-star-o"></i>
-                                }
-                            </div>
-                            <div>@oda.KonaklamaTuruAdi<i class="fa fa-map-marker"></i></div>
-                        </div>
-                        <div class="col-sm-2 left-border right-border">
-                            <div style="width:120px;height:120px;">
-                                <h2 class="text-center" style="padding-left:0px;">300 TL</h2>
-                                <div class="text-center">Herşey dahil</div>
-                                <a class="btn btn-warning" href="/Otel/Detay/@oda.FiyatCocuk" style="position:absolute;bottom:0px;left:7px;width:90%">
-                                    Detaylar
-                                    <i class="fa fa-angle-double-right"></i> <i class="fa fa-spin fa-spinner hidden"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                }
-            </li>
-        </ul>*@
+                    }
+                </li>
+            </ul>*@
     </div>
 </div>
 
