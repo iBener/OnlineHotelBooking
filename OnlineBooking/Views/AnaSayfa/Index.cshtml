@@ -1,8 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Otel Ara";
 
-    var giris = GetNextWeekday(DateTime.Today, DayOfWeek.Monday);
-    var cikis = GetNextWeekday(GetNextWeekday(DateTime.Today, DayOfWeek.Monday), DayOfWeek.Sunday);
+    var giris = Helper.GetSonrakiGun(DayOfWeek.Monday, DateTime.Today);
+    var cikis = Helper.GetSonrakiGun(DayOfWeek.Sunday, giris);
 }
 
 <div class="clearfix">
@@ -81,12 +81,4 @@
         startDate = "@giris.ToString("dd.MM.yyyy")";
         endDate = "@cikis.ToString("dd.MM.yyyy")";
     </script>
-}
-
-@functions {
-    public DateTime GetNextWeekday(DateTime start, DayOfWeek day)
-    {
-        int daysToAdd = ((int)day - (int)start.DayOfWeek + 7) % 7;
-        return start.AddDays(daysToAdd);
-    }
 }

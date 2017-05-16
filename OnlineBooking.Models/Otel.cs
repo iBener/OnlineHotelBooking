@@ -9,6 +9,23 @@ namespace OnlineBooking.Models
     [Table(name: "Otel")]
     public class Otel
     {
+        public Otel()
+        {
+        }
+
+        public Otel(Otel other)
+        {
+            Aciklama = other.Aciklama;
+            Adres = other.Adres;
+            Degerlendirme = other.Degerlendirme;
+            IlAdi = other.IlAdi;
+            IlceAdi = other.IlceAdi;
+            OtelAdi = other.OtelAdi;
+            OtelId = other.OtelId;
+            Telefon = other.Telefon;
+            Yildiz = other.Yildiz;
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public int OtelId { get; set; }
