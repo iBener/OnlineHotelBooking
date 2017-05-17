@@ -34,12 +34,27 @@
                 </button>
                 <a asp-area="" asp-controller="AnaSayfa" asp-action="Index" class="navbar-brand">Online Hotel Booking</a>
             </div>
-            <div class="navbar-collapse collapse">
+            <div class="navbar-collapse collapse" style="max-width:1024px;">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="AnaSayfa" asp-action="Index"><i class="glyphicon glyphicon-bed"></i> Otel Bul</a></li>
                     @*<li><a asp-area="" asp-controller="AnaSayfa" asp-action="Hakkinda">Hakkında</a></li>
                     <li><a asp-area="" asp-controller="AnaSayfa" asp-action="Iletisim">İletişim</a></li>*@
                 </ul>
+                @if (User.Identity.IsAuthenticated)
+                {
+
+                    <form asp-controller="Account" asp-action="LogOut" method="post" id="logoutForm" class="navbar-right">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a asp-controller="Kullanici" asp-action="Cikis">Çıkış</a></li>
+                        </ul>
+                    </form>
+                }
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a asp-controller="Kullanici" asp-action="Giris">Giriş</a></li>
+                    </ul>
+                }
             </div>
         </div>
     </nav>
