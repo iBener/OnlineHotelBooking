@@ -44,15 +44,15 @@
                 {
 
                     <form asp-controller="Account" asp-action="LogOut" method="post" id="logoutForm" class="navbar-right">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a asp-controller="Kullanici" asp-action="Cikis">Çıkış</a></li>
+                        <ul class="nav navbar-nav">
+                            <li><a asp-controller="Kullanici" asp-action="Cikis"><i class="glyphicon glyphicon-log-out"></i> Çıkış</a></li>
                         </ul>
                     </form>
                 }
                 else
                 {
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a asp-controller="Kullanici" asp-action="Giris">Giriş</a></li>
+                    <ul class="nav navbar-nav">
+                        <li><a asp-controller="Kullanici" asp-action="Giris"><i class="glyphicon glyphicon-log-in"></i> Giriş</a></li>
                     </ul>
                 }
             </div>
