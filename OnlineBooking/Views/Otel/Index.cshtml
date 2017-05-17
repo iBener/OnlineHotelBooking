@@ -211,7 +211,11 @@
                                 <div style="width:120px;height:120px;">
                                     <h2 class="text-center" style="padding-left:0px;">@otel.Fiyat TL</h2>
                                     <div class="text-center">Herşey dahil</div>
-                                    <a class="btn btn-warning" href="/Otel/Detay/@otel.OtelId" style="position:absolute;bottom:0px;left:7px;width:90%">
+                                    <a class="btn btn-warning" 
+                                       asp-controller="Otel" asp-action="Detay" asp-route-id="@otel.OtelId" 
+                                       asp-route-giris="@giris.ToString("yyyy-MM-dd")" asp-route-cikis="@cikis.ToString("yyyy-MM-dd")" 
+                                       asp-route-yetiskin="@ViewBag.Yetiskin" asp-route-cocuk="@ViewBag.Cocuk"
+                                       style="position:absolute;bottom:0px;left:7px;width:90%">
                                         Detaylar
                                         <i class="fa fa-angle-double-right"></i> <i class="fa fa-spin fa-spinner hidden"></i>
                                     </a>

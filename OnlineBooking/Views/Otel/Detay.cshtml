@@ -99,17 +99,17 @@
 </header>
 
 <form method="get" asp-controller="Otel" asp-action="Detay" class="row" style="background: #f7f7f7;border: 1px solid #eee;padding: 10px; padding-top:20px; margin-left:0px; max-width:720px">
-    <div class="form-group col-sm-4 pd5">
+    <div class="form-group col-sm-5">
         <label for="girisCikis" class="control-label">Giriş - Çıkış Tarihi</label>
         <div class='input-group date' id='daterangepicker1'>
-            <input id="giris-cikis-tarih" type='text' class="form-control" />
+            <input id="giris-cikis-tarih" type='text' class="form-control text-center" />
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
             </span>
         </div>
     </div>
 
-    <div class="form-group dropdown col-sm-3 pd5">
+    <div class="form-group dropdown col-sm-4">
         <label for="misafir-sayisi">Misafir sayısı</label>
         <button id="misafir-sayisi" type="button" class="form-control dropdown-toggle" data-toggle="dropdown">@ViewBag.Yetiskin yetişkin, @ViewBag.Cocuk çocuk</button>
 
@@ -136,19 +136,7 @@
         </div>
     </div>
 
-    <div class="form-group col-sm-3 pd5">
-        <label for="girisCikis" class="control-label">Konaklama Türü</label>
-        <div class='input-group date' id='daterangepicker1'>
-            <select class="form-control">
-                <option>Yarım Pansiyon</option>
-                <option>Tam Pansion</option>
-                <option>Herşey Dahil</option>
-                <option>Ultra Herşey Dahil</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="form-group col-sm-2 pd5">
+    <div class="form-group col-sm-2">
         <label style="color:white">.</label>
         <div>
             <button type="submit" class="btn btn-success btn-search-hotel">
@@ -165,23 +153,18 @@
         @*https://codepen.io/arkev/pen/EDeuG*@
 
         <div id="pricing-table" class="clear">
-            <div class="plan">
-                <h3>Enterprise<span>$59</span></h3>
-                <img src="~/images/la.jpg" style="width:138px;height:80px;" />
-                <a class="signup" href="">Sign up</a>
-            </div>
-            <div class="plan">
-                <h3>Professional<span>$29</span></h3>
-                <a class="signup" href="">Sign up</a>
-            </div>
-            <div class="plan">
-                <h3>Standard<span>$17</span></h3>
-                <a class="signup" href="">Sign up</a>
-            </div>
-            <div class="plan">
-                <h3>Basic<span>$9</span></h3>
-                <a class="signup" href="">Sign up</a>
-            </div>
+            @foreach (var oda in Model.Odalar)
+            {
+                <div class="plan">
+                    <h3>@oda.OdaTipiAdi<span>@oda.ToplamFiyat TL</span></h3>
+                    <img src="@oda.ImageUrl" style="width:138px;height:80px;" />
+                    <ul>
+                        <li>@oda.KonaklamaTuruAdi</li>
+                        <li></li>
+                    </ul>
+                    <a class="signup" href="">SEÇ</a>
+                </div>
+            }
         </div>
 
         @*<table class="table table-bordered" style="max-width:700px;">

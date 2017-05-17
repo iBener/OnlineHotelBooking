@@ -38,7 +38,7 @@ namespace OnlineBooking.Data
             foreach (var otel in oteller)
             {
                 var resim = Execute("select top 1 Path from OtelResim where OtelId = @otelId and OdaTipiId = 0", new { otelId = otel.OtelId });
-                var otelfiyati = Connection.QuerySingleOrDefault<dynamic>("select top 1 OtelFiyatId, FiyatYetiskin Yetiskin, FiyatCocuk Cocuk from OtelFiyat f where f.OtelId = @otelId and f.FiyatYetiskin <> 0 " + w_konaklama, new { otelId = otel.OtelId });
+                var otelfiyati = Connection.QuerySingleOrDefault<dynamic>("select top 1 OtelFiyatId, FiyatYetiskin Yetiskin, FiyatCocuk Cocuk from OtelFiyat f where f.OtelId = @otelId and f.FiyatYetiskin <> 0 " + w_konaklama + " order by f.FiyatYetiskin, f.FiyatCocuk", new { otelId = otel.OtelId });
 
                 if (resim != null)
                 {
@@ -59,10 +59,15 @@ namespace OnlineBooking.Data
                 "from OdaTipi o join OtelFiyat f on f.OdaTipiId = o.OdaTipiId \n" +
                 "join KonaklamaTuru k on k.KonaklamaTuruId = f.KonaklamaId \n" +
                 "left join OtelResim r on r.OdaTipiId = f.OdaTipiId \n" +
-                "where f.OtelId=1 and f.FiyatYetiskin<>0 order by f.KonaklamaId,f.OdaTipiId \n";
+                "where f.OtelId=@OtelId and f.FiyatYetiskin<>0 order by f.KonaklamaId,f.OdaTipiId \n";
 
-            model.Odalar = Connection.Query<OtelOdaTipleri>(query);
+            model.Odalar = Connection.Query<OtelOdaTipleri>(query, new { OtelId = id });
             model.Resimler = Query<OtelResim>(new { OtelId = id });
+
+            foreach (var oda in model.Odalar)
+            {
+                oda.ToplamFiyat = oda.FiyatYetiskin * yetiskin + oda.FiyatCocuk * cocuk;
+            }
 
             return model;
         }

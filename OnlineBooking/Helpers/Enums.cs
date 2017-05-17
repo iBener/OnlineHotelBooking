@@ -12,7 +12,6 @@ namespace OnlineBooking.Helpers
         StandartOda = 2,
         AileOdasi = 3,
         SuitOda = 4,
-        KralDairesi = 5
     }
 
     public enum KonaklamaTipleri
@@ -21,6 +20,6 @@ namespace OnlineBooking.Helpers
         YarimPansiyon = 1,
         TamPansiyon = 2,
         HerseyDahil = 3,
-        Ultra = 4
+        Ultra = 4,
     }
 }

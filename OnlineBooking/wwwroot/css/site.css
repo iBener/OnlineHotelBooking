@@ -275,9 +275,8 @@ textarea {
 
 
 #pricing-table {
-    margin: 0px auto;
-    margin-top:8px;
     text-align: center;
+    max-width:740px;
 }
 
     #pricing-table .plan {
@@ -290,6 +289,7 @@ textarea {
         width: 180px; /* plan width = 180 + 20 + 20 + 1 + 1 = 222px */
         float: left;
         position: relative;
+        margin-top: 8px;
     }
 
     #pricing-table .plan:nth-child(1) {
@@ -368,7 +368,7 @@ textarea {
     #pricing-table .signup {
         position: relative;
         padding: 8px 20px;
-        margin: 20px 0 0 0;
+        margin: 0px 0 0 0;
         color: #fff;
         font: bold 14px Arial, Helvetica;
         text-transform: uppercase;
