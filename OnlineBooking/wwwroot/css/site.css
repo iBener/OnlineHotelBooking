@@ -289,7 +289,21 @@ textarea {
         width: 180px; /* plan width = 180 + 20 + 20 + 1 + 1 = 222px */
         float: left;
         position: relative;
-        margin-top: 8px;
+        margin-top: 20px;
+        /*margin-bottom: 12px;*/
+    }
+
+    #pricing-table #enucuz {
+        z-index: 2;
+        top: -13px;
+        border-width: 3px;
+        padding: 30px 20px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+        -moz-box-shadow: 20px 0 10px -10px rgba(0, 0, 0, .15), -20px 0 10px -10px rgba(0, 0, 0, .15);
+        -webkit-box-shadow: 20px 0 10px -10px rgba(0, 0, 0, .15), -20px 0 10px -10px rgba(0, 0, 0, .15);
+        box-shadow: 20px 0 10px -10px rgba(0, 0, 0, .15), -20px 0 10px -10px rgba(0, 0, 0, .15);
     }
 
     #pricing-table .plan:nth-child(1) {
@@ -347,7 +361,7 @@ textarea {
         -moz-box-shadow: 0 5px 20px #ddd inset, 0 3px 0 #999 inset;
         -webkit-box-shadow: 0 5px 20px #ddd inset, 0 3px 0 #999 inset;
         box-shadow: 0 5px 20px #ddd inset, 0 3px 0 #999 inset;
-        padding-top: 32px;
+        padding-top: 23px;
     }
 
     /* --------------- */

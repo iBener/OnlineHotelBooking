@@ -21,29 +21,12 @@
         ViewBag.Cocuk = 0;
     }
     var resimler = Model.Resimler.ToArray();
+
+    var enUcuzFiyat = Model.Odalar.Select(x => x.ToplamFiyat).OrderBy(x => x).FirstOrDefault();
+    var odaSayisi = Model.Odalar.Count();
+    var odaSatirSayisi = Math.Ceiling((double)odaSayisi / 4);
+    var odaIndex = 0;
 }
-
-<style>
-    /* Resposive table: */
-    /*@@media screen and (max-width: 750px) {
-        tbody, thead {
-            float: left;
-        }
-
-        td, th {
-            display: block
-        }
-    }*/
-    .carouselImg img {
-        /*height: 240px;
-        max-height: 240px;*/
-    }
-
-    .pd5 {
-        padding-left: 5px;
-        padding-right: 5px;
-    }
-</style>
 
 @Html.Partial("_HataMesaji", (string)ViewBag.HataMesaji ?? "")
 
@@ -53,11 +36,11 @@
     {
         if (i < Model.Yildiz)
         {
-    <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
         }
         else
         {
-    <i class="fa fa-star-o"></i>
+            <i class="fa fa-star-o"></i>
         }
     }
 </div>
@@ -68,7 +51,7 @@
     <ol class="carousel-indicators">
         @for (int i = 0; i <= resimler.Length - 1; i++)
         {
-        <li data-target="#myCarousel" data-slide-to="0" @((i == 0) ? "class=active" : "")></li>
+            <li data-target="#myCarousel" data-slide-to="0" @((i == 0) ? "class=active" : "")></li>
         }
     </ol>
 
@@ -77,9 +60,9 @@
         @for (int i = 0; i <= resimler.Length - 1; i++)
         {
             var resim = resimler[i];
-        <div class="item@(i == 0 ? " active" : "") carouselImg">
-            <img src="@resim.Path">
-        </div>
+            <div class="item@(i == 0 ? " active" : "") carouselImg">
+                <img src="@resim.Path">
+            </div>
         }
     </div>
 
@@ -152,20 +135,34 @@
 
         @*https://codepen.io/arkev/pen/EDeuG*@
 
-        <div id="pricing-table" class="clear">
-            @foreach (var oda in Model.Odalar)
+
+        @for (int i = 0; i < odaSatirSayisi; i++)
             {
-                <div class="plan">
-                    <h3>@oda.OdaTipiAdi<span>@oda.ToplamFiyat TL</span></h3>
-                    <img src="@oda.ImageUrl" style="width:138px;height:80px;" />
-                    <ul>
-                        <li>@oda.KonaklamaTuruAdi</li>
-                        <li></li>
-                    </ul>
-                    <a class="signup" href="">SEÇ</a>
-                </div>
-            }
-        </div>
+            <div id="pricing-table" class="clear">
+                @for (int j = 0; j < 4; j++)
+                {
+                    if (odaIndex < odaSayisi)
+                    {
+                        var oda = Model.Odalar.ToArray()[odaIndex];
+                        <div class="plan" @(oda.ToplamFiyat == enUcuzFiyat ? "id=enucuz" : "")>
+                            <h3>@oda.OdaTipiAdi<span>@oda.ToplamFiyat<br />TL</span></h3>
+                            <img src="@oda.ImageUrl" style="width:138px;height:80px;" />
+                            <ul>
+                                <li>@oda.KonaklamaTuruAdi</li>
+                                <li></li>
+                            </ul>
+                            <a class="signup" href="">SEÇ</a>
+                        </div>
+                    }
+                    odaIndex++;
+                }
+            </div>
+        }
+        @foreach (var oda in Model.Odalar)
+        {
+
+        }
+
 
         @*<table class="table table-bordered" style="max-width:700px;">
                 <thead>

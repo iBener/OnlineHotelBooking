@@ -34,6 +34,9 @@ namespace OnlineBooking.Data
                 "and f.FiyatYetiskin<>0 " + w_konaklama;
 
             var oteller = Connection.Query<OtelViewModel>(query, new { bolge });
+            var tgiris = Convert.ToDateTime(giris);
+            var tcikis = Convert.ToDateTime(cikis);
+            var gece = (int)(tcikis - tgiris).TotalDays;
 
             foreach (var otel in oteller)
             {
@@ -44,7 +47,7 @@ namespace OnlineBooking.Data
                 {
                     otel.Resim = resim.ToString();
                 }
-                otel.Fiyat = yetiskin * (int)otelfiyati.Yetiskin + cocuk * (int)otelfiyati.Cocuk;
+                otel.Fiyat = gece * yetiskin * (int)otelfiyati.Yetiskin + cocuk * (int)otelfiyati.Cocuk;
             }
 
             return oteller;
@@ -63,10 +66,13 @@ namespace OnlineBooking.Data
 
             model.Odalar = Connection.Query<OtelOdaTipleri>(query, new { OtelId = id });
             model.Resimler = Query<OtelResim>(new { OtelId = id });
+            var tgiris = Convert.ToDateTime(giris);
+            var tcikis = Convert.ToDateTime(cikis);
+            var gece = (int)(tcikis - tgiris).TotalDays;
 
             foreach (var oda in model.Odalar)
             {
-                oda.ToplamFiyat = oda.FiyatYetiskin * yetiskin + oda.FiyatCocuk * cocuk;
+                oda.ToplamFiyat = gece * oda.FiyatYetiskin * yetiskin + oda.FiyatCocuk * cocuk;
             }
 
             return model;
