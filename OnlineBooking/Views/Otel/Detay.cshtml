@@ -115,7 +115,12 @@
                                 <li>@oda.KonaklamaTuruAdi</li>
                                 <li></li>
                             </ul>
-                            <a class="signup" href="">SEÇ</a>
+                            <a class="signup" 
+                               asp-controller="Rezervasyon" asp-action="Index" asp-route-otelId="@Model.OtelId"
+                               asp-route-giris="@giris.ToString("yyyy-MM-dd")" asp-route-cikis="@cikis.ToString("yyyy-MM-dd")" 
+                               asp-route-yetiskin="@ViewBag.Yetiskin" asp-route-cocuk="@ViewBag.Cocuk">
+                                SEÇ
+                            </a>
                         </div>
                     }
                     odaIndex++;

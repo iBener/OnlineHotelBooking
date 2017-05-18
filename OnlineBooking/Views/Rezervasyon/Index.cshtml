@@ -1,5 +1,13 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model OnlineBooking.ViewModels.RezervasyonViewModel
+
 @{
+    ViewBag["Title"] = "Rezervasyon";
 }
+
+@Html.Partial("_HataMesaji", (string)ViewBag.HataMesaji ?? "")
+
+@*<h1>@Model.OtelAdi</h1>
+<div class="mrg-btm-10" style="color:#ffa800">
+    @Html.Partial("Yildiz", Model.Yildiz)
+</div>
+<div class="mrg-btm-10"><i class="fa fa-map-marker"></i> @Model.IlAdi, @Model.IlceAdi</div>*@
