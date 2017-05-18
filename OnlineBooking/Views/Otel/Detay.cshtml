@@ -31,17 +31,7 @@
 
 <h1>@Model.OtelAdi</h1>
 <div class="mrg-btm-10" style="color:#ffa800">
-    @for (int i = 0; i < 5; i++)
-    {
-        if (i < Model.Yildiz)
-        {
-            <i class="fa fa-star"></i>
-        }
-        else
-        {
-            <i class="fa fa-star-o"></i>
-        }
-    }
+    @Html.Partial("Yildiz", Model.Yildiz)
 </div>
 <div class="mrg-btm-10"><i class="fa fa-map-marker"></i> @Model.IlAdi, @Model.IlceAdi</div>
 
@@ -60,6 +50,8 @@
                 <span class="glyphicon glyphicon-calendar"></span>
             </span>
         </div>
+        <input id="giris" name="giris" type="hidden" value="@giris.ToString("yyyy-MM-dd")" />
+        <input id="cikis" name="cikis" type="hidden" value="@cikis.ToString("yyyy-MM-dd")" />
     </div>
 
     <div class="form-group dropdown col-sm-4">
@@ -92,7 +84,10 @@
     <div class="form-group col-sm-2">
         <label style="color:white">.</label>
         <div>
-            <button type="submit" class="btn btn-success btn-search-hotel">
+            <button type="submit" class="btn btn-success btn-search-hotel"
+                    asp-controller="Otel" asp-action="Detay" asp-route-id="@Model.OtelId" 
+                    asp-route-giris="@giris.ToString("yyyy-MM-dd")" asp-route-cikis="@cikis.ToString("yyyy-MM-dd")" 
+                    asp-route-yetiskin="@ViewBag.Yetiskin" asp-route-cocuk="@ViewBag.Cocuk">
                 Oda Bul
                 <i class="fa fa-angle-double-right"></i> <i class="fa fa-spin fa-spinner hidden"></i>
             </button>
@@ -106,7 +101,7 @@
         @*https://codepen.io/arkev/pen/EDeuG*@
 
         @for (int i = 0; i < odaSatirSayisi; i++)
-            {
+        {
             <div id="pricing-table" class="clear">
                 @for (int j = 0; j < 4; j++)
                 {

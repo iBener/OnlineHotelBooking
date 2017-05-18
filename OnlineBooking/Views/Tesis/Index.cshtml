@@ -18,17 +18,7 @@
         <div>Otel Adı</div>
 
         <div class="ohb-txt-fs14" style="color:#ffa800">
-            @for (int i = 0; i < 5; i++)
-            {
-                if (i < Model.Yildiz)
-                {
-                    <i class="fa fa-star"></i>
-                }
-                else
-                {
-                    <i class="fa fa-star-o"></i>
-                }
-            }
+            @Html.Partial("Yildiz", Model.Yildiz)
         </div>
         <div>Yıldız</div>
 
