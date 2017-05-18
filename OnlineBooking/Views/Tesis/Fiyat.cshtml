@@ -1,11 +1,20 @@
-﻿@model OnlineBooking.ViewModels.OtelFiyatViewModel
+﻿@using OnlineBooking.ViewModels
+@model IEnumerable<OnlineBooking.ViewModels.OtelFiyatItemViewModel>
 
 @{
     ViewData["Title"] = "Fiyatlar";
+
+    OtelFiyatItemViewModel[] fiyatlar = null;
+    if (Model != null)
+    {
+        fiyatlar = Model.ToArray();
+    }
+    int otelId = ViewBag.OtelId;
+    int konaklamaId = ViewBag.KonaklamaId;
 }
 
 <h1>Tesis Tanımı</h1>
-<h3>@Model?.Konaklama Odalama Fiyat Listesi</h3>
+<h3>Konaklama Fiyat Listesi</h3>
 <div class="row"><div class="col-sm-6"><hr /></div></div>
 
 @Html.Partial("_HataMesaji", (string)ViewBag.HataMesaji ?? "")
@@ -22,27 +31,29 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Model != null)
+                    @if (fiyatlar != null)
                     {
-                        for (int i = 0; i < Model.Fiyatlar.Count; i++)
+                        for (int i = 0; i < fiyatlar.Length; i++)
                         {
-                            var item = Model.Fiyatlar[i];
+                            var item = fiyatlar[i];
                             <tr>
                                 <td>
                                     @item.OdaTipi
-                                    <input name="Fiyatlar[@i].OdaTipi" value="@item.OdaTipi" type="hidden" />
-                                    <input name="Fiyatlar[@i].OdaTipiId" value="@item.OdaTipiId" type="hidden" />
-                                    <input name="Fiyatlar[@i].OtelFiyatId" value="@item.OtelFiyatId" type="hidden" />
+                                    <input name="fiyat[@i].OtelId" value="@otelId" type="hidden" />
+                                    <input name="fiyat[@i].KonaklamaId" value="@konaklamaId" type="hidden" />
+                                    <input name="fiyat[@i].OdaTipi" value="@item.OdaTipi" type="hidden" />
+                                    <input name="fiyat[@i].OdaTipiId" value="@item.OdaTipiId" type="hidden" />
+                                    <input name="fiyat[@i].OtelFiyatId" value="@item.OtelFiyatId" type="hidden" />
                                 </td>
                                 <td>
                                     <div class="input-group">
-                                        <input name="Fiyatlar[@i].FiyatYetiskin" value="@item.FiyatYetiskin" type="number" class="form-control text-right" /> 
+                                        <input name="fiyat[@i].FiyatYetiskin" value="@item.FiyatYetiskin" type="number" class="form-control text-right" /> 
                                         <div class="input-group-addon">TL</div>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="input-group">
-                                        <input name="Fiyatlar[@i].FiyatCocuk" value="@item.FiyatCocuk" type="number" class="form-control text-right" />
+                                        <input name="fiyat[@i].FiyatCocuk" value="@item.FiyatCocuk" type="number" class="form-control text-right" />
                                         <div class="input-group-addon">TL</div>
                                     </div>
                                 </td>
@@ -51,9 +62,8 @@
                     }
                 </tbody>
             </table>
-            <input asp-for="OtelId" type="hidden" />
-            <input asp-for="KonaklamaId" type="hidden" />
-            <input asp-for="Konaklama" type="hidden" />
+            <input asp-for="@otelId" type="hidden" />
+            <input asp-for="@konaklamaId" type="hidden" />
             <button style="margin-top:20px;" type="submit" class="btn btn-default"><i class="fa fa-floppy-o"></i> Kaydet</button>
         </fieldset>
     </form>

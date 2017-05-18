@@ -51,18 +51,9 @@ namespace OnlineBooking.Data
             return fiyatlar;
         }
 
-        public OtelFiyatViewModel GetFiyatListesi(int otelId, int konaklamaId)
+        public IEnumerable<OtelFiyatItemViewModel> GetFiyatListesi(int otelId, int konaklamaId)
         {
-            var konaklama = FindWithId<KonaklamaTuru>(konaklamaId);
-
-            var item = new OtelFiyatViewModel()
-            {
-                OtelId = otelId,
-                KonaklamaId = konaklama.KonaklamaTuruId,
-                Konaklama = konaklama.KonaklamaTuruAdi,
-                Fiyatlar = KonaklamaFiyatOlustur(otelId, konaklamaId),
-            };
-            return item;
+            return KonaklamaFiyatOlustur(otelId, konaklamaId);
         }
 
         private List<OtelFiyatItemViewModel> KonaklamaFiyatOlustur(int otelId, int konaklamaId)
@@ -75,7 +66,8 @@ namespace OnlineBooking.Data
                 var fiyat = fiyatlar.FirstOrDefault(x => x.OdaTipiId == odatipi.OdaTipiId);
                 odaFiyatlari.Add(new OtelFiyatItemViewModel()
                 {
-                    KonaklamaId = fiyat?.KonaklamaId,
+                    OtelId = otelId,
+                    KonaklamaId = fiyat.KonaklamaId,
                     OtelFiyatId = fiyat?.OtelFiyatId,
                     OdaTipiId = odatipi.OdaTipiId,
                     OdaTipi = odatipi.OdaTipiAdi,
@@ -86,15 +78,15 @@ namespace OnlineBooking.Data
             return odaFiyatlari;
         }
 
-        public void FiyatListesiKaydet(OtelFiyatViewModel fiyat)
+        public void FiyatListesiKaydet(IEnumerable<OtelFiyatItemViewModel> fiyat)
         {
-            foreach (var item in fiyat.Fiyatlar)
+            foreach (var item in fiyat)
             {
                 var oda = new OtelFiyat()
                 {
                     OtelFiyatId = item.OtelFiyatId??0,
-                    OtelId = fiyat.OtelId,
-                    KonaklamaId = fiyat.KonaklamaId,
+                    OtelId = item.OtelId,
+                    KonaklamaId = item.KonaklamaId,
                     OdaTipiId = item.OdaTipiId,
                     FiyatYetiskin = item.FiyatYetiskin??0,
                     FiyatCocuk = item.FiyatCocuk??0,

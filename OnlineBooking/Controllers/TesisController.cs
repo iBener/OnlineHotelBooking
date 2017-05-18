@@ -71,6 +71,18 @@ namespace OnlineBooking.Controllers
 
         public ActionResult Fiyat(int id, int konaklamaId)
         {
+            ViewBag.OtelId = id;
+            ViewBag.KonaklamaId = konaklamaId;
+            if (id == 0)
+            {
+                ViewBag.HataMesaji = "Lütfen fiyatlarýný girmek istediðiniz oteli belirtiniz!";
+                return View();
+            }
+            if (konaklamaId == 0)
+            {
+                ViewBag.HataMesaji = "Lütfen fiyatlarýný girmek istediðiniz otelin konaklama tipini belirtiniz!";
+                return View();
+            }
             using (var db = new DbModel(VeriTabani))
             {
                 return View(db.Tesis.GetFiyatListesi(id, konaklamaId));
@@ -80,8 +92,10 @@ namespace OnlineBooking.Controllers
         // POST: Tesis/Detay/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Fiyat(OtelFiyatViewModel fiyat)
+        public ActionResult Fiyat(int otelId, int konaklamaId, IEnumerable<OtelFiyatItemViewModel> fiyat)
         {
+            ViewBag.OtelId = otelId;
+            ViewBag.KonaklamaId = konaklamaId;
             if (!ModelState.IsValid)
             {
                 return View(fiyat);
@@ -92,7 +106,7 @@ namespace OnlineBooking.Controllers
                 {
                     db.Tesis.FiyatListesiKaydet(fiyat);
                 }
-                return RedirectToAction("Index", new { id = fiyat.OtelId });
+                return RedirectToAction("Index", new { id = otelId });
             }
             catch (Exception ex)
             {

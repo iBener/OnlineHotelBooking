@@ -6,21 +6,11 @@ using System.Threading.Tasks;
 
 namespace OnlineBooking.ViewModels
 {
-    public class OtelFiyatViewModel
+    public class OtelFiyatItemViewModel
     {
-
         public int OtelId { get; set; }
 
         public int KonaklamaId { get; set; }
-
-        public string Konaklama { get; set; }
-
-        public List<OtelFiyatItemViewModel> Fiyatlar { get; set; }
-    }
-
-    public class OtelFiyatItemViewModel
-    {
-        public int? KonaklamaId { get; set; }
 
         public int? OtelFiyatId { get; set; }
 
