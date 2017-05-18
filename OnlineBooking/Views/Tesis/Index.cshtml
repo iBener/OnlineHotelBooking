@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Otel Tesis Profili";
-    var resimler = Model.Resimler.ToArray();
 }
 
 <h1>Otel Tesis Profili</h1>
@@ -119,37 +118,7 @@
             <div class="ohb-tesis-img-prev">
                 @*<img src="~/images/beach.jpg" class="img-responsive">*@
 
-                <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                    <!-- Indicators -->
-                    <ol class="carousel-indicators">
-                        @for (int i = 0; i <= resimler.Length - 1; i++)
-                        {
-                            <li data-target="#myCarousel" data-slide-to="0" @((i == 0) ? "class=active" : "")></li>
-                        }
-                    </ol>
-
-                    <!-- Wrapper for slides -->
-                    <div class="carousel-inner">
-                        @for (int i = 0; i <= resimler.Length - 1; i++)
-                        {
-                            var resim = resimler[i];
-                            <div class="item@(i == 0 ? " active" : "")"> 
-                                <img src="@resim.Path">
-                            </div>
-                        }
-                    </div>
-
-                    <!-- Left and right controls -->
-                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                        <span class="sr-only">Önceki</span>
-                    </a>
-                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                        <span class="sr-only">Sonraki</span>
-                    </a>
-                </div>
-
+                @Html.Partial("Resimler", Model.Resimler.ToArray())
             </div>
         </div>
         <div class="ohb-tesis-alan">

@@ -20,7 +20,6 @@
     {
         ViewBag.Cocuk = 0;
     }
-    var resimler = Model.Resimler.ToArray();
 
     var enUcuzFiyat = Model.Odalar.Select(x => x.ToplamFiyat).OrderBy(x => x).FirstOrDefault();
     var odaSayisi = Model.Odalar.Count();
@@ -46,36 +45,7 @@
 </div>
 <div class="mrg-btm-10"><i class="fa fa-map-marker"></i> @Model.IlAdi, @Model.IlceAdi</div>
 
-<div id="myCarousel" class="carousel slide" data-ride="carousel" style="width:480px">
-    <!-- Indicators -->
-    <ol class="carousel-indicators">
-        @for (int i = 0; i <= resimler.Length - 1; i++)
-        {
-            <li data-target="#myCarousel" data-slide-to="0" @((i == 0) ? "class=active" : "")></li>
-        }
-    </ol>
-
-    <!-- Wrapper for slides -->
-    <div class="carousel-inner">
-        @for (int i = 0; i <= resimler.Length - 1; i++)
-        {
-            var resim = resimler[i];
-            <div class="item@(i == 0 ? " active" : "") carouselImg">
-                <img src="@resim.Path">
-            </div>
-        }
-    </div>
-
-    <!-- Left and right controls -->
-    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left"></span>
-        <span class="sr-only">Önceki</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right"></span>
-        <span class="sr-only">Sonraki</span>
-    </a>
-</div>
+@Html.Partial("Resimler", Model.Resimler.ToArray())
 
 <header>
     <h3>Oda Seçenekleri</h3>
@@ -135,7 +105,6 @@
 
         @*https://codepen.io/arkev/pen/EDeuG*@
 
-
         @for (int i = 0; i < odaSatirSayisi; i++)
             {
             <div id="pricing-table" class="clear">
@@ -145,7 +114,7 @@
                     {
                         var oda = Model.Odalar.ToArray()[odaIndex];
                         <div class="plan" @(oda.ToplamFiyat == enUcuzFiyat ? "id=enucuz" : "")>
-                            <h3>@oda.OdaTipiAdi<span>@oda.ToplamFiyat<br />TL</span></h3>
+                            <h3>@oda.OdaTipiAdi<span>@oda.ToplamFiyat.ToString("n0")<br />TL</span></h3>
                             <img src="@oda.ImageUrl" style="width:138px;height:80px;" />
                             <ul>
                                 <li>@oda.KonaklamaTuruAdi</li>
@@ -158,11 +127,6 @@
                 }
             </div>
         }
-        @foreach (var oda in Model.Odalar)
-        {
-
-        }
-
 
         @*<table class="table table-bordered" style="max-width:700px;">
                 <thead>

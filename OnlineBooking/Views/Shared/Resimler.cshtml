@@ -1,0 +1,32 @@
+﻿@model OnlineBooking.Models.OtelResim[]
+
+<div id="myCarousel" class="carousel slide" data-ride="carousel" style="width:480px">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        @for (int i = 0; i <= Model.Length - 1; i++)
+        {
+            <li data-target="#myCarousel" data-slide-to="0" @((i == 0) ? "class=active" : "")></li>
+        }
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+        @for (int i = 0; i <= Model.Length - 1; i++)
+        {
+            var resim = Model[i];
+            <div class="item@(i == 0 ? " active" : "") carouselImg">
+                <img src="@resim.Path">
+            </div>
+        }
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        <span class="sr-only">Önceki</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+        <span class="sr-only">Sonraki</span>
+    </a>
+</div>

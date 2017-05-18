@@ -32,17 +32,19 @@
     }
 
     li .row {
-        margin-bottom: 30px;
+        margin-bottom: 18px;
+        padding-bottom: 12px;
         /*border: 1px solid;*/
         /*border-color:gray;*/
+        border-bottom: 1px solid #dddddd;
     }
 
     .right-border {
-        border-right: 1px solid grey !important;
+        /*border-right: 1px solid grey !important;*/
     }
 
     .left-border {
-        border-left: 1px solid grey !important;
+        /*border-left: 1px solid grey !important;*/
     }
 
     /* Resposive table: */
@@ -177,18 +179,18 @@
                 </div>
             </form>
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-7">
             <ul style="margin:0px;padding:0px;list-style:none">
                 <li>
                     @foreach (var otel in Model)
                     {
                         <div class="row">
-                            <div class="col-sm-3 right-border">
+                            <div class="col-sm-4 right-border">
                                 <div style="height:120px;">
                                     <img src="@otel.Resim" style="width:100%;height:100%" />
                                 </div>
                             </div>
-                            <div class="col-sm-5">
+                            <div class="col-sm-6">
                                 <h3>@otel.OtelAdi</h3>
                                 <div style="color:#ffa800">
                                     @for (int i = 0; i < 5; i++)
@@ -209,7 +211,7 @@
                             </div>
                             <div class="col-sm-2 left-border right-border">
                                 <div style="width:120px;height:120px;">
-                                    <h2 class="text-center" style="padding-left:0px;">@otel.Fiyat TL</h2>
+                                    <h2 class="text-center" style="padding-left:0px;">@otel.Fiyat.ToString("n0") TL</h2>
                                     <div class="text-center">Herşey dahil</div>
                                     <a class="btn btn-warning" 
                                        asp-controller="Otel" asp-action="Detay" asp-route-id="@otel.OtelId" 
@@ -222,6 +224,10 @@
                                 </div>
                             </div>
                         </div>
+                    }
+                    @if (Model.Count() == 0)
+                    {
+                        <div>Aradığınız krilerlere uygun kayıt bulunamadı!</div>
                     }
                 </li>
             </ul>
