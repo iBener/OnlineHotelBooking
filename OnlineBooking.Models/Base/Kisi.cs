@@ -21,5 +21,8 @@ namespace OnlineBooking.Models.Base
 
         [Display(Name = "E-Posta")]
         public string EPostasi { get; set; }
+
+        [Display(Name = "Cinsiyeti")]
+        public string Cinsiyeti { get; set; }
     }
 }
