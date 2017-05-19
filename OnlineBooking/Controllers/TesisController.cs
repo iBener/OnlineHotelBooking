@@ -31,9 +31,14 @@ namespace OnlineBooking.Controllers
         }
 
         // GET: Tesis
-        public ActionResult Index(int id)
+        public IActionResult Index(int id)
         {
-            return View(GetOtelById(id));
+            var model = GetOtelById(id);
+            if (model == null)
+            {
+                return HataMesaji("Aradýðýnýz otel tanýmý bulunamadý!");
+            }
+            return View(model);
         }
 
         public ActionResult Detay(int id)

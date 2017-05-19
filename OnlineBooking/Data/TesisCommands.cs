@@ -19,6 +19,10 @@ namespace OnlineBooking.Data
         public OtelViewModel GetOtelViewModel(int id)
         {
             var otel = FindWithId(id);
+            if (otel == null)
+            {
+                return null;
+            }
             var model = new OtelViewModel(otel)
             {
                 Fiyat = OtelFiyatlariOlustur(id),
@@ -64,16 +68,19 @@ namespace OnlineBooking.Data
             foreach (var odatipi in odatipleri.OrderBy(x => x.OdaTipiId))
             {
                 var fiyat = fiyatlar.FirstOrDefault(x => x.OdaTipiId == odatipi.OdaTipiId);
-                odaFiyatlari.Add(new OtelFiyatViewModel()
+                if (fiyat != null)
                 {
-                    OtelId = otelId,
-                    KonaklamaId = fiyat.KonaklamaId,
-                    OtelFiyatId = fiyat.OtelFiyatId,
-                    OdaTipiId = odatipi.OdaTipiId,
-                    OdaTipiAdi = odatipi.OdaTipiAdi,
-                    FiyatYetiskin = fiyat.FiyatYetiskin,
-                    FiyatCocuk = fiyat.FiyatCocuk,
-                });
+                    odaFiyatlari.Add(new OtelFiyatViewModel()
+                    {
+                        OtelId = otelId,
+                        KonaklamaId = fiyat.KonaklamaId,
+                        OtelFiyatId = fiyat.OtelFiyatId,
+                        OdaTipiId = odatipi.OdaTipiId,
+                        OdaTipiAdi = odatipi.OdaTipiAdi,
+                        FiyatYetiskin = fiyat.FiyatYetiskin,
+                        FiyatCocuk = fiyat.FiyatCocuk,
+                    });
+                }
             }
             return odaFiyatlari;
         }

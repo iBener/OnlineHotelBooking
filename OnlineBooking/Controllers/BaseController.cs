@@ -17,5 +17,10 @@ namespace OnlineBooking.Controllers
             VeriTabani = ayarlar.Value;
         }
 
+        public IActionResult HataMesaji(string mesaj)
+        {
+            var m = Helper.ToBase64(mesaj);
+            return RedirectToAction("Hata", "AnaSayfa", new { m });
+        }
     }
 }

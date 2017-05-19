@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using OnlineBooking.Helpers;
 
 namespace OnlineBooking.Controllers
 {
@@ -29,8 +30,9 @@ namespace OnlineBooking.Controllers
             return View();
         }
 
-        public IActionResult Hata()
+        public IActionResult Hata(string m)
         {
+            ViewBag.Mesaj = Helper.FromBase64(m);
             return View();
         }
     }

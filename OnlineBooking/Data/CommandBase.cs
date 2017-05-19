@@ -104,7 +104,7 @@ namespace OnlineBooking.Data
             var tabloAdi = GetTabloAdi<TModel>();
             var keyKolon = GetKeyColumnName<TModel>();
             var query = $"SELECT * FROM { tabloAdi } WHERE { keyKolon } = @id ";
-            return Connection.QueryFirst<TModel>(query, new { id = id });
+            return Connection.QueryFirstOrDefault<TModel>(query, new { id = id });
         }
 
         public void Insert(T entity)
