@@ -56,7 +56,7 @@ namespace OnlineBooking.Controllers
                             OtelResimId = 0,
                             OtelId = OtelId,
                             OdaTipiId = (int)OdaTipiId,
-                            Path = String.Join("/", "/images", dosyaAdi)
+                            ImageUrl = String.Join("/", "/images", dosyaAdi)
                         };
 
                         db.Tesis.Insert(resim);

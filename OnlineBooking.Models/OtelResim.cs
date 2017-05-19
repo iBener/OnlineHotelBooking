@@ -13,14 +13,11 @@ namespace OnlineBooking.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public int OtelResimId { get; set; }
 
-        [Display(Name = "Otel Adı")]
         public int OtelId { get; set; }
 
-        [Display(Name = "Otel Adı")]
         public int OdaTipiId { get; set; }
 
-        [Display(Name = "Otel Adı")]
-        public string Path { get; set; }
+        public string ImageUrl { get; set; }
 
     }
 }

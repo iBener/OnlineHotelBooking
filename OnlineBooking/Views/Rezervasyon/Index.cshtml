@@ -1,13 +1,249 @@
 ﻿@model OnlineBooking.ViewModels.RezervasyonViewModel
 
 @{
-    ViewBag["Title"] = "Rezervasyon";
+    ViewData["Title"] = "Rezervasyon";
 }
 
 @Html.Partial("_HataMesaji", (string)ViewBag.HataMesaji ?? "")
 
-@*<h1>@Model.OtelAdi</h1>
+<h1>@Model.Otel.OtelAdi</h1>
 <div class="mrg-btm-10" style="color:#ffa800">
-    @Html.Partial("Yildiz", Model.Yildiz)
+    @Html.Partial("Yildiz", Model.Otel.Yildiz)
 </div>
-<div class="mrg-btm-10"><i class="fa fa-map-marker"></i> @Model.IlAdi, @Model.IlceAdi</div>*@
+<div class="mrg-btm-10"><i class="fa fa-map-marker"></i> @Model.Otel.IlAdi, @Model.Otel.IlceAdi</div>
+
+<form asp-controller="Rezervasyon" asp-action="Index">
+    <div class="row">
+        <div class="col-sm-7">
+            <div class="ohb-tesis-alan">
+                <h3 style="display:inline-block">Konaklayacak Kişi Bilgileri</h3>
+                @for (int i = 0; i < Model.Musteriler.Count; i++)
+                {
+                    var musteri = Model.Musteriler[i];
+
+                    <div class="panel panel-default row m08">
+                        <div class="panel-heading">
+                            @(i + 1). Yetişkin
+                        </div>
+                        <div class="col-sm-3 p5">
+                            <select class="form-control" name="Musteriler[@i].Cinsiyeti">
+                                <option>Cinsiyeti</option>
+                                <option>Kadın</option>
+                                <option>Erkek</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3 p5">
+                            <input name="Musteriler[@i].Adi" type="text" class="form-control" value="@musteri.Adi" placeholder="Adı">
+                        </div>
+                        <div class="col-sm-3 p5">
+                            <input name="Musteriler[@i].Soyadi" type="text" class="form-control" value="@musteri.Soyadi" placeholder="Soyadı">
+                        </div>
+                        @*<div class="col-sm-3 p5">
+                                <input class="form-control" type="text" name="DogumTarihi" value="10/24/1984" />
+                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                            </div>*@
+                        <div class="col-sm-3 input-group date p5" style="padding-right:5px;padding-left:5px;">
+                            <input type="text" class="form-control text-center" name="DogumTarihi" data-name="Musteriler[@i].DogumTarihi" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+
+                            <input name="Musteriler[@i].DogumTarihi" type="hidden" class="form-control" value="@musteri.DogumTarihi">
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="ohb-tesis-alan">
+                <h3 style="display:inline-block">Fatura Bilgileri</h3>
+                <div class="panel panel-default row m08">
+                    <div class="col-sm-4 p5">
+                        <input asp-for="FaturaBilgileri.Adi" type="text" class="form-control" placeholder="Adı">
+                    </div>
+                    <div class="col-sm-4 p5">
+                        <input asp-for="FaturaBilgileri.Soyadi" type="text" class="form-control" placeholder="Soyadı">
+                    </div>
+                    <div class="col-sm-4 p5">
+                        <input asp-for="FaturaBilgileri.EPostasi" type="text" class="form-control" placeholder="E-Posta Adresi">
+                    </div>
+                    <div class="col-sm-8 p5">
+                        <input asp-for="FaturaBilgileri.Adresi" type="text" class="form-control" placeholder="Adresi">
+                    </div>
+                    <div class="col-sm-4 p5">
+                        <input asp-for="FaturaBilgileri.Telefonu" type="text" class="form-control" placeholder="Telefonu">
+                    </div>
+                </div>
+            </div>
+
+            <div class="ohb-tesis-alan">
+                <h3 style="display:inline-block">Ödeme Bilgileri</h3>
+                <img class="img-responsive pull-right" src="http://i76.imgup.net/accepted_c22e0.png">
+                <div class="panel panel-default credit-card-box">
+                    <div class="panel-body">
+                        <div id="payment-form">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="form-group">
+                                        <label for="cardNumber">CARD NUMBER</label>
+                                        <div class="input-group">
+                                            <input type="tel"
+                                                   class="form-control"
+                                                   name="cardNumber"
+                                                   placeholder="Valid Card Number"
+                                                   autocomplete="cc-number"
+                                                   required autofocus />
+                                            <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-7 col-md-7">
+                                    <div class="form-group">
+                                        <label for="cardExpiry"><span class="hidden-xs">EXPIRATION</span><span class="visible-xs-inline">EXP</span> DATE</label>
+                                        <input type="tel"
+                                               class="form-control"
+                                               name="cardExpiry"
+                                               placeholder="MM / YY"
+                                               autocomplete="cc-exp"
+                                               required />
+                                    </div>
+                                </div>
+                                <div class="col-xs-5 col-md-5 pull-right">
+                                    <div class="form-group">
+                                        <label for="cardCVC">CV CODE</label>
+                                        <input type="tel"
+                                               class="form-control"
+                                               name="cardCVC"
+                                               placeholder="CVC"
+                                               autocomplete="cc-csc"
+                                               required />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <div class="ohb-tesis-alan">
+                <h3 style="display:inline-block">Konaklama Bilgileri</h3>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-7">
+            <button class="btn btn-warning pull-right" type="submit">
+                Ödemeyi Tamamla
+            </button>
+        </div>
+    </div>
+
+    <input type="hidden" asp-for="Otel.OtelAdi" />
+    <input type="hidden" asp-for="Otel.Yildiz" />
+    <input type="hidden" asp-for="Otel.IlAdi" />
+    <input type="hidden" asp-for="Otel.IlceAdi" />
+</form>
+
+@section Styles {
+    <style>
+        .m08 {
+            margin-left: 0px;
+            margin-right: 8px;
+        }
+
+        .p5 {
+            padding: 5px;
+        }
+
+        .r {
+            padding-right: 20px;
+        }
+
+        .l {
+            padding-left: 15px;
+        }
+
+        .tarih {
+            background: #fff;
+            cursor: pointer;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            width: 100%
+        }
+
+        .demo {
+            position: absolute;
+            bottom: 10px;
+            right: 24px;
+            top: auto;
+            cursor: pointer;
+        }
+
+        /* CSS for Credit Card Payment form */
+        .credit-card-box .panel-title {
+            display: inline;
+            font-weight: bold;
+        }
+
+        .credit-card-box .form-control.error {
+            border-color: red;
+            outline: 0;
+            box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,0,0,0.6);
+        }
+
+        .credit-card-box label.error {
+            font-weight: bold;
+            color: red;
+            padding: 2px 8px;
+            margin-top: 2px;
+        }
+
+        .credit-card-box .payment-errors {
+            font-weight: bold;
+            color: red;
+            padding: 2px 8px;
+            margin-top: 2px;
+        }
+
+        .credit-card-box label {
+            display: block;
+        }
+        /* The old "center div vertically" hack */
+        .credit-card-box .display-table {
+            display: table;
+        }
+
+        .credit-card-box .display-tr {
+            display: table-row;
+        }
+
+        .credit-card-box .display-td {
+            display: table-cell;
+            vertical-align: middle;
+            width: 50%;
+        }
+        /* Just looks nicer */
+        .credit-card-box .panel-heading img {
+            min-width: 180px;
+        }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        $("input[name='DogumTarihi']").daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+        });
+
+        $("input[name='DogumTarihi']").on('apply.daterangepicker', function (ev, picker) {
+            var eleman = picker.element.data("name");
+            $("input[name='" + eleman + "']").val(picker.startDate.format('YYYY-MM-DD'));
+        });
+    </script>
+}

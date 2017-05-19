@@ -8,29 +8,29 @@ namespace OnlineBooking.ViewModels
 {
     public class RezervasyonViewModel : Rezervasyon
     {
+        public RezervasyonViewModel() { }
+
+        public RezervasyonViewModel(int yetiskin) 
+            : this()
+        {
+            Musteriler = new List<Musteri>();
+            for (int i = 0; i < yetiskin; i++)
+            {
+                Musteriler.Add(new Musteri());
+            }
+        }
+
+        public RezervasyonViewModel(Rezervasyon rezervasyon) : base(rezervasyon) { }
+
         public Otel Otel { get; set; }
 
-        public DateTime Giris { get; set; }
-
-        public DateTime Cikis { get; set; }
-
-        public int Yetiskin { get; set; }
-
-        public int Cocuk { get; set; }
-
-        public int OdaFiyati { get; set; }
-
-        public int ToplamTutar { get; set; }
-
-        public IEnumerable<Musteri> Musteriler { get; set; }
+        public List<Musteri> Musteriler { get; set; }
 
         public Musteri FaturaBilgileri { get; set; }
 
         public KrediKartiViewModel KrediKarti { get; set; }
 
         public bool SozleymeOnay { get; set; }
-
-        public bool KampanyaBildirimOnay { get; set; }
 
     }
 }

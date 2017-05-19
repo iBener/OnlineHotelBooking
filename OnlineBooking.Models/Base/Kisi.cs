@@ -24,5 +24,8 @@ namespace OnlineBooking.Models.Base
 
         [Display(Name = "Cinsiyeti")]
         public string Cinsiyeti { get; set; }
+
+        [Display(Name = "Doğum Tarihi")]
+        public DateTime DogumTarihi { get; set; }
     }
 }

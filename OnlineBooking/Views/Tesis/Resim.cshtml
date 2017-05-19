@@ -23,7 +23,7 @@
         @foreach (var item in Model.Where(x => x.OdaTipiId == (int)OdaTipleri.Yok))
         {
             <div class="col-lg-4 thumbnail">
-                <img src="@item.Path" style="width:100%;height:100%" />
+                <img src="@item.ImageUrl" style="width:100%;height:100%" />
             </div>
         }
     </div>
@@ -39,7 +39,7 @@
         @foreach (var item in Model.Where(x => x.OdaTipiId == (int)OdaTipleri.JuniorOda))
         {
             <div class="col-sm-4 thumbnail">
-                <img src="@item.Path" style="width:100%;height:100%" />
+                <img src="@item.ImageUrl" style="width:100%;height:100%" />
             </div>
         }
     </div>
@@ -55,7 +55,7 @@
         @foreach (var item in Model.Where(x => x.OdaTipiId == (int)OdaTipleri.StandartOda))
         {
             <div class="col-sm-4 thumbnail">
-                <img src="@item.Path" style="width:100%;height:100%" />
+                <img src="@item.ImageUrl" style="width:100%;height:100%" />
             </div>
         }
     </div>
@@ -71,7 +71,7 @@
         @foreach (var item in Model.Where(x => x.OdaTipiId == (int)OdaTipleri.AileOdasi))
         {
             <div class="col-sm-4 thumbnail">
-                <img src="@item.Path" style="width:100%;height:100%" />
+                <img src="@item.ImageUrl" style="width:100%;height:100%" />
             </div>
         }
     </div>
@@ -87,7 +87,7 @@
         @foreach (var item in Model.Where(x => x.OdaTipiId == (int)OdaTipleri.SuitOda))
         {
             <div class="col-sm-4 thumbnail">
-                <img src="@item.Path" style="width:100%;height:100%" />
+                <img src="@item.ImageUrl" style="width:100%;height:100%" />
             </div>
         }
     </div>

@@ -18,6 +18,7 @@ namespace OnlineBooking.Data
 
             Tesis = new TesisCommands(this, Connection);
             Otel = new OtelBulCommands(this, Connection);
+            Rezervasyon = new RezervasyonCommand(this, Connection);
         }
 
         protected DbConnection Connection { get; }
@@ -25,6 +26,7 @@ namespace OnlineBooking.Data
 
         public TesisCommands Tesis { get; }
         public OtelBulCommands Otel { get; }
+        public RezervasyonCommand Rezervasyon { get; }
 
         public void BeginTransaction()
         {
