@@ -25,7 +25,8 @@ namespace OnlineBooking.Data
             var w_konaklama = "";
             if (konaklama != null && konaklama.Count > 0)
             {
-                w_konaklama = " and f.KonaklamaId in(" + String.Join(",", konaklama) + ")";
+                int[] sonuc = konaklama.Select(x => (int)x).ToArray();
+                w_konaklama = " and f.KonaklamaId in(" + String.Join(",", sonuc) + ")";
             }
             var query =
                 "select distinct o.* from Otel o \n" +

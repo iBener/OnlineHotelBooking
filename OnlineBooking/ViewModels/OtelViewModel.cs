@@ -8,6 +8,10 @@ namespace OnlineBooking.ViewModels
 {
     public class OtelViewModel : Otel
     {
+        public OtelViewModel()
+        {
+        }
+
         public OtelViewModel(Otel otel) : base(otel)
         {
         }
