@@ -10,9 +10,9 @@ namespace OnlineBooking.Controllers
 {
     public class AnaSayfaController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(string m)
         {
-
+            ViewBag.HataMesaji = Helper.FromBase64(m);
             return View();
         }
 

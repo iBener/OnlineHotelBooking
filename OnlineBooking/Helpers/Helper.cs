@@ -25,6 +25,10 @@ namespace OnlineBooking.Helpers
 
         public static string FromBase64(string base64)
         {
+            if (base64 == null)
+            {
+                return String.Empty;
+            }
             var bytes = Convert.FromBase64String(base64);
             var text = Encoding.UTF8.GetString(bytes);
             return text;

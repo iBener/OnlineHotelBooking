@@ -83,10 +83,15 @@ namespace OnlineBooking.Data
 
         public bool DeleteWithId(int id)
         {
-            var tabloAdi = GetTabloAdi();
-            var keyKolon = GetKeyColumnName();
+            return DeleteWithId<T>(id);
+        }
+
+        public bool DeleteWithId<TModel>(int id)
+        {
+            var tabloAdi = GetTabloAdi<TModel>();
+            var keyKolon = GetKeyColumnName<TModel>();
             var query = $"DELETE FROM { tabloAdi } WHERE { keyKolon } = @id ";
-            return Connection.Execute(query) > 0;
+            return Connection.Execute(query, new { id }) > 0;
         }
 
         public object Execute(string command, object param = null)

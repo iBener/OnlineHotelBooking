@@ -68,19 +68,16 @@ namespace OnlineBooking.Data
             foreach (var odatipi in odatipleri.OrderBy(x => x.OdaTipiId))
             {
                 var fiyat = fiyatlar.FirstOrDefault(x => x.OdaTipiId == odatipi.OdaTipiId);
-                if (fiyat != null)
+                odaFiyatlari.Add(new OtelFiyatViewModel()
                 {
-                    odaFiyatlari.Add(new OtelFiyatViewModel()
-                    {
-                        OtelId = otelId,
-                        KonaklamaId = fiyat.KonaklamaId,
-                        OtelFiyatId = fiyat.OtelFiyatId,
-                        OdaTipiId = odatipi.OdaTipiId,
-                        OdaTipiAdi = odatipi.OdaTipiAdi,
-                        FiyatYetiskin = fiyat.FiyatYetiskin,
-                        FiyatCocuk = fiyat.FiyatCocuk,
-                    });
-                }
+                    OtelId = otelId,
+                    KonaklamaId = konaklamaId,
+                    OdaTipiId = odatipi.OdaTipiId,
+                    OdaTipiAdi = odatipi.OdaTipiAdi,
+                    OtelFiyatId = fiyat != null ? fiyat.OtelFiyatId : 0,
+                    FiyatYetiskin = fiyat != null ? fiyat.FiyatYetiskin : 0,
+                    FiyatCocuk = fiyat != null ? fiyat.FiyatCocuk : 0,
+                });
             }
             return odaFiyatlari;
         }
@@ -89,16 +86,23 @@ namespace OnlineBooking.Data
         {
             foreach (var item in fiyat)
             {
-                var oda = new OtelFiyat()
+                if (item.FiyatYetiskin != 0 || item.FiyatCocuk != 0)
                 {
-                    OtelFiyatId = item.OtelFiyatId,
-                    OtelId = item.OtelId,
-                    KonaklamaId = item.KonaklamaId,
-                    OdaTipiId = item.OdaTipiId,
-                    FiyatYetiskin = item.FiyatYetiskin,
-                    FiyatCocuk = item.FiyatCocuk,
-                };
-                InsertOrUpdate<OtelFiyat>(oda, oda.OtelFiyatId);
+                    var oda = new OtelFiyat()
+                    {
+                        OtelFiyatId = item.OtelFiyatId,
+                        OtelId = item.OtelId,
+                        KonaklamaId = item.KonaklamaId,
+                        OdaTipiId = item.OdaTipiId,
+                        FiyatYetiskin = item.FiyatYetiskin,
+                        FiyatCocuk = item.FiyatCocuk,
+                    };
+                    InsertOrUpdate<OtelFiyat>(oda, oda.OtelFiyatId);
+                }
+                else
+                {
+                    DeleteWithId<OtelFiyat>(item.OtelFiyatId);
+                }
             }
         }
     }

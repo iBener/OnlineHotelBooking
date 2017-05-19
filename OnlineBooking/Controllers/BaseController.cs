@@ -22,5 +22,11 @@ namespace OnlineBooking.Controllers
             var m = Helper.ToBase64(mesaj);
             return RedirectToAction("Hata", "AnaSayfa", new { m });
         }
+
+        public IActionResult HataMesajiAnasayfa(string mesaj)
+        {
+            var m = Helper.ToBase64(mesaj);
+            return RedirectToAction("Index", "AnaSayfa", new { m });
+        }
     }
 }

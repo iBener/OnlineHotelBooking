@@ -183,14 +183,16 @@
 </script>
 }
 
-@functions { 
+@functions {
     public string FiyatOlustur(int konaklamaId)
     {
         var tbody = "";
         foreach(var item in Model.Fiyat.Where(x => x.KonaklamaId == konaklamaId).OrderBy(x => x.OdaTipiId))
         {
             tbody += "<tr>" +
-                        "<td>" + item.OdaTipiAdi + "</td><td>" + item.FiyatYetiskin + "</td><td>" + item.FiyatCocuk + "</td>" +
+                        "<td>" + item.OdaTipiAdi + "</td>" +
+                        "<td>" + (item.FiyatYetiskin != 0 ? item.FiyatYetiskin.ToString() : "-") + "</td>" +
+                        "<td>" + (item.FiyatCocuk != 0 ? item.FiyatCocuk.ToString() : "-") + "</td>" +
                      "</tr>";
         }
         return tbody;

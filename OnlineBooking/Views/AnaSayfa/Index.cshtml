@@ -5,6 +5,8 @@
     var cikis = Helper.GetSonrakiGun(DayOfWeek.Sunday, giris);
 }
 
+@Html.Partial("_HataMesaji", (string)ViewBag.HataMesaji ?? "")
+
 <div class="clearfix">
     <div class="container col-lg-6 col-md-7 col-sm-12">
         <h1>Aradığınız oteli bulun</h1>
