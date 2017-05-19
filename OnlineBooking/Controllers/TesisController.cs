@@ -92,7 +92,7 @@ namespace OnlineBooking.Controllers
         // POST: Tesis/Detay/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Fiyat(int otelId, int konaklamaId, IEnumerable<OtelFiyatItemViewModel> fiyat)
+        public ActionResult Fiyat(int otelId, int konaklamaId, IEnumerable<OtelFiyatViewModel> fiyat)
         {
             ViewBag.OtelId = otelId;
             ViewBag.KonaklamaId = konaklamaId;

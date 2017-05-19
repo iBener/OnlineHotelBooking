@@ -16,33 +16,24 @@ namespace OnlineBooking.Data
         {
         }
 
-        public OtelTesisViewModel GetOtelViewModel(int id)
+        public OtelViewModel GetOtelViewModel(int id)
         {
             var otel = FindWithId(id);
-            var otelModel = new OtelTesisViewModel()
+            var model = new OtelViewModel(otel)
             {
-                OtelId = otel.OtelId,
-                OtelAdi = otel.OtelAdi,
-                Aciklama = otel.Aciklama,
-                Adres = otel.Adres,
-                Telefon = otel.Telefon,
-                IlAdi = otel.IlAdi,
-                IlceAdi = otel.IlceAdi,
-                Yildiz = otel.Yildiz,
-                Degerlendirme = otel.Degerlendirme,
-                Fiyatlar = OtelFiyatlariOlustur(id),
-                Resimler = GetOtelResimleri(id),
+                Fiyat = OtelFiyatlariOlustur(id),
+                Resim = GetOtelResimleri(id)
             };
-            return otelModel;
+            return model;
         }
 
-        private IEnumerable<OtelFiyatItemViewModel> OtelFiyatlariOlustur(int id)
+        private IEnumerable<OtelFiyatViewModel> OtelFiyatlariOlustur(int id)
         {
             var konaklama = Query<KonaklamaTuru>(null);
-            var fiyatlar = new List<OtelFiyatItemViewModel>();
+            var fiyatlar = new List<OtelFiyatViewModel>();
             foreach (var item in konaklama)
             {
-                var konaklamaFiyatlari = KonaklamaFiyatOlustur(id, item.KonaklamaTuruId);
+                var konaklamaFiyatlari = FiyatListesiOlustur(id, item.KonaklamaTuruId);
                 foreach (var fiyat in konaklamaFiyatlari)
                 {
                     fiyatlar.Add(fiyat);
@@ -51,53 +42,57 @@ namespace OnlineBooking.Data
             return fiyatlar;
         }
 
-        public IEnumerable<OtelFiyatItemViewModel> GetFiyatListesi(int otelId, int konaklamaId)
+        public IEnumerable<OtelResim> GetOtelResimleri(int otelId, int odaTipi = -1)
         {
-            return KonaklamaFiyatOlustur(otelId, konaklamaId);
+            if (odaTipi >= 0)
+            {
+                return Query<OtelResim>(new { OtelId = otelId, OdaTipiId = odaTipi });
+            }
+            return Query<OtelResim>(new { OtelId = otelId});
         }
 
-        private List<OtelFiyatItemViewModel> KonaklamaFiyatOlustur(int otelId, int konaklamaId)
+        public IEnumerable<OtelFiyatViewModel> GetFiyatListesi(int otelId, int konaklamaId)
+        {
+            return FiyatListesiOlustur(otelId, konaklamaId);
+        }
+
+        public List<OtelFiyatViewModel> FiyatListesiOlustur(int otelId, int konaklamaId)
         {
             var odatipleri = Query<OdaTipi>(null);
             var fiyatlar = Query<OtelFiyat>(new { OtelId = otelId, KonaklamaId = konaklamaId });
-            var odaFiyatlari = new List<OtelFiyatItemViewModel>();
+            var odaFiyatlari = new List<OtelFiyatViewModel>();
             foreach (var odatipi in odatipleri.OrderBy(x => x.OdaTipiId))
             {
                 var fiyat = fiyatlar.FirstOrDefault(x => x.OdaTipiId == odatipi.OdaTipiId);
-                odaFiyatlari.Add(new OtelFiyatItemViewModel()
+                odaFiyatlari.Add(new OtelFiyatViewModel()
                 {
                     OtelId = otelId,
                     KonaklamaId = fiyat.KonaklamaId,
-                    OtelFiyatId = fiyat?.OtelFiyatId,
+                    OtelFiyatId = fiyat.OtelFiyatId,
                     OdaTipiId = odatipi.OdaTipiId,
-                    OdaTipi = odatipi.OdaTipiAdi,
-                    FiyatYetiskin = fiyat?.FiyatYetiskin,
-                    FiyatCocuk = fiyat?.FiyatCocuk,
+                    OdaTipiAdi = odatipi.OdaTipiAdi,
+                    FiyatYetiskin = fiyat.FiyatYetiskin,
+                    FiyatCocuk = fiyat.FiyatCocuk,
                 });
             }
             return odaFiyatlari;
         }
 
-        public void FiyatListesiKaydet(IEnumerable<OtelFiyatItemViewModel> fiyat)
+        public void FiyatListesiKaydet(IEnumerable<OtelFiyatViewModel> fiyat)
         {
             foreach (var item in fiyat)
             {
                 var oda = new OtelFiyat()
                 {
-                    OtelFiyatId = item.OtelFiyatId??0,
+                    OtelFiyatId = item.OtelFiyatId,
                     OtelId = item.OtelId,
                     KonaklamaId = item.KonaklamaId,
                     OdaTipiId = item.OdaTipiId,
-                    FiyatYetiskin = item.FiyatYetiskin??0,
-                    FiyatCocuk = item.FiyatCocuk??0,
+                    FiyatYetiskin = item.FiyatYetiskin,
+                    FiyatCocuk = item.FiyatCocuk,
                 };
                 InsertOrUpdate<OtelFiyat>(oda, oda.OtelFiyatId);
             }
-        }
-
-        public IEnumerable<OtelResim> GetOtelResimleri(int id)
-        {
-            return Query<OtelResim>(new { OtelId = id });
         }
     }
 }

@@ -41,7 +41,7 @@ namespace OnlineBooking.Controllers
             };
             using (var db = new DbModel(VeriTabani))
             {
-                return View(db.Otel.Bul(bolge, giris, cikis, yetiskin, cocuk, fiyat, konaklama));
+                return View(db.Otel.OtelListesiOku(bolge, giris, cikis, yetiskin, cocuk, fiyat, konaklama));
             }
         }
 
@@ -54,7 +54,7 @@ namespace OnlineBooking.Controllers
             ViewBag.Cocuk = cocuk;
             using (var db = new DbModel(VeriTabani))
             {
-                return View(db.Otel.OtelOda(id, giris, cikis, yetiskin, cocuk));
+                return View(db.Otel.OtelModelOku(id, giris, cikis, yetiskin, cocuk));
             }
         }
 

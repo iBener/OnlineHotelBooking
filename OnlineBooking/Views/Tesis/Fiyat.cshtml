@@ -1,10 +1,10 @@
 ﻿@using OnlineBooking.ViewModels
-@model IEnumerable<OnlineBooking.ViewModels.OtelFiyatItemViewModel>
+@model IEnumerable<OtelFiyatViewModel>
 
 @{
     ViewData["Title"] = "Fiyatlar";
 
-    OtelFiyatItemViewModel[] fiyatlar = null;
+    OtelFiyatViewModel[] fiyatlar = null;
     if (Model != null)
     {
         fiyatlar = Model.ToArray();
@@ -38,10 +38,10 @@
                             var item = fiyatlar[i];
                             <tr>
                                 <td>
-                                    @item.OdaTipi
+                                    @item.OdaTipiAdi
                                     <input name="fiyat[@i].OtelId" value="@otelId" type="hidden" />
                                     <input name="fiyat[@i].KonaklamaId" value="@konaklamaId" type="hidden" />
-                                    <input name="fiyat[@i].OdaTipi" value="@item.OdaTipi" type="hidden" />
+                                    <input name="fiyat[@i].OdaTipi" value="@item.OdaTipiAdi" type="hidden" />
                                     <input name="fiyat[@i].OdaTipiId" value="@item.OdaTipiId" type="hidden" />
                                     <input name="fiyat[@i].OtelFiyatId" value="@item.OtelFiyatId" type="hidden" />
                                 </td>

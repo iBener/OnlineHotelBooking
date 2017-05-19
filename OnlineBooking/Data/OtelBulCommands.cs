@@ -16,14 +16,14 @@ namespace OnlineBooking.Data
         {
         }
 
-        public IEnumerable<OtelViewModel> Bul(string bolge, string giris, string cikis, int yetiskin, int cocuk, List<string> fiyat, List<KonaklamaTipleri> konaklama)
+        public IEnumerable<OtelViewModel> OtelListesiOku(string bolge, string giris, string cikis, int yetiskin, int cocuk, List<string> fiyat, List<KonaklamaTipleri> konaklama)
         {
             if (String.IsNullOrEmpty(bolge))
             {
                 bolge = String.Empty;
             }
             var w_konaklama = "";
-            if (konaklama.Count > 0)
+            if (konaklama != null && konaklama.Count > 0)
             {
                 w_konaklama = " and f.KonaklamaId in(" + String.Join(",", konaklama) + ")";
             }
@@ -37,43 +37,49 @@ namespace OnlineBooking.Data
             var tgiris = Convert.ToDateTime(giris);
             var tcikis = Convert.ToDateTime(cikis);
             var gece = (int)(tcikis - tgiris).TotalDays;
+            var tesis = new TesisCommands(Model, Connection);
 
             foreach (var otel in oteller)
             {
-                var resim = Execute("select top 1 Path from OtelResim where OtelId = @otelId and OdaTipiId = 0", new { otelId = otel.OtelId });
-                var otelfiyati = Connection.QuerySingleOrDefault<dynamic>("select top 1 OtelFiyatId, FiyatYetiskin Yetiskin, FiyatCocuk Cocuk from OtelFiyat f where f.OtelId = @otelId and f.FiyatYetiskin <> 0 " + w_konaklama + " order by f.FiyatYetiskin, f.FiyatCocuk", new { otelId = otel.OtelId });
+                var resim = tesis.GetOtelResimleri(otel.OtelId, (int)OdaTipleri.Yok).FirstOrDefault();
+                otel.Resim = new List<OtelResim> { resim };
 
-                if (resim != null)
-                {
-                    otel.Resim = resim.ToString();
-                }
-                otel.Fiyat = gece * yetiskin * (int)otelfiyati.Yetiskin + cocuk * (int)otelfiyati.Cocuk;
+                var enUcuzOdafiyati = Connection.QuerySingleOrDefault<OtelFiyatViewModel>(
+                    "select top 1 f.* from OtelFiyat f where f.OtelId = @otelId and f.FiyatYetiskin <> 0 " + 
+                    w_konaklama + " order by f.FiyatYetiskin, f.FiyatCocuk", new { otelId = otel.OtelId });
+                enUcuzOdafiyati.Gece = gece;
+                enUcuzOdafiyati.Yetiskin = yetiskin;
+                enUcuzOdafiyati.Cocuk = cocuk;
+                otel.Fiyat = new List<OtelFiyatViewModel> { enUcuzOdafiyati };
             }
 
             return oteller;
         }
 
-        public OtelOdalarViewModel OtelOda(int id, string giris, string cikis, int yetiskin, int cocuk)
+        public OtelViewModel OtelModelOku(int otelId, string giris, string cikis, int yetiskin, int cocuk)
         {
-            var otel = FindWithId(id);
-            var model = new OtelOdalarViewModel(otel);
+            var otel = FindWithId(otelId);
+            var model = new OtelViewModel(otel);
             var query =
-                "select o.OdaTipiAdi,k.KonaklamaTuruAdi,f.FiyatYetiskin,f.FiyatCocuk,0 ToplamFiyat,r.Path ImageUrl \n" +
+                "select f.*, o.OdaTipiAdi, k.KonaklamaTuruAdi, r.Path ImageUrl \n" +
                 "from OdaTipi o join OtelFiyat f on f.OdaTipiId = o.OdaTipiId \n" +
                 "join KonaklamaTuru k on k.KonaklamaTuruId = f.KonaklamaId \n" +
                 "left join OtelResim r on r.OtelId = @OtelId and r.OdaTipiId = f.OdaTipiId \n" +
                 "where f.OtelId=@OtelId and f.FiyatYetiskin<>0 order by f.KonaklamaId,f.OdaTipiId \n";
 
-            model.Odalar = Connection.Query<OtelOdaTipleri>(query, new { OtelId = id });
-            model.Resimler = Query<OtelResim>(new { OtelId = id });
+            model.Fiyat = Connection.Query<OtelFiyatViewModel>(query, new { OtelId = otelId });
             var tgiris = Convert.ToDateTime(giris);
             var tcikis = Convert.ToDateTime(cikis);
             var gece = (int)(tcikis - tgiris).TotalDays;
 
-            foreach (var oda in model.Odalar)
+            foreach (var fiyat in model.Fiyat)
             {
-                oda.ToplamFiyat = gece * oda.FiyatYetiskin * yetiskin + oda.FiyatCocuk * cocuk;
+                fiyat.Gece = gece;
+                fiyat.Yetiskin = yetiskin;
+                fiyat.Cocuk = cocuk;
             }
+            var tesis = new TesisCommands(Model, Connection);
+            model.Resim = tesis.GetOtelResimleri(otelId);
 
             return model;
         }

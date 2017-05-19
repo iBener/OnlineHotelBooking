@@ -1,4 +1,4 @@
-﻿@model OnlineBooking.ViewModels.OtelTesisViewModel
+﻿@model OnlineBooking.ViewModels.OtelViewModel
 
 @{
     ViewData["Title"] = "Otel Tesis Profili";
@@ -108,7 +108,7 @@
             <div class="ohb-tesis-img-prev">
                 @*<img src="~/images/beach.jpg" class="img-responsive">*@
 
-                @Html.Partial("Resimler", Model.Resimler.ToArray())
+                @Html.Partial("Resimler", Model.Resim.ToArray())
             </div>
         </div>
         <div class="ohb-tesis-alan">
@@ -130,10 +130,10 @@
                         </tr>
                     </thead>
                     <tbody id="fiyatlar">
-                        @foreach (var item in Model.Fiyatlar.Where(x => x.KonaklamaId == 3).OrderBy(x => x.OdaTipiId))
+                        @foreach (var item in Model.Fiyat.Where(x => x.KonaklamaId == 3).OrderBy(x => x.OdaTipiId))
                         {
                             <tr>
-                                <td>@item.OdaTipi</td>
+                                <td>@item.OdaTipiAdi</td>
                                 <td>@item.FiyatYetiskin</td>
                                 <td>@item.FiyatCocuk</td>
                             </tr>
@@ -187,10 +187,10 @@
     public string FiyatOlustur(int konaklamaId)
     {
         var tbody = "";
-        foreach(var item in Model.Fiyatlar.Where(x => x.KonaklamaId == konaklamaId).OrderBy(x => x.OdaTipiId))
+        foreach(var item in Model.Fiyat.Where(x => x.KonaklamaId == konaklamaId).OrderBy(x => x.OdaTipiId))
         {
             tbody += "<tr>" +
-                        "<td>" + item.OdaTipi + "</td><td>" + item.FiyatYetiskin + "</td><td>" + item.FiyatCocuk + "</td>" +
+                        "<td>" + item.OdaTipiAdi + "</td><td>" + item.FiyatYetiskin + "</td><td>" + item.FiyatCocuk + "</td>" +
                      "</tr>";
         }
         return tbody;

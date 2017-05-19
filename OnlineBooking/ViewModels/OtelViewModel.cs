@@ -8,8 +8,12 @@ namespace OnlineBooking.ViewModels
 {
     public class OtelViewModel : Otel
     {
-        public int Fiyat { get; set; }
+        public OtelViewModel(Otel otel) : base(otel)
+        {
+        }
 
-        public string Resim { get; set; }
+        public IEnumerable<OtelFiyatViewModel> Fiyat { get; set; }
+
+        public IEnumerable<OtelResim> Resim { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model OnlineBooking.ViewModels.OtelOdalarViewModel
+﻿@model OnlineBooking.ViewModels.OtelViewModel
 
 @{
     ViewData["Title"] = Model.OtelAdi;
@@ -21,8 +21,8 @@
         ViewBag.Cocuk = 0;
     }
 
-    var enUcuzFiyat = Model.Odalar.Select(x => x.ToplamFiyat).OrderBy(x => x).FirstOrDefault();
-    var odaSayisi = Model.Odalar.Count();
+    var enUcuzFiyat = Model.Fiyat.Select(x => x.ToplamFiyat).OrderBy(x => x).FirstOrDefault();
+    var odaSayisi = Model.Fiyat.Count();
     var odaSatirSayisi = Math.Ceiling((double)odaSayisi / 4);
     var odaIndex = 0;
 }
@@ -35,7 +35,7 @@
 </div>
 <div class="mrg-btm-10"><i class="fa fa-map-marker"></i> @Model.IlAdi, @Model.IlceAdi</div>
 
-@Html.Partial("Resimler", Model.Resimler.ToArray())
+@Html.Partial("Resimler", Model.Resim.ToArray())
 
 <header>
     <h3>Oda Seçenekleri</h3>
@@ -107,7 +107,7 @@
                 {
                     if (odaIndex < odaSayisi)
                     {
-                        var oda = Model.Odalar.ToArray()[odaIndex];
+                        var oda = Model.Fiyat.ToArray()[odaIndex];
                         <div class="plan" @(oda.ToplamFiyat == enUcuzFiyat ? "id=enucuz" : "")>
                             <h3>@oda.OdaTipiAdi<span>@oda.ToplamFiyat.ToString("n0")<br />TL</span></h3>
                             <img src="@oda.ImageUrl" style="width:138px;height:80px;" />
