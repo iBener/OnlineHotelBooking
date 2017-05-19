@@ -62,7 +62,7 @@ namespace OnlineBooking.Data
             var otel = FindWithId(otelId);
             var model = new OtelViewModel(otel);
             var query =
-                "select f.*, o.OdaTipiAdi, k.KonaklamaTuruAdi, r.Path ImageUrl \n" +
+                "select f.*, o.OdaTipiAdi, k.KonaklamaTuruAdi, r.ImageUrl \n" +
                 "from OdaTipi o join OtelFiyat f on f.OdaTipiId = o.OdaTipiId \n" +
                 "join KonaklamaTuru k on k.KonaklamaTuruId = f.KonaklamaId \n" +
                 "left join OtelResim r on r.OtelId = @OtelId and r.OdaTipiId = f.OdaTipiId \n" +

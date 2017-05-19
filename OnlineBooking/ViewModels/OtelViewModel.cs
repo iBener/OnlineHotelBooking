@@ -8,13 +8,9 @@ namespace OnlineBooking.ViewModels
 {
     public class OtelViewModel : Otel
     {
-        public OtelViewModel()
-        {
-        }
+        public OtelViewModel() { }
 
-        public OtelViewModel(Otel otel) : base(otel)
-        {
-        }
+        public OtelViewModel(Otel otel) : base(otel) { }
 
         public IEnumerable<OtelFiyatViewModel> Fiyat { get; set; }
 

@@ -16,5 +16,18 @@ namespace OnlineBooking.Models
         public string OtelId { get; set; }
 
         public string MusteriId { get; set; }
+
+        public DateTime Giris { get; set; }
+
+        public DateTime Cikis { get; set; }
+
+        public int Yetiskin { get; set; }
+
+        public int Cocuk { get; set; }
+
+        public int OdaFiyati { get; set; }
+
+        public int ToplamTutar { get; set; }
+
     }
 }

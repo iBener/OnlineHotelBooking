@@ -12,5 +12,7 @@ namespace OnlineBooking.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public int MusteriId { get; set; }
+
+        public bool KampanyaBildirimOnay { get; set; }
     }
 }
