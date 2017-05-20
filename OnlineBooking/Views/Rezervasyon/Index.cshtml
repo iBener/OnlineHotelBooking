@@ -50,6 +50,10 @@
 
                             <input name="Musteriler[@i].DogumTarihi" type="hidden" class="form-control" value="@musteri.DogumTarihi">
                         </div>
+                        <div class="col-sm-12">
+                            @*<span data-valmsg-for="Musteriler[@i].Cinsiyeti" data-valmsg-replace="true" class="text-danger field-validation-error">Lütfen ama</span>*@
+                            @Html.ValidationMessageFor(m => m.Musteriler[i].Cinsiyeti)
+                        </div>
                     </div>
                 }
             </div>
@@ -75,62 +79,61 @@
                 </div>
             </div>
 
+
+
             <div class="ohb-tesis-alan">
                 <h3 style="display:inline-block">Ödeme Bilgileri</h3>
-                <img class="img-responsive pull-right" src="http://i76.imgup.net/accepted_c22e0.png">
-                <div class="panel panel-default credit-card-box">
-                    <div class="panel-body">
-                        <div id="payment-form">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="form-group">
-                                        <label for="cardNumber">CARD NUMBER</label>
-                                        <div class="input-group">
-                                            <input type="tel"
-                                                   class="form-control"
-                                                   name="cardNumber"
-                                                   placeholder="Valid Card Number"
-                                                   autocomplete="cc-number"
-                                                   required autofocus />
-                                            <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-7 col-md-7">
-                                    <div class="form-group">
-                                        <label for="cardExpiry"><span class="hidden-xs">EXPIRATION</span><span class="visible-xs-inline">EXP</span> DATE</label>
-                                        <input type="tel"
-                                               class="form-control"
-                                               name="cardExpiry"
-                                               placeholder="MM / YY"
-                                               autocomplete="cc-exp"
-                                               required />
-                                    </div>
-                                </div>
-                                <div class="col-xs-5 col-md-5 pull-right">
-                                    <div class="form-group">
-                                        <label for="cardCVC">CV CODE</label>
-                                        <input type="tel"
-                                               class="form-control"
-                                               name="cardCVC"
-                                               placeholder="CVC"
-                                               autocomplete="cc-csc"
-                                               required />
-                                    </div>
-                                </div>
+                <img class="img-responsive pull-right" src="~/images/kredi-kartlari.png" style="margin-top:10px;margin-right:8px">
+                <div class="panel panel-default row m08">
+                    <div class="col-sm-12 p5">
+                        <div class="form-group">
+                            <label for="cardNumber">Kart Numarası</label>
+                            <div class="input-group">
+                                <input type="tel"
+                                       class="form-control"
+                                       name="cardNumber"
+                                       placeholder="0000-0000-0000-0000"
+                                       autocomplete="cc-number"
+                                        />
+                                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
                             </div>
                         </div>
                     </div>
+                    <div class="col-sm-6 p5">
+                        <div class="form-group">
+                            <label for="cardExpiry">Son Geçerlilik Tarihi</label>
+                            <input type="tel"
+                                   class="form-control"
+                                   name="cardExpiry"
+                                   placeholder="MM / YY"
+                                   autocomplete="cc-exp"
+                                    />
+                        </div>
+                    </div>
+                    <div class="col-sm-6 p5">
+                        <div class="form-group">
+                            <label for="cardCVC">CVC Kodu</label>
+                            <input type="tel"
+                                   class="form-control"
+                                   name="cardCVC"
+                                   placeholder="CVC"
+                                   autocomplete="cc-csc"
+                                    />
+                        </div>
+                    </div>
                 </div>
-
+            </div>
+            <div class="checkbox">
+                <label><input asp-for="SozleymeOnay" type="checkbox" value="">Satış sözleşmesini okudum kabul ediyorum.</label>
+                <div style="margin-left:20px"><span asp-validation-for="SozleymeOnay" class="text-danger"></span></div>
+            </div>
+            <div class="checkbox">
+                <label><input asp-for="FaturaBilgileri.KampanyaBildirimOnay" type="checkbox" value="">Fırsat ve kampanyalardan haberdar olmak istiyorum.</label>
             </div>
         </div>
         <div class="col-sm-5">
             <div class="ohb-tesis-alan">
                 <h3 style="display:inline-block">Konaklama Bilgileri</h3>
-
             </div>
         </div>
     </div>
@@ -182,54 +185,6 @@
             right: 24px;
             top: auto;
             cursor: pointer;
-        }
-
-        /* CSS for Credit Card Payment form */
-        .credit-card-box .panel-title {
-            display: inline;
-            font-weight: bold;
-        }
-
-        .credit-card-box .form-control.error {
-            border-color: red;
-            outline: 0;
-            box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,0,0,0.6);
-        }
-
-        .credit-card-box label.error {
-            font-weight: bold;
-            color: red;
-            padding: 2px 8px;
-            margin-top: 2px;
-        }
-
-        .credit-card-box .payment-errors {
-            font-weight: bold;
-            color: red;
-            padding: 2px 8px;
-            margin-top: 2px;
-        }
-
-        .credit-card-box label {
-            display: block;
-        }
-        /* The old "center div vertically" hack */
-        .credit-card-box .display-table {
-            display: table;
-        }
-
-        .credit-card-box .display-tr {
-            display: table-row;
-        }
-
-        .credit-card-box .display-td {
-            display: table-cell;
-            vertical-align: middle;
-            width: 50%;
-        }
-        /* Just looks nicer */
-        .credit-card-box .panel-heading img {
-            min-width: 180px;
         }
     </style>
 }
