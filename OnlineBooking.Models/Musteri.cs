@@ -14,6 +14,5 @@ namespace OnlineBooking.Models
         public int MusteriId { get; set; }
 
         public bool KampanyaBildirimOnay { get; set; }
-
     }
 }
