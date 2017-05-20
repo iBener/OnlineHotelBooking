@@ -23,11 +23,15 @@ namespace OnlineBooking.ViewModels
 
         public RezervasyonViewModel(Rezervasyon rezervasyon) : base(rezervasyon) { }
 
-        public Otel Otel { get; set; }
+        public OtelViewModel Otel { get; set; }
 
         public List<Musteri> Musteriler { get; set; }
 
         public Musteri FaturaBilgileri { get; set; }
+
+        public int OtelFiyatId { get; set; }
+
+        public OtelFiyatViewModel OtelFiyat { get; internal set; }
 
         public KrediKartiViewModel KrediKarti { get; set; }
 
@@ -42,6 +46,62 @@ namespace OnlineBooking.ViewModels
                 {
                     yield return new ValidationResult("Lütfen bir cinsiyet seçiniz!", new[] { "Musteriler[" + i + "].Cinsiyeti" });
                 }
+                if (String.IsNullOrWhiteSpace(musteri.Adi))
+                {
+                    yield return new ValidationResult("Lütfen müşteri adını belirtiniz!", new[] { "Musteriler[" + i + "].Adi" });
+                }
+                if (String.IsNullOrWhiteSpace(musteri.Soyadi))
+                {
+                    yield return new ValidationResult("Lütfen müşteri soyadını belirtiniz!", new[] { "Musteriler[" + i + "].Soyadi" });
+                }
+                if (musteri.DogumTarihi == null || musteri.DogumTarihi == DateTime.MinValue)
+                {
+                    yield return new ValidationResult("Lütfen müşteri doğum tarihini belirtiniz!", new[] { "Musteriler[" + i + "].DogumTarihi" });
+                }
+            }
+
+            if (String.IsNullOrWhiteSpace(FaturaBilgileri.Adi))
+            {
+                yield return new ValidationResult("Lütfen bir ad belirtiniz!", new[] { "FaturaBilgileri.Adi" });
+            }
+            if (String.IsNullOrWhiteSpace(FaturaBilgileri.Soyadi))
+            {
+                yield return new ValidationResult("Lütfen bir soyad belirtiniz!", new[] { "FaturaBilgileri.Soyadi" });
+            }
+            if (String.IsNullOrWhiteSpace(FaturaBilgileri.EPostasi))
+            {
+                yield return new ValidationResult("Lütfen bir e-postası belirtiniz!", new[] { "FaturaBilgileri.EPostasi" });
+            }
+            var emailattrb = new EmailAddressAttribute();
+            if (!emailattrb.IsValid(FaturaBilgileri.EPostasi))
+            {
+                yield return new ValidationResult("Lütfen geçerli bir e-posta adresi belirtiniz!", new[] { "FaturaBilgileri.EPostasi" });
+            }
+            if (String.IsNullOrWhiteSpace(FaturaBilgileri.Adresi))
+            {
+                yield return new ValidationResult("Lütfen bir adres belirtiniz!", new[] { "FaturaBilgileri.Adresi" });
+            }
+            if (String.IsNullOrWhiteSpace(FaturaBilgileri.Telefonu))
+            {
+                yield return new ValidationResult("Lütfen bir telefon numarası belirtiniz!", new[] { "FaturaBilgileri.Telefonu" });
+            }
+
+            if (String.IsNullOrWhiteSpace(KrediKarti.AdSoyad))
+            {
+                yield return new ValidationResult("Lütfen kredi kartı sahibini belirtiniz!", new[] { "KrediKarti.AdSoyad" });
+            }
+            var attrb = new CreditCardAttribute();
+            if (attrb.IsValid(KrediKarti.KartNo))
+            {
+                yield return new ValidationResult("Girdiğiniz kart numarası geçerli bir kredi kartı numarası değildir!", new[] { "KrediKarti.KartNo" });
+            }
+            if (String.IsNullOrWhiteSpace(KrediKarti.GecerlilikTarihi) || KrediKarti.GecerlilikTarihi.Split('/').Length != 2)
+            {
+                yield return new ValidationResult("Lütfen kredi kartı geçerlilik tarihini belirtiniz!", new[] { "KrediKarti.GecerlilikTarihi" });
+            }
+            if (String.IsNullOrWhiteSpace(KrediKarti.Cvc))
+            {
+                yield return new ValidationResult("Lütfen kredi kartı CVC numarasını belirtiniz!", new[] { "KrediKarti.Cvc" });
             }
 
             if (!SozleymeOnay)

@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Rezervasyon";
+    var otelImageUrl = "";
 }
 
 @Html.Partial("_HataMesaji", (string)ViewBag.HataMesaji ?? "")
@@ -26,34 +27,31 @@
                             @(i + 1). Yetişkin
                         </div>
                         <div class="col-sm-3 p5">
-                            <select class="form-control" name="Musteriler[@i].Cinsiyeti">
+                            <select asp-for="Musteriler[i].Cinsiyeti" class="form-control">
                                 <option>Cinsiyeti</option>
                                 <option>Kadın</option>
                                 <option>Erkek</option>
                             </select>
+                            <span asp-validation-for="Musteriler[i].Cinsiyeti" class="text-danger"></span>
                         </div>
                         <div class="col-sm-3 p5">
-                            <input name="Musteriler[@i].Adi" type="text" class="form-control" value="@musteri.Adi" placeholder="Adı">
+                            <input asp-for="Musteriler[i].Adi" class="form-control" placeholder="Adı">
+                            <span asp-validation-for="Musteriler[i].Adi" class="text-danger"></span>
+                            @*@Html.ValidationMessageFor(m => m.Musteriler[i].Adi, null, new { @class = "text-danger" })*@
                         </div>
                         <div class="col-sm-3 p5">
-                            <input name="Musteriler[@i].Soyadi" type="text" class="form-control" value="@musteri.Soyadi" placeholder="Soyadı">
+                            <input asp-for="Musteriler[i].Soyadi" class="form-control" placeholder="Soyadı">
+                            <span asp-validation-for="Musteriler[i].Soyadi" class="text-danger"></span>
                         </div>
-                        @*<div class="col-sm-3 p5">
-                                <input class="form-control" type="text" name="DogumTarihi" value="10/24/1984" />
-                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                            </div>*@
                         <div class="col-sm-3 input-group date p5" style="padding-right:5px;padding-left:5px;">
-                            <input type="text" class="form-control text-center" name="DogumTarihi" data-name="Musteriler[@i].DogumTarihi" />
+                            <input type="text" class="form-control text-center" name="DogumTarihi" data-name="Musteriler[@i].DogumTarihi" value="@(musteri.DogumTarihi == null || musteri.DogumTarihi == DateTime.MinValue ? "" : musteri.DogumTarihi.ToString("dd.MM.yyyy"))" placeholder="Doğum Tarihi"/>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
 
-                            <input name="Musteriler[@i].DogumTarihi" type="hidden" class="form-control" value="@musteri.DogumTarihi">
+                            <input asp-for="Musteriler[i].DogumTarihi" type="hidden" class="form-control">
                         </div>
-                        <div class="col-sm-12">
-                            @*<span data-valmsg-for="Musteriler[@i].Cinsiyeti" data-valmsg-replace="true" class="text-danger field-validation-error">Lütfen ama</span>*@
-                            @Html.ValidationMessageFor(m => m.Musteriler[i].Cinsiyeti)
-                        </div>
+                        <span asp-validation-for="Musteriler[i].DogumTarihi" class="text-danger"></span>
                     </div>
                 }
             </div>
@@ -63,18 +61,23 @@
                 <div class="panel panel-default row m08">
                     <div class="col-sm-4 p5">
                         <input asp-for="FaturaBilgileri.Adi" type="text" class="form-control" placeholder="Adı">
+                        <span asp-validation-for="FaturaBilgileri.Adi" class="text-danger"></span>
                     </div>
                     <div class="col-sm-4 p5">
                         <input asp-for="FaturaBilgileri.Soyadi" type="text" class="form-control" placeholder="Soyadı">
+                        <span asp-validation-for="FaturaBilgileri.Soyadi" class="text-danger"></span>
                     </div>
                     <div class="col-sm-4 p5">
                         <input asp-for="FaturaBilgileri.EPostasi" type="text" class="form-control" placeholder="E-Posta Adresi">
+                        <span asp-validation-for="FaturaBilgileri.EPostasi" class="text-danger"></span>
                     </div>
                     <div class="col-sm-8 p5">
                         <input asp-for="FaturaBilgileri.Adresi" type="text" class="form-control" placeholder="Adresi">
+                        <span asp-validation-for="FaturaBilgileri.Adresi" class="text-danger"></span>
                     </div>
                     <div class="col-sm-4 p5">
-                        <input asp-for="FaturaBilgileri.Telefonu" type="text" class="form-control" placeholder="Telefonu">
+                        <input asp-for="FaturaBilgileri.Telefonu" type="text" class="form-control" placeholder="Telefonu" />
+                        <span asp-validation-for="FaturaBilgileri.Telefonu" class="text-danger"></span>
                     </div>
                 </div>
             </div>
@@ -84,72 +87,95 @@
             <div class="ohb-tesis-alan">
                 <h3 style="display:inline-block">Ödeme Bilgileri</h3>
                 <img class="img-responsive pull-right" src="~/images/kredi-kartlari.png" style="margin-top:10px;margin-right:8px">
-                <div class="panel panel-default row m08">
-                    <div class="col-sm-12 p5">
-                        <div class="form-group">
-                            <label for="cardNumber">Kart Numarası</label>
-                            <div class="input-group">
-                                <input type="tel"
-                                       class="form-control"
-                                       name="cardNumber"
-                                       placeholder="0000-0000-0000-0000"
-                                       autocomplete="cc-number"
-                                        />
-                                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                <div class="panel panel-default">
+                    <div class="row m08">
+                        <div class="col-sm-6 p5">
+                            <div class="form-group">
+                                <label asp-for="KrediKarti.AdSoyad">Kart Sahibi</label>
+                                <input asp-for="KrediKarti.AdSoyad" class="form-control" placeholder="Adı Soyadı" autocomplete="off" />
+                                <span asp-validation-for="KrediKarti.AdSoyad" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 p5">
+                            <div class="form-group">
+                                <label asp-for="KrediKarti.KartNo">Kart Numarası</label>
+                                <div class="input-group">
+                                    <input asp-for="KrediKarti.KartNo" type="tel" class="form-control"
+                                           placeholder="0000-0000-0000-0000" autocomplete="cc-number" />
+                                    <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                </div>
+                                <span asp-validation-for="KrediKarti.KartNo" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 p5">
-                        <div class="form-group">
-                            <label for="cardExpiry">Son Geçerlilik Tarihi</label>
-                            <input type="tel"
-                                   class="form-control"
-                                   name="cardExpiry"
-                                   placeholder="MM / YY"
-                                   autocomplete="cc-exp"
-                                    />
+                    <div class="row m08">
+                        <div class="col-sm-6 p5">
+                            <div class="form-group">
+                                <label asp-for="KrediKarti.GecerlilikTarihi">Son Geçerlilik Tarihi</label>
+                                <input asp-for="KrediKarti.GecerlilikTarihi" type="tel" class="form-control"
+                                       placeholder="MM / YY" autocomplete="cc-exp" />
+                            </div>
+                            <span asp-validation-for="KrediKarti.GecerlilikTarihi" class="text-danger"></span>
                         </div>
-                    </div>
-                    <div class="col-sm-6 p5">
-                        <div class="form-group">
-                            <label for="cardCVC">CVC Kodu</label>
-                            <input type="tel"
-                                   class="form-control"
-                                   name="cardCVC"
-                                   placeholder="CVC"
-                                   autocomplete="cc-csc"
-                                    />
+                        <div class="col-sm-6 p5">
+                            <div class="form-group">
+                                <label asp-for="KrediKarti.Cvc">CVC Kodu</label>
+                                <input asp-for="KrediKarti.Cvc" type="tel" class="form-control"
+                                       placeholder="CVC" autocomplete="cc-csc" />
+                            </div>
+                            <span asp-validation-for="KrediKarti.Cvc" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="checkbox">
-                <label><input asp-for="SozleymeOnay" type="checkbox" value="">Satış sözleşmesini okudum kabul ediyorum.</label>
-                <div style="margin-left:20px"><span asp-validation-for="SozleymeOnay" class="text-danger"></span></div>
-            </div>
-            <div class="checkbox">
-                <label><input asp-for="FaturaBilgileri.KampanyaBildirimOnay" type="checkbox" value="">Fırsat ve kampanyalardan haberdar olmak istiyorum.</label>
             </div>
         </div>
         <div class="col-sm-5">
             <div class="ohb-tesis-alan">
                 <h3 style="display:inline-block">Konaklama Bilgileri</h3>
+                <div class="ohb-tesis-img-prev" style="width:100%">
+                    @if (Model.Otel.Resim.Count() > 0)
+                    {
+                        <img src="@Model.Otel.Resim.ToArray()[0].ImageUrl" style="width:97%"/>
+                    }
+                </div>
+                <h4>@Model.Otel.OtelAdi</h4>
+                <h5>@Model.OtelFiyat.OdaTipiAdi, @Model.OtelFiyat.KonaklamaTuruAdi</h5>
+                <hr style="border-top-color:gray;" />
+                <div style="width:97%;margin-bottom:5px;"><span>Giriş Tarihi</span><div class="pull-right"><strong>@Model.Giris.ToString("D")</strong></div></div>
+                <div style="width:97%;margin-bottom:5px;"><span>Çıkış Tarihi</span><div class="pull-right"><strong>@Model.Cikis.ToString("D")</strong></div></div>
+                <div style="width:97%;margin-bottom:5px;"><span>Gece Sayısı</span><div class="pull-right"><strong>@Model.OtelFiyat.Gece Gece, @(Model.OtelFiyat.Gece + 1) Gün</strong></div></div>
+                <div style="width:97%;margin-bottom:5px;"><span>Kişi Sayısı</span><div class="pull-right"><strong>@Model.OtelFiyat.Yetiskin Yetişkin@(Model.OtelFiyat.Cocuk == 0 ? "" : ", " + Model.OtelFiyat.Cocuk + " Çocuk")</strong></div></div>
+                <div style="width:97%;margin-bottom:5px;"><span>Oda Fiyatı</span><div class="pull-right"><strong>@Model.OtelFiyat.FiyatYetiskin.ToString("n0") TL @(Model.OtelFiyat.Cocuk == 0 ? "" : "Yetişkin, " + Model.OtelFiyat.FiyatCocuk + " TL Çocuk")</strong></div></div>
+                <hr style="border-top-color:gray;margin-bottom:5px;" />
+                <div style="width:97%;"><h4 style="display:inline-block">Toplam Fiyat</h4><div class="pull-right"><h4><strong>@Model.OtelFiyat.ToplamFiyat.ToString("n0") TL</strong></h4></div></div>
             </div>
         </div>
     </div>
-
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="checkbox">
+                <label><input asp-for="SozleymeOnay" type="checkbox">Satış sözleşmesini okudum kabul ediyorum.</label>
+                <div style="margin-left:20px"><span asp-validation-for="SozleymeOnay" class="text-danger"></span></div>
+            </div>
+            <div class="checkbox">
+                <label><input asp-for="FaturaBilgileri.KampanyaBildirimOnay" type="checkbox">Fırsat ve kampanyalardan haberdar olmak istiyorum.</label>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-7">
-            <button class="btn btn-warning pull-right" type="submit">
+            <button class="btn btn-warning" type="submit">
                 Ödemeyi Tamamla
             </button>
         </div>
     </div>
 
-    <input type="hidden" asp-for="Otel.OtelAdi" />
-    <input type="hidden" asp-for="Otel.Yildiz" />
-    <input type="hidden" asp-for="Otel.IlAdi" />
-    <input type="hidden" asp-for="Otel.IlceAdi" />
+    <input type="hidden" asp-for="OtelId" />
+    <input type="hidden" asp-for="OtelFiyatId" />
+    <input type="hidden" asp-for="Yetiskin" />
+    <input type="hidden" asp-for="Cocuk" />
+    <input type="hidden" asp-for="Giris" />
+    <input type="hidden" asp-for="Cikis" />
 </form>
 
 @section Styles {
@@ -194,11 +220,14 @@
         $("input[name='DogumTarihi']").daterangepicker({
             singleDatePicker: true,
             showDropdowns: true,
+            autoUpdateInput: false,
         });
 
         $("input[name='DogumTarihi']").on('apply.daterangepicker', function (ev, picker) {
             var eleman = picker.element.data("name");
+            $(this).val(picker.startDate.format("DD.MM.YYYY"));
             $("input[name='" + eleman + "']").val(picker.startDate.format('YYYY-MM-DD'));
         });
+
     </script>
 }

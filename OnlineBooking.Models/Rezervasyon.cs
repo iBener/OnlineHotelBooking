@@ -28,9 +28,9 @@ namespace OnlineBooking.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public int RezervasyonId { get; set; }
 
-        public string OtelId { get; set; }
+        public int OtelId { get; set; }
 
-        public string MusteriId { get; set; }
+        public int MusteriId { get; set; }
 
         public DateTime Giris { get; set; }
 
