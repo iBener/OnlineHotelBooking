@@ -1,0 +1,92 @@
+﻿@model OnlineBooking.ViewModels.KullaniciViewModel
+
+@{
+    ViewData["Title"] = "Giriş";
+}
+
+@Html.Partial("_HataMesaji", (string)ViewBag.HataMesaji ?? "")
+
+<form id="giris" asp-controller="Kullanici" asp-action="Giris" asp-route-returnurl="@ViewData["ReturnUrl"]">
+    <h1>Giriş</h1>
+    <div class="row">
+        <div class="form-group col-sm-4">
+            <label asp-for="Kullanici.KullaniciAdi" class="control-label"></label>
+            <input asp-for="Kullanici.KullaniciAdi" class="form-control" placeholder="Kullanıcı E-Postası" type="text" autocomplete="off" />
+            <span asp-validation-for="Kullanici.KullaniciAdi" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-sm-4">
+            <label asp-for="Kullanici.Parola" class="control-label"></label>
+            <input asp-for="Kullanici.Parola" class="form-control" placeholder="Parola" type="password" autocomplete="off" />
+            <span asp-validation-for="Kullanici.Parola" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Giriş</button>
+    </div>
+    <div>
+        Bir hesabınız yok mu? <a href="#" onclick="gosterKaydol()">Hemen Kaydol!</a>
+    </div>
+</form>
+
+<form id="kaydol" asp-controller="Kullanici" asp-action="Kaydol" asp-route-returnurl="@ViewData["ReturnUrl"]">
+    <h1>Kayıt Formu</h1>
+    <div class="row">
+        <div class="form-group col-sm-4">
+            <label asp-for="Musteri.Adi" class="control-label">Adınız</label>
+            <input asp-for="Musteri.Adi" class="form-control" placeholder="Adınız" type="text" autocomplete="off" />
+            <span asp-validation-for="Musteri.Adi" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-sm-4">
+            <label asp-for="Musteri.Soyadi" class="control-label">Soyadınız</label>
+            <input asp-for="Musteri.Soyadi" class="form-control" placeholder="Soyadınız" type="text" autocomplete="off" />
+            <span asp-validation-for="Musteri.Soyadi" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-sm-4">
+            <label asp-for="Kullanici.KullaniciAdi" class="control-label"></label>
+            <input asp-for="Kullanici.KullaniciAdi" class="form-control" placeholder="Kullanıcı E-Postası" type="text" autocomplete="off" />
+            <span asp-validation-for="Kullanici.KullaniciAdi" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-sm-4">
+            <label asp-for="Kullanici.Parola" class="control-label"></label>
+            <input asp-for="Kullanici.Parola" class="form-control" placeholder="Parola" type="password" autocomplete="off" />
+            <span asp-validation-for="Kullanici.Parola" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="checkbox">
+                <label><input asp-for="Musteri.KampanyaBildirimOnay" type="checkbox">Fırsat ve kampanyalardan haberdar olmak istiyorum.</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Kaydol</button>
+    </div>
+    <div>
+        Zaten bir hesabınız var mı? <a href="#" onclick="gosterGiris()">Giriş Yap!</a>
+    </div>
+</form>
+
+@section Scripts {
+<script>
+    $(function () {
+        @((bool)ViewData["Kaydol"] ? "gosterKaydol();" : "gosterGiris();")
+    });
+    function gosterKaydol() {
+        $("#giris").hide();
+        $("#kaydol").show();
+    }
+    function gosterGiris() {
+        $("#kaydol").hide();
+        $("#giris").show();
+    }
+</script>
+}

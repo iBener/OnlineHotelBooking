@@ -15,10 +15,10 @@ namespace OnlineBooking.Data
         {
             Connection = veriTabani.GetConnection(open: true);
 
-
-            Tesis = new TesisCommands(this, Connection);
-            Otel = new OtelBulCommands(this, Connection);
-            Rezervasyon = new RezervasyonCommand(this, Connection);
+            Tesis = new TesisCommands(this, Connection, transaction);
+            Otel = new OtelBulCommands(this, Connection, transaction);
+            Rezervasyon = new RezervasyonCommand(this, Connection, transaction);
+            Kullanici = new KullaniciCommands(this, Connection, transaction);
         }
 
         protected DbConnection Connection { get; }
@@ -27,6 +27,7 @@ namespace OnlineBooking.Data
         public TesisCommands Tesis { get; }
         public OtelBulCommands Otel { get; }
         public RezervasyonCommand Rezervasyon { get; }
+        public KullaniciCommands Kullanici { get; }
 
         public void BeginTransaction()
         {

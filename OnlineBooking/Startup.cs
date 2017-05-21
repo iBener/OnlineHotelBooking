@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using OnlineBooking.Helpers;
 using Dapper.FastCrud;
 using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace OnlineBooking
 {
@@ -56,6 +57,16 @@ namespace OnlineBooking
             }
 
             app.UseStaticFiles();
+
+            app.UseCookieAuthentication(new CookieAuthenticationOptions()
+            {
+                AuthenticationScheme = "Ohb",
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                LoginPath = new PathString("/Kullanici/Giris"),
+                LogoutPath = new PathString("/Kullanici/Cikis"),
+                AccessDeniedPath = new PathString("/Kullanici/Izin"),
+            });
 
             app.UseMvc(routes =>
             {

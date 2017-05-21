@@ -12,7 +12,7 @@ namespace OnlineBooking.Data
 {
     public class TesisCommands : CommandBase<Otel>
     {
-        public TesisCommands(DbModel model, DbConnection connection) : base(model, connection)
+        public TesisCommands(DbModel model, DbConnection connection, DbTransaction transaction) : base(model, connection, transaction)
         {
         }
 

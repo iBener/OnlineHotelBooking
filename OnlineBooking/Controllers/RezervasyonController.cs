@@ -7,11 +7,13 @@ using Microsoft.Extensions.Options;
 using OnlineBooking.Data;
 using OnlineBooking.Helpers;
 using OnlineBooking.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace OnlineBooking.Controllers
 {
+    [Authorize]
     public class RezervasyonController : BaseController
     {
         public RezervasyonController(IOptions<VeriTabani> ayarlar) : base(ayarlar)

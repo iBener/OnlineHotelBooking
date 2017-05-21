@@ -13,14 +13,16 @@ namespace OnlineBooking.Data
 {
     public class CommandBase<T> : ICommands<T>
     {
-        public CommandBase(DbModel model, DbConnection connection)
+        public CommandBase(DbModel model, DbConnection connection, DbTransaction transaction)
         {
             Model = model;
             Connection = connection;
+            Transaction = transaction;
         }
 
         protected DbModel Model { get; set; }
         protected DbConnection Connection { get; set; }
+        protected DbTransaction Transaction { get; set; }
 
         private string GetTabloAdi()
         {
@@ -73,12 +75,12 @@ namespace OnlineBooking.Data
 
         public bool Delete(T entity)
         {
-            return Connection.Delete<T>(entity); ;
+            return Connection.Delete<T>(entity, statement => statement.AttachToTransaction(Transaction)); ;
         }
 
         public bool Delete<TModel>(TModel entity)
         {
-            return Connection.Delete<TModel>(entity); ;
+            return Connection.Delete<TModel>(entity, statement => statement.AttachToTransaction(Transaction)); ;
         }
 
         public bool DeleteWithId(int id)
@@ -114,12 +116,12 @@ namespace OnlineBooking.Data
 
         public void Insert(T entity)
         {
-            Connection.Insert<T>(entity);
+            Connection.Insert<T>(entity, statement => statement.AttachToTransaction(Transaction));
         }
 
         public void Insert<TModel>(TModel entity)
         {
-            Connection.Insert<TModel>(entity);
+            Connection.Insert<TModel>(entity, statement => statement.AttachToTransaction(Transaction));
         }
 
         public IEnumerable<T> Query(object param)
@@ -152,7 +154,7 @@ namespace OnlineBooking.Data
             {
                 foreach (var item in param.GetType().GetProperties())
                 {
-                    whereKosul.Add(String.Join(" = ", new string[] { item.Name, item.GetValue(param).ToString() }));
+                    whereKosul.Add(String.Join(" = ", new string[] { item.Name, $"@{ item.Name }" }));
                 }
             }
             var query = $"{ kolonlar } FROM { tabloAdi } \n";
@@ -165,12 +167,12 @@ namespace OnlineBooking.Data
 
         public bool Update(T entity)
         {
-            return Connection.Update<T>(entity);
+            return Connection.Update<T>(entity, statement => statement.AttachToTransaction(Transaction));
         }
 
         public bool Update<TModel>(TModel entity)
         {
-            return Connection.Update<TModel>(entity);
+            return Connection.Update<TModel>(entity, statement => statement.AttachToTransaction(Transaction));
         }
 
         public bool InsertOrUpdate(T entity, int? id)
@@ -182,10 +184,10 @@ namespace OnlineBooking.Data
         {
             if (id == null || id == 0)
             {
-                Connection.Insert<TModel>(entity);
+                Connection.Insert<TModel>(entity, statement => statement.AttachToTransaction(Transaction));
                 return true;
             }
-            return Connection.Update<TModel>(entity);
+            return Connection.Update<TModel>(entity, statement => statement.AttachToTransaction(Transaction));
         }
     }
 }
