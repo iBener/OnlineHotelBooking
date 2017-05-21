@@ -25,7 +25,7 @@ namespace OnlineBooking.Data
                 FaturaBilgileri = new Musteri(),
                 KrediKarti = new KrediKartiViewModel(),
                 SozleymeOnay = false,
-                OtelFiyat = FiyatBilgisiOku(otelFiyatId, tgiris, tcikis, yetiskin, cocuk),
+                OtelFiyat = FiyatBilgisiOku(otelId, otelFiyatId, tgiris, tcikis, yetiskin, cocuk),
                 Giris = tgiris,
                 Cikis = tcikis,
                 Yetiskin = yetiskin,
@@ -35,25 +35,41 @@ namespace OnlineBooking.Data
             return model;
         }
 
-        public OtelFiyatViewModel FiyatBilgisiOku(int otelFiyatId, DateTime giris, DateTime cikis, int yetiskin, int cocuk)
+        public OtelFiyatViewModel FiyatBilgisiOku(int otelId, int otelFiyatId, DateTime giris, DateTime cikis, int yetiskin, int cocuk)
         {
-            var query =
-                "select f.*, o.OdaTipiAdi, k.KonaklamaTuruAdi, r.ImageUrl \n" +
+            var query = "select f.*, o.OdaTipiAdi, k.KonaklamaTuruAdi, r.ImageUrl \n" +
                 "from OdaTipi o join OtelFiyat f on f.OdaTipiId = o.OdaTipiId \n" +
                 "join KonaklamaTuru k on k.KonaklamaTuruId = f.KonaklamaId \n" +
                 "left join OtelResim r on r.OtelId = f.OtelId and r.OdaTipiId = f.OdaTipiId \n" +
-                "where f.OtelFiyatId = @otelFiyatId \n";
-            var fiyat = Connection.Query<OtelFiyatViewModel>(query, new { otelFiyatId }).First();
+                "where f.OtelFiyatId = @otelFiyatId and f.OtelId = @otelId \n";
+            var fiyat = Connection.Query<OtelFiyatViewModel>(query, new { otelId, otelFiyatId }).FirstOrDefault();
             var gece = (int)(cikis - giris).TotalDays;
-            fiyat.Gece = gece;
-            fiyat.Yetiskin = yetiskin;
-            fiyat.Cocuk = cocuk;
+            if (fiyat != null)
+            {
+                fiyat.Gece = gece;
+                fiyat.Yetiskin = yetiskin;
+                fiyat.Cocuk = cocuk;
+            }
             return fiyat;
         }
 
         public void RezervasyonKaydet(RezervasyonViewModel model)
         {
-            
+            var rez = (Rezervasyon)model;
+
+            foreach (var musteri in model.Musteriler)
+            {
+                var misafir = new RezervasyonMisafir()
+                {
+                    RezervasyonId = rez.RezervasyonId,
+                    AdiSoyadi = $"{ musteri.Adi } { musteri.Soyadi }",
+                    Cinsiyeti = musteri.Cinsiyeti,
+                    DogumTarihi = musteri.DogumTarihi,
+                };
+                Insert(misafir);
+            }
+
+            InsertOrUpdate(rez, rez.RezervasyonId);
         }
     }
 }

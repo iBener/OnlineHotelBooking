@@ -27,7 +27,13 @@ namespace OnlineBooking.Controllers
             }
             using (var db = new DbModel(VeriTabani))
             {
-                return View(db.Rezervasyon.GetRezervasyonViewModel(id, otelId, otelFiyatId, giris, cikis, yetiskin, cocuk));
+                var model = db.Rezervasyon.GetRezervasyonViewModel(id, otelId, otelFiyatId, giris, cikis, yetiskin, cocuk);
+                if (model.OtelFiyat == null)
+                {
+                    ViewBag.HataMesaji = "Otel fiyat bilgisi bulunamadı!";
+                    ViewBag.KaydetEnable = false;
+                }
+                return View(model);
             }
         }
 
@@ -35,13 +41,18 @@ namespace OnlineBooking.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(RezervasyonViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || model.OtelFiyat == null || model.OtelFiyat.OtelFiyatId == 0)
             {
                 ViewBag.HataMesaji = "Aşağıda belirtilen hataları düzelttikten sonra yeniden deneyiniz.";
                 using (var db = new DbModel(VeriTabani))
                 {
                     model.Otel = db.Otel.OtelModelOku(model.OtelId, "1900-01-01", "1900-01-01", 0, 0);
-                    model.OtelFiyat = db.Rezervasyon.FiyatBilgisiOku(model.OtelFiyatId, model.Giris, model.Cikis, model.Yetiskin, model.Cocuk);
+                    model.OtelFiyat = db.Rezervasyon.FiyatBilgisiOku(model.OtelId, model.OtelFiyatId, model.Giris, model.Cikis, model.Yetiskin, model.Cocuk);
+                    if (model.OtelFiyat == null)
+                    {
+                        ViewBag.HataMesaji += "\nOtel fiyat bilgisi bulunamadı!";
+                        ViewBag.KaydetEnable = false;
+                    }
                 }
                 return View(model);
             }

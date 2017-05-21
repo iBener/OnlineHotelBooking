@@ -25,16 +25,22 @@ namespace OnlineBooking.ViewModels
 
         public OtelViewModel Otel { get; set; }
 
+        [Required]
         public List<Musteri> Musteriler { get; set; }
 
+        [Required]
         public Musteri FaturaBilgileri { get; set; }
 
+        [Required]
         public int OtelFiyatId { get; set; }
 
-        public OtelFiyatViewModel OtelFiyat { get; internal set; }
+        [Required]
+        public OtelFiyatViewModel OtelFiyat { get; set; }
 
+        [Required]
         public KrediKartiViewModel KrediKarti { get; set; }
 
+        [Required]
         public bool SozleymeOnay { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

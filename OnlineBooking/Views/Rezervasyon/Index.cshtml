@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Rezervasyon";
-    var otelImageUrl = "";
 }
 
 @Html.Partial("_HataMesaji", (string)ViewBag.HataMesaji ?? "")
@@ -139,15 +138,15 @@
                     }
                 </div>
                 <h4>@Model.Otel.OtelAdi</h4>
-                <h5>@Model.OtelFiyat.OdaTipiAdi, @Model.OtelFiyat.KonaklamaTuruAdi</h5>
+                <h5>@Model.OtelFiyat?.OdaTipiAdi, @Model.OtelFiyat?.KonaklamaTuruAdi</h5>
                 <hr style="border-top-color:gray;" />
                 <div style="width:97%;margin-bottom:5px;"><span>Giriş Tarihi</span><div class="pull-right"><strong>@Model.Giris.ToString("D")</strong></div></div>
                 <div style="width:97%;margin-bottom:5px;"><span>Çıkış Tarihi</span><div class="pull-right"><strong>@Model.Cikis.ToString("D")</strong></div></div>
-                <div style="width:97%;margin-bottom:5px;"><span>Gece Sayısı</span><div class="pull-right"><strong>@Model.OtelFiyat.Gece Gece, @(Model.OtelFiyat.Gece + 1) Gün</strong></div></div>
-                <div style="width:97%;margin-bottom:5px;"><span>Kişi Sayısı</span><div class="pull-right"><strong>@Model.OtelFiyat.Yetiskin Yetişkin@(Model.OtelFiyat.Cocuk == 0 ? "" : ", " + Model.OtelFiyat.Cocuk + " Çocuk")</strong></div></div>
-                <div style="width:97%;margin-bottom:5px;"><span>Oda Fiyatı</span><div class="pull-right"><strong>@Model.OtelFiyat.FiyatYetiskin.ToString("n0") TL @(Model.OtelFiyat.Cocuk == 0 ? "" : "Yetişkin, " + Model.OtelFiyat.FiyatCocuk + " TL Çocuk")</strong></div></div>
+                <div style="width:97%;margin-bottom:5px;"><span>Gece Sayısı</span><div class="pull-right"><strong>@Model.OtelFiyat?.Gece Gece, @(Model.OtelFiyat?.Gece + 1) Gün</strong></div></div>
+                <div style="width:97%;margin-bottom:5px;"><span>Kişi Sayısı</span><div class="pull-right"><strong>@Model.OtelFiyat?.Yetiskin Yetişkin@(Model.OtelFiyat?.Cocuk == 0 ? "" : ", " + Model.OtelFiyat?.Cocuk + " Çocuk")</strong></div></div>
+                <div style="width:97%;margin-bottom:5px;"><span>Oda Fiyatı</span><div class="pull-right"><strong>@Model.OtelFiyat?.FiyatYetiskin.ToString("n0") TL @(Model.OtelFiyat?.Cocuk == 0 ? "" : "Yetişkin, " + Model.OtelFiyat?.FiyatCocuk + " TL Çocuk")</strong></div></div>
                 <hr style="border-top-color:gray;margin-bottom:5px;" />
-                <div style="width:97%;"><h4 style="display:inline-block">Toplam Fiyat</h4><div class="pull-right"><h4><strong>@Model.OtelFiyat.ToplamFiyat.ToString("n0") TL</strong></h4></div></div>
+                <div style="width:97%;"><h4 style="display:inline-block">Toplam Fiyat</h4><div class="pull-right"><h4><strong>@Model.OtelFiyat?.ToplamFiyat.ToString("n0") TL</strong></h4></div></div>
             </div>
         </div>
     </div>
@@ -162,13 +161,6 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-7">
-            <button class="btn btn-warning" type="submit">
-                Ödemeyi Tamamla
-            </button>
-        </div>
-    </div>
 
     <input type="hidden" asp-for="OtelId" />
     <input type="hidden" asp-for="OtelFiyatId" />
@@ -176,6 +168,16 @@
     <input type="hidden" asp-for="Cocuk" />
     <input type="hidden" asp-for="Giris" />
     <input type="hidden" asp-for="Cikis" />
+    <input type="hidden" asp-for="ToplamTutar" value="@Model.OtelFiyat?.ToplamFiyat"/>
+    <input type="hidden" asp-for="OtelFiyat.OtelFiyatId" />
+
+    <div class="row">
+        <div class="col-sm-7">
+            <button class="btn btn-warning" type="submit" @(ViewBag.KaydetEnable ?? true ? "" : "disabled")>
+                Ödemeyi Tamamla
+            </button>
+        </div>
+    </div>
 </form>
 
 @section Styles {
