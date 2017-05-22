@@ -8,6 +8,8 @@ using OnlineBooking.Data;
 using OnlineBooking.Helpers;
 using OnlineBooking.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
+using OnlineBooking.Models;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -34,6 +36,19 @@ namespace OnlineBooking.Controllers
                 {
                     ViewBag.HataMesaji = "Otel fiyat bilgisi bulunamadı!";
                     ViewBag.KaydetEnable = false;
+                }
+                if (TempData["Musteri"] != null)
+                {
+                    var musteri = JsonConvert.DeserializeObject<Musteri>(TempData["Musteri"].ToString());
+                    if (model.Musteriler.Count > 0)
+                    {
+                        model.Musteriler[0].Adi = musteri.Adi;
+                        model.Musteriler[0].Soyadi = musteri.Soyadi;
+                        model.Musteriler[0].EPosta = musteri.EPosta;
+                    }
+                    model.FaturaBilgileri.Adi = musteri.Adi;
+                    model.FaturaBilgileri.Soyadi = musteri.Soyadi;
+                    model.FaturaBilgileri.EPosta = musteri.EPosta;
                 }
                 return View(model);
             }

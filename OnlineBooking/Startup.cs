@@ -11,6 +11,7 @@ using OnlineBooking.Helpers;
 using Dapper.FastCrud;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace OnlineBooking
 {
@@ -38,6 +39,17 @@ namespace OnlineBooking
             // Ayarlar classı yapılandırması:
             services.AddOptions();
             services.Configure<VeriTabani>(Configuration.GetSection("VeriTabani"));
+
+            // Session
+            services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
+            //services.AddDistributedMemoryCache();
+
+            //services.AddSession(options =>
+            //{
+            //    // Set a short timeout for easy testing.
+            //    options.IdleTimeout = TimeSpan.FromSeconds(10);
+            //    options.CookieHttpOnly = true;
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

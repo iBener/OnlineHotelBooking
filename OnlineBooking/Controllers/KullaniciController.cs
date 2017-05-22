@@ -9,6 +9,7 @@ using OnlineBooking.Models;
 using System.Security.Claims;
 using OnlineBooking.Data;
 using OnlineBooking.ViewModels;
+using Newtonsoft.Json;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -121,6 +122,10 @@ namespace OnlineBooking.Controllers
 
                     if (ReturnUrl != null)
                     {
+                        if (ReturnUrl.StartsWith("/Rezervasyon"))
+                        {
+                            TempData["Musteri"] = JsonConvert.SerializeObject(model.Musteri);
+                        }
                         return Redirect(ReturnUrl);
                     }
                     return RedirectToAction("Index", "AnaSayfa");

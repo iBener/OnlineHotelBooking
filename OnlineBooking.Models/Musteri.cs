@@ -37,7 +37,7 @@ namespace OnlineBooking.Models
         public string Cinsiyeti { get; set; } = "";
 
         [Display(Name = "Doğum Tarihi")]
-        public DateTime DogumTarihi { get; set; } = new DateTime(1900, 1, 1);
+        public DateTime DogumTarihi { get; set; }
 
         public bool KampanyaBildirimOnay { get; set; }
     }

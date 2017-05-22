@@ -51,6 +51,8 @@
                             <input asp-for="Musteriler[i].DogumTarihi" type="hidden" class="form-control">
                         </div>
                         <span asp-validation-for="Musteriler[i].DogumTarihi" class="text-danger"></span>
+
+                        <input type="hidden" asp-for="Musteriler[i].EPosta" />
                     </div>
                 }
             </div>
@@ -223,13 +225,9 @@
             singleDatePicker: true,
             showDropdowns: true,
             autoUpdateInput: false,
+        }, function (start, end) {
+            var eleman = $(this)[0].element[0].dataset.name;
+            $("input[name='" + eleman + "']").val(start.format('YYYY-MM-DD'));
         });
-
-        $("input[name='DogumTarihi']").on('apply.daterangepicker', function (ev, picker) {
-            var eleman = picker.element.data("name");
-            $(this).val(picker.startDate.format("DD.MM.YYYY"));
-            $("input[name='" + eleman + "']").val(picker.startDate.format('YYYY-MM-DD'));
-        });
-
     </script>
 }

@@ -56,6 +56,7 @@ namespace OnlineBooking.Data
         public void RezervasyonKaydet(RezervasyonViewModel model)
         {
             var rez = (Rezervasyon)model;
+            InsertOrUpdate(rez, rez.RezervasyonId);
 
             foreach (var musteri in model.Musteriler)
             {
@@ -68,8 +69,6 @@ namespace OnlineBooking.Data
                 };
                 Insert(misafir);
             }
-
-            InsertOrUpdate(rez, rez.RezervasyonId);
         }
     }
 }
