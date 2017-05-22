@@ -10,6 +10,7 @@ using System.Security.Claims;
 using OnlineBooking.Data;
 using OnlineBooking.ViewModels;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,6 +20,15 @@ namespace OnlineBooking.Controllers
     {
         public KullaniciController(IOptions<VeriTabani> ayarlar) : base(ayarlar)
         {
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult Index()
+        {
+            using (var db = new DbModel(VeriTabani))
+            {
+                return View(db.Kullanici.GetKullaniciListesi());
+            }
         }
 
         public IActionResult Giris(string ReturnUrl = null)

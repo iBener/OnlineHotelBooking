@@ -34,6 +34,10 @@ namespace OnlineBooking.Data
 
                 model.Musteri.KullaniciId = model.Kullanici.KullaniciId;
                 model.Musteri.EPosta = model.Kullanici.KullaniciAdi;
+                if (model.Musteri.DogumTarihi == null || model.Musteri.DogumTarihi == DateTime.MinValue)
+                {
+                    model.Musteri.DogumTarihi = new DateTime(1900, 1, 1);
+                }
                 Insert(model.Musteri);
 
                 Transaction.Commit();
@@ -43,6 +47,21 @@ namespace OnlineBooking.Data
                 Transaction.Rollback();
                 throw;
             }
+        }
+
+        public IEnumerable<KullaniciViewModel> GetKullaniciListesi()
+        {
+            var kullanicilar = Query(null);
+            var sonuc = new List<KullaniciViewModel>();
+            foreach (var item in kullanicilar)
+            {
+                sonuc.Add(new KullaniciViewModel()
+                {
+                    Kullanici = item,
+                    Musteri = Query<Musteri>(new { KullaniciId = item.KullaniciId }).FirstOrDefault()
+                });
+            }
+            return sonuc;
         }
     }
 }

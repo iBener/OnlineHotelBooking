@@ -42,7 +42,12 @@
                 </ul>
                 @if (User.Identity.IsAuthenticated)
                 {
-
+                    if (User.IsInRole("Admin"))
+                    {
+                        <ul class="nav navbar-nav">
+                            <li><a asp-controller="Kullanici" asp-action="Index"><i class="fa fa-users"></i> Kullanıcılar</a></li>
+                        </ul>
+                    }
                     <form asp-controller="Kullanici" asp-action="Cikis" method="post" id="logoutForm">
                         <ul class="nav navbar-nav">
                             <li><a asp-controller="Kullanici" asp-action="Cikis"><i class="glyphicon glyphicon-log-out"></i> Çıkış</a></li>

@@ -1,0 +1,64 @@
+﻿@model IEnumerable<OnlineBooking.ViewModels.KullaniciViewModel>
+
+@{
+    ViewData["Title"] = "Rezervasyon";
+}
+
+@Html.Partial("_HataMesaji", (string)ViewBag.HataMesaji ?? "")
+
+<h1>Kullanıcılar</h1>
+
+<table class="table table-responsive">
+    <thead>
+        <tr>
+            <th>
+                Kullanıcı Adı
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Musteri.Adi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Musteri.Soyadi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Kullanici.Rol)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Kullanici.KayitTarihi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Kullanici.Aktif)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Kullanici.KullaniciAdi
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Musteri.Adi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Musteri.Soyadi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kullanici.Rol)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kullanici.KayitTarihi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kullanici.Aktif)
+                </td>
+                <td>
+                    <a asp-action="Duzenle" asp-route-id="@item.Kullanici.KullaniciId">Düzenle</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
