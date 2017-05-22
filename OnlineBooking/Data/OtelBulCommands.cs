@@ -12,7 +12,7 @@ namespace OnlineBooking.Data
 {
     public class OtelBulCommands : CommandBase<Otel>
     {
-        public OtelBulCommands(DbModel model, DbConnection connection, DbTransaction transaction) : base(model, connection, transaction)
+        public OtelBulCommands(DbModel model, DbConnection connection) : base(model, connection)
         {
         }
 
@@ -38,7 +38,7 @@ namespace OnlineBooking.Data
             var tgiris = Convert.ToDateTime(giris);
             var tcikis = Convert.ToDateTime(cikis);
             var gece = (int)(tcikis - tgiris).TotalDays;
-            var tesis = new TesisCommands(Model, Connection, null);
+            var tesis = new TesisCommands(Model, Connection);
 
             foreach (var otel in oteller)
             {
@@ -79,7 +79,7 @@ namespace OnlineBooking.Data
                 fiyat.Yetiskin = yetiskin;
                 fiyat.Cocuk = cocuk;
             }
-            var tesis = new TesisCommands(Model, Connection, null);
+            var tesis = new TesisCommands(Model, Connection);
             model.Resim = tesis.GetOtelResimleri(otelId);
 
             return model;

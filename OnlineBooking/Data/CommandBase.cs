@@ -13,11 +13,10 @@ namespace OnlineBooking.Data
 {
     public class CommandBase<T> : ICommands<T>
     {
-        public CommandBase(DbModel model, DbConnection connection, DbTransaction transaction)
+        public CommandBase(DbModel model, DbConnection connection)
         {
             Model = model;
             Connection = connection;
-            Transaction = transaction;
         }
 
         protected DbModel Model { get; set; }

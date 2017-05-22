@@ -11,7 +11,7 @@ namespace OnlineBooking.Data
 {
     public class RezervasyonCommand : CommandBase<Rezervasyon>
     {
-        public RezervasyonCommand(DbModel model, DbConnection connection, DbTransaction transaction) : base(model, connection, transaction)
+        public RezervasyonCommand(DbModel model, DbConnection connection) : base(model, connection)
         {
         }
 

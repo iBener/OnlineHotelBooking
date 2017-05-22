@@ -97,9 +97,7 @@ namespace OnlineBooking.Controllers
             {
                 using (var db = new DbModel(VeriTabani))
                 {
-                    db.BeginTransaction();
                     db.Kullanici.Kaydet(model);
-                    db.CommitTransaction();
 
                     var claims = new List<Claim>
                     {

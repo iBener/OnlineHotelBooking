@@ -24,20 +24,20 @@ namespace OnlineBooking.Models
         public string Soyadi { get; set; }
 
         [Display(Name = "Adres")]
-        public string Adresi { get; set; }
+        public string Adres { get; set; } = "";
 
         [Display(Name = "Telefon")]
-        public string Telefonu { get; set; }
+        public string Telefon { get; set; } = "";
 
         [Display(Name = "E-Posta")]
         [DataType(DataType.EmailAddress)]
-        public string EPostasi { get; set; }
+        public string EPosta { get; set; }
 
         [Display(Name = "Cinsiyeti")]
-        public string Cinsiyeti { get; set; }
+        public string Cinsiyeti { get; set; } = "";
 
         [Display(Name = "Doğum Tarihi")]
-        public DateTime DogumTarihi { get; set; }
+        public DateTime DogumTarihi { get; set; } = new DateTime(1900, 1, 1);
 
         public bool KampanyaBildirimOnay { get; set; }
     }

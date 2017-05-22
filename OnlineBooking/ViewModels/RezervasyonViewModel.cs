@@ -74,20 +74,20 @@ namespace OnlineBooking.ViewModels
             {
                 yield return new ValidationResult("Lütfen bir soyad belirtiniz!", new[] { "FaturaBilgileri.Soyadi" });
             }
-            if (String.IsNullOrWhiteSpace(FaturaBilgileri.EPostasi))
+            if (String.IsNullOrWhiteSpace(FaturaBilgileri.EPosta))
             {
                 yield return new ValidationResult("Lütfen bir e-postası belirtiniz!", new[] { "FaturaBilgileri.EPostasi" });
             }
             var emailattrb = new EmailAddressAttribute();
-            if (!emailattrb.IsValid(FaturaBilgileri.EPostasi))
+            if (!emailattrb.IsValid(FaturaBilgileri.EPosta))
             {
                 yield return new ValidationResult("Lütfen geçerli bir e-posta adresi belirtiniz!", new[] { "FaturaBilgileri.EPostasi" });
             }
-            if (String.IsNullOrWhiteSpace(FaturaBilgileri.Adresi))
+            if (String.IsNullOrWhiteSpace(FaturaBilgileri.Adres))
             {
                 yield return new ValidationResult("Lütfen bir adres belirtiniz!", new[] { "FaturaBilgileri.Adresi" });
             }
-            if (String.IsNullOrWhiteSpace(FaturaBilgileri.Telefonu))
+            if (String.IsNullOrWhiteSpace(FaturaBilgileri.Telefon))
             {
                 yield return new ValidationResult("Lütfen bir telefon numarası belirtiniz!", new[] { "FaturaBilgileri.Telefonu" });
             }
