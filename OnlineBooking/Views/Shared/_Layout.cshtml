@@ -42,12 +42,16 @@
                 </ul>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    if (User.IsInRole("Admin"))
-                    {
-                        <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav">
+                        @if (User.IsInRole("Admin") || User.IsInRole("OtelAdmin"))
+                        {
+                            <li><a asp-controller="Tesis" asp-action="Index"><i class="fa fa-hotel"></i> Oteller</a></li>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
                             <li><a asp-controller="Kullanici" asp-action="Index"><i class="fa fa-users"></i> Kullanıcılar</a></li>
-                        </ul>
-                    }
+                        }
+                    </ul>
                     <form asp-controller="Kullanici" asp-action="Cikis" method="post" id="logoutForm" class="navbar-right">
                         <ul class="nav navbar-nav">
                             <li>
