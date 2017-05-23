@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
         <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
-        <link rel="stylesheet" href="~/lib/bootstrap-daterangepicker/daterangepicker.css"/>
+        <link rel="stylesheet" href="~/lib/bootstrap-daterangepicker/daterangepicker.css" />
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -38,7 +38,7 @@
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="AnaSayfa" asp-action="Index"><i class="glyphicon glyphicon-bed"></i> Otel Bul</a></li>
                     @*<li><a asp-area="" asp-controller="AnaSayfa" asp-action="Hakkinda">Hakkında</a></li>
-                    <li><a asp-area="" asp-controller="AnaSayfa" asp-action="Iletisim">İletişim</a></li>*@
+                        <li><a asp-area="" asp-controller="AnaSayfa" asp-action="Iletisim">İletişim</a></li>*@
                 </ul>
                 @if (User.Identity.IsAuthenticated)
                 {
@@ -48,15 +48,20 @@
                             <li><a asp-controller="Kullanici" asp-action="Index"><i class="fa fa-users"></i> Kullanıcılar</a></li>
                         </ul>
                     }
-                    <form asp-controller="Kullanici" asp-action="Cikis" method="post" id="logoutForm">
+                    <form asp-controller="Kullanici" asp-action="Cikis" method="post" id="logoutForm" class="navbar-right">
                         <ul class="nav navbar-nav">
-                            <li><a asp-controller="Kullanici" asp-action="Cikis"><i class="glyphicon glyphicon-log-out"></i> Çıkış</a></li>
+                            <li>
+                                <a asp-controller="Kullanici" asp-action="Duzenle" title="Manage">Merhaba @GetKullaniciAdSoyad()</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Kullanici" asp-action="Cikis"><i class="glyphicon glyphicon-log-out"></i> Çıkış</a>
+                            </li>
                         </ul>
                     </form>
                 }
                 else
                 {
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav navbar-right">
                         <li><a asp-controller="Kullanici" asp-action="Giris"><i class="glyphicon glyphicon-log-in"></i> Giriş</a></li>
                     </ul>
                 }
@@ -98,3 +103,16 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+
+@functions {
+    public string GetKullaniciAdSoyad()
+    {
+        var claim = User.Claims.FirstOrDefault(x => x.Type == "AdiSoyadi");
+        if (claim != null && !String.IsNullOrEmpty(claim.Value))
+        {
+            return claim.Value;
+        }
+        claim = User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Name);
+        return claim.Value;
+    }
+} 

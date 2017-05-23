@@ -40,6 +40,7 @@ namespace OnlineBooking.Controllers
                 {
                     return RedirectToHataMesaji("Bu işlemi yapmak için yetkili değilsiniz.");
                 }
+                id = Int32.Parse(userId.Value);
             }
             using (var db = new DbModel(VeriTabani))
             {
@@ -98,10 +99,12 @@ namespace OnlineBooking.Controllers
 
                     if (item != null)
                     {
+                        var musteri = db.Kullanici.GetMusteriByKullaniciId(item.KullaniciId);
                         var claims = new List<Claim>
                         {
                             new Claim(ClaimTypes.NameIdentifier, item.KullaniciId.ToString(), ClaimValueTypes.Integer32),
                             new Claim(ClaimTypes.Name, item.KullaniciAdi, ClaimValueTypes.String),
+                            new Claim("AdiSoyadi", musteri == null ? "" : musteri.Adi + " " + musteri.Soyadi, ClaimValueTypes.String),
                             //new Claim(ClaimTypes.Email, item.EPosta, ClaimValueTypes.String),
                             //new Claim("AdiSoyadi", item.AdiSoyadi, ClaimValueTypes.String),
                         };

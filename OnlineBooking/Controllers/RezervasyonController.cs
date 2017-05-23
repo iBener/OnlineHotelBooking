@@ -10,6 +10,7 @@ using OnlineBooking.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using OnlineBooking.Models;
+using System.Security.Claims;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -40,18 +41,32 @@ namespace OnlineBooking.Controllers
                 if (TempData["Musteri"] != null)
                 {
                     var musteri = JsonConvert.DeserializeObject<Musteri>(TempData["Musteri"].ToString());
-                    if (model.Musteriler.Count > 0)
+                    SetModelMusteri(model, musteri);
+                }
+                else if (User.Identity.IsAuthenticated)
+                {
+                    var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+                    if (userId != null && Int32.TryParse(userId.Value, out int kullaniciid))
                     {
-                        model.Musteriler[0].Adi = musteri.Adi;
-                        model.Musteriler[0].Soyadi = musteri.Soyadi;
-                        model.Musteriler[0].EPosta = musteri.EPosta;
+                        var kullanici = db.Kullanici.GetKullanici(kullaniciid);
+                        SetModelMusteri(model, kullanici.Musteri);
                     }
-                    model.FaturaBilgileri.Adi = musteri.Adi;
-                    model.FaturaBilgileri.Soyadi = musteri.Soyadi;
-                    model.FaturaBilgileri.EPosta = musteri.EPosta;
                 }
                 return View(model);
             }
+        }
+
+        private void SetModelMusteri(RezervasyonViewModel model, Musteri musteri)
+        {
+            if (model.Musteriler.Count > 0)
+            {
+                model.Musteriler[0].Adi = musteri.Adi;
+                model.Musteriler[0].Soyadi = musteri.Soyadi;
+                model.Musteriler[0].EPosta = musteri.EPosta;
+            }
+            model.FaturaBilgileri.Adi = musteri.Adi;
+            model.FaturaBilgileri.Soyadi = musteri.Soyadi;
+            model.FaturaBilgileri.EPosta = musteri.EPosta;
         }
 
         [HttpPost]

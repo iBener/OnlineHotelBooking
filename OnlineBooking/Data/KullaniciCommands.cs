@@ -53,6 +53,12 @@ namespace OnlineBooking.Data
         {
             try
             {
+                if (String.IsNullOrEmpty(model.Kullanici.Rol))
+                {
+                    var kullanici = FindWithId(model.Kullanici.KullaniciId);
+                    model.Kullanici.Rol = kullanici.Rol;
+                    model.Kullanici.Aktif = kullanici.Aktif;
+                }
                 Transaction = Connection.BeginTransaction();
 
                 Update<Kullanici>(model.Kullanici);
@@ -88,10 +94,15 @@ namespace OnlineBooking.Data
             var model = new KullaniciViewModel()
             {
                 Kullanici = kullanici,
-                Musteri = Query<Musteri>(new { KullaniciId = id }).FirstOrDefault(),
+                Musteri = GetMusteriByKullaniciId(id),
                 ParolaDogrula = kullanici.Parola,
             };
             return model;
+        }
+
+        public Musteri GetMusteriByKullaniciId(int id)
+        {
+            return Query<Musteri>(new { KullaniciId = id }).FirstOrDefault();
         }
     }
 }

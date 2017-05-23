@@ -79,22 +79,25 @@
                     <input asp-for="ParolaDogrula" class="form-control" placeholder="Parola Doğrula" value="@Model.ParolaDogrula" type="password">
                 </div>
             </div>
-            <div class="row">
-                <div class="form-group col-sm-6">
-                    <label asp-for="Kullanici.Rol" class="control-label"></label>
-                    <select asp-for="Kullanici.Rol" class="form-control">
-                        <option>Musteri</option>
-                        <option>OtelAdmin</option>
-                        <option>Admin</option>
-                    </select>
-                </div>
-                <div class="form-group col-sm-6">
-                    <label asp-for="Kullanici.Aktif" class="control-label"></label>
-                    <div class="checkbox">
-                        <label><input asp-for="Kullanici.Aktif" type="checkbox">Aktif kullanıcı</label>
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label asp-for="Kullanici.Rol" class="control-label"></label>
+                        <select asp-for="Kullanici.Rol" class="form-control">
+                            <option>Musteri</option>
+                            <option>OtelAdmin</option>
+                            <option>Admin</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label asp-for="Kullanici.Aktif" class="control-label"></label>
+                        <div class="checkbox">
+                            <label><input asp-for="Kullanici.Aktif" type="checkbox">Aktif kullanıcı</label>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         </fieldset>
 
         <button style="margin-top:20px;" type="submit" class="btn btn-default"><i class="fa fa-floppy-o"></i> Kaydet</button>
