@@ -21,7 +21,7 @@ namespace OnlineBooking.Data
             return model;
         }
 
-        public void Kaydet(KullaniciViewModel model)
+        public void Kaydol(KullaniciViewModel model)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace OnlineBooking.Data
                 model.Kullanici.Rol = "Musteri";
                 model.Kullanici.KayitTarihi = DateTime.Now;
                 model.Kullanici.Aktif = true;
-                Insert(model.Kullanici);
+                Insert<Kullanici>(model.Kullanici);
 
                 model.Musteri.KullaniciId = model.Kullanici.KullaniciId;
                 model.Musteri.EPosta = model.Kullanici.KullaniciAdi;
@@ -38,7 +38,25 @@ namespace OnlineBooking.Data
                 {
                     model.Musteri.DogumTarihi = new DateTime(1900, 1, 1);
                 }
-                Insert(model.Musteri);
+                Insert<Musteri>(model.Musteri);
+
+                Transaction.Commit();
+            }
+            catch (Exception)
+            {
+                Transaction.Rollback();
+                throw;
+            }
+        }
+
+        public void Guncelle(KullaniciViewModel model)
+        {
+            try
+            {
+                Transaction = Connection.BeginTransaction();
+
+                Update<Kullanici>(model.Kullanici);
+                Update<Musteri>(model.Musteri);
 
                 Transaction.Commit();
             }
@@ -62,6 +80,18 @@ namespace OnlineBooking.Data
                 });
             }
             return sonuc;
+        }
+
+        public KullaniciViewModel GetKullanici(int id)
+        {
+            var kullanici = FindWithId(id);
+            var model = new KullaniciViewModel()
+            {
+                Kullanici = kullanici,
+                Musteri = Query<Musteri>(new { KullaniciId = id }).FirstOrDefault(),
+                ParolaDogrula = kullanici.Parola,
+            };
+            return model;
         }
     }
 }

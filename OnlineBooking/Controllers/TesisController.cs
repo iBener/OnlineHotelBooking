@@ -36,7 +36,7 @@ namespace OnlineBooking.Controllers
             var model = GetOtelById(id);
             if (model == null)
             {
-                return HataMesajiAnasayfa("Aradýðýnýz otel tanýmý bulunamadý!");
+                return RedirectToHataMesajiAnasayfa("Aradýðýnýz otel tanýmý bulunamadý!");
             }
             return View(model);
         }

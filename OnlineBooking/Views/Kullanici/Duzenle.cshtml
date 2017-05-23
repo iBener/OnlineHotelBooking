@@ -1,0 +1,115 @@
+﻿@model OnlineBooking.ViewModels.KullaniciViewModel
+
+@{
+    ViewData["Title"] = "Kullanıcı Tanımı";
+}
+
+<h1>Kullanıcı Tanımı</h1>
+
+<hr />
+
+@Html.Partial("_HataMesaji", (string)ViewBag.HataMesaji ?? "")
+
+<div class="row">
+    <form class="col-sm-6" role="form" asp-controller="Kullanici" asp-action="Duzenle">
+        <fieldset>
+            <legend>Kişisel Bilgiler</legend>
+            <input type="hidden" asp-for="Musteri.MusteriId" />
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="Musteri.Adi" class="control-label"></label>
+                    <input asp-for="Musteri.Adi" class="form-control" placeholder="Adı">
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Musteri.Soyadi" class="control-label"></label>
+                    <input asp-for="Musteri.Soyadi" class="form-control" placeholder="Soyadı">
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Musteri.Adres" class="control-label"></label>
+                <input asp-for="Musteri.Adres" class="form-control" placeholder="Adresi">
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="Musteri.Telefon" class="control-label"></label>
+                    <input asp-for="Musteri.Telefon" class="form-control" placeholder="Telefon">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="Musteri.DogumTarihi" class="control-label"></label>
+                    <div class="input-group date">
+                        <input id="dogumTarihi" type="text" class="form-control text-center" name="dogumTarihi" value="@(Model.Musteri.DogumTarihi == null || Model.Musteri.DogumTarihi == DateTime.MinValue || Model.Musteri.DogumTarihi == new DateTime(1900, 1, 1) ? "" : Model.Musteri.DogumTarihi.ToString("dd.MM.yyyy"))" placeholder="Doğum Tarihi" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                        <input asp-for="Musteri.DogumTarihi" type="hidden" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Musteri.Cinsiyeti" class="control-label"></label>
+                    <select asp-for="Musteri.Cinsiyeti" class="form-control">
+                        <option>Cinsiyeti</option>
+                        <option>Kadın</option>
+                        <option>Erkek</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label><input asp-for="Musteri.KampanyaBildirimOnay" type="checkbox">Fırsat ve kampanyalardan haberdar olmak istiyorum.</label>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Kullanıcı Bilgileri</legend>
+            <input type="hidden" asp-for="Kullanici.KullaniciId" />
+            <input type="hidden" asp-for="Kullanici.KayitTarihi" />
+            <div class="form-group">
+                <label asp-for="Kullanici.KullaniciAdi" class="control-label">Kullanıcı E-Postası</label>
+                <input asp-for="Kullanici.KullaniciAdi" type="email" class="form-control" placeholder="Kullanıcı E-Postası">
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="Kullanici.Parola" class="control-label"></label>
+                    <input asp-for="Kullanici.Parola" class="form-control" placeholder="Parola" value="@Model.Kullanici.Parola">
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="ParolaDogrula" class="control-label">Parola Doğrula</label>
+                    <input asp-for="ParolaDogrula" class="form-control" placeholder="Parola Doğrula" value="@Model.ParolaDogrula" type="password">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="Kullanici.Rol" class="control-label"></label>
+                    <select asp-for="Kullanici.Rol" class="form-control">
+                        <option>Musteri</option>
+                        <option>OtelAdmin</option>
+                        <option>Admin</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Kullanici.Aktif" class="control-label"></label>
+                    <div class="checkbox">
+                        <label><input asp-for="Kullanici.Aktif" type="checkbox">Aktif kullanıcı</label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <button style="margin-top:20px;" type="submit" class="btn btn-default"><i class="fa fa-floppy-o"></i> Kaydet</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () { 
+            $("#dogumTarihi").daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+            }, function (start, end) {
+                $("#Musteri_DogumTarihi").val(start.format('YYYY-MM-DD'));
+            });
+        });
+    </script>
+}

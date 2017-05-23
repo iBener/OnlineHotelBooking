@@ -31,6 +31,44 @@ namespace OnlineBooking.Controllers
             }
         }
 
+        public IActionResult Duzenle(int? id)
+        {
+            if (!User.IsInRole("Admin"))
+            {
+                var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+                if (userId != null && id != null && userId.Value != id.Value.ToString())
+                {
+                    return RedirectToHataMesaji("Bu işlemi yapmak için yetkili değilsiniz.");
+                }
+            }
+            using (var db = new DbModel(VeriTabani))
+            {
+                return View(db.Kullanici.GetKullanici(id ?? 0));
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Duzenle(KullaniciViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            try
+            {
+                using (var db = new DbModel(VeriTabani))
+                {
+                    db.Kullanici.Guncelle(model);
+                }
+                return RedirectToAction("Index", "AnaSayfa");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.HataMesaji = ex.ToString();
+            }
+            return View(model);
+        }
+
         public IActionResult Giris(string ReturnUrl = null)
         {
             ViewData["ReturnUrl"] = ReturnUrl;
@@ -108,7 +146,7 @@ namespace OnlineBooking.Controllers
             {
                 using (var db = new DbModel(VeriTabani))
                 {
-                    db.Kullanici.Kaydet(model);
+                    db.Kullanici.Kaydol(model);
 
                     var claims = new List<Claim>
                     {

@@ -17,13 +17,13 @@ namespace OnlineBooking.Controllers
             VeriTabani = ayarlar.Value;
         }
 
-        public IActionResult HataMesaji(string mesaj)
+        public IActionResult RedirectToHataMesaji(string mesaj)
         {
             var m = Helper.ToBase64(mesaj);
             return RedirectToAction("Hata", "AnaSayfa", new { m });
         }
 
-        public IActionResult HataMesajiAnasayfa(string mesaj)
+        public IActionResult RedirectToHataMesajiAnasayfa(string mesaj)
         {
             var m = Helper.ToBase64(mesaj);
             return RedirectToAction("Index", "AnaSayfa", new { m });
