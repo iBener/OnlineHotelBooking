@@ -9,6 +9,7 @@ using OnlineBooking.Helpers;
 using OnlineBooking.Models;
 using OnlineBooking.Data;
 using OnlineBooking.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OnlineBooking.Controllers
 {
@@ -16,6 +17,7 @@ namespace OnlineBooking.Controllers
     /// Tesis tanýmlama class'ý. Bu class ile otel/tesis yetkileri kendi tesislerini sisteme 
     /// tanýmlayabilirler.
     /// </summary>
+    [Authorize(Roles = "Admin,OtelAdmin")]
     public class TesisController : BaseController
     {
         public TesisController(IOptions<VeriTabani> ayarlar) : base(ayarlar)
@@ -31,7 +33,12 @@ namespace OnlineBooking.Controllers
         }
 
         // GET: Tesis
-        public IActionResult Index(int id)
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Detay(int id)
         {
             var model = GetOtelById(id);
             if (model == null)
@@ -41,16 +48,16 @@ namespace OnlineBooking.Controllers
             return View(model);
         }
 
-        public ActionResult Detay(int id)
+        public ActionResult Duzelt(int id)
         {
             ViewBag.Islem = "Düzelt";
             return View(GetOtelById(id));
         }
 
-        // POST: Tesis/Detay/5
+        // POST: Tesis/Duzelt/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Detay(Otel tesis)
+        public ActionResult Duzelt(Otel tesis)
         {
             if (!ModelState.IsValid)
             {
@@ -65,7 +72,7 @@ namespace OnlineBooking.Controllers
                     else
                         db.Tesis.Update(tesis);
                 }
-                return RedirectToAction("Index", new { id = tesis.OtelId });
+                return RedirectToAction("Detay", new { id = tesis.OtelId });
             }
             catch (Exception ex)
             {
@@ -94,7 +101,7 @@ namespace OnlineBooking.Controllers
             }
         }
 
-        // POST: Tesis/Detay/5
+        // POST: Tesis/Fiyat/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Fiyat(int otelId, int konaklamaId, IEnumerable<OtelFiyatViewModel> fiyat)
@@ -111,7 +118,7 @@ namespace OnlineBooking.Controllers
                 {
                     db.Tesis.FiyatListesiKaydet(fiyat);
                 }
-                return RedirectToAction("Index", new { id = otelId });
+                return RedirectToAction("Detay", new { id = otelId });
             }
             catch (Exception ex)
             {

@@ -137,6 +137,11 @@ namespace OnlineBooking.Controllers
             return View(model);
         }
 
+        public IActionResult Izin()
+        {
+            return RedirectToHataMesaji("Bu işlemi yapmak için yetkili değilsiniz!");
+        }
+
         public async Task<ActionResult> Kaydol(KullaniciViewModel model, string ReturnUrl = null)
         {
             ViewData["ReturnUrl"] = ReturnUrl;
