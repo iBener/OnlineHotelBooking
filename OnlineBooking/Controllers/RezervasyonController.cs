@@ -63,10 +63,15 @@ namespace OnlineBooking.Controllers
                 model.Musteriler[0].Adi = musteri.Adi;
                 model.Musteriler[0].Soyadi = musteri.Soyadi;
                 model.Musteriler[0].EPosta = musteri.EPosta;
+                model.Musteriler[0].Cinsiyeti = musteri.Cinsiyeti;
+                model.Musteriler[0].DogumTarihi = musteri.DogumTarihi;
             }
             model.FaturaBilgileri.Adi = musteri.Adi;
             model.FaturaBilgileri.Soyadi = musteri.Soyadi;
             model.FaturaBilgileri.EPosta = musteri.EPosta;
+            model.FaturaBilgileri.MusteriId = musteri.MusteriId;
+            model.FaturaBilgileri.Adres = musteri.Adres;
+            model.FaturaBilgileri.Telefon = musteri.Telefon;
         }
 
         [HttpPost]

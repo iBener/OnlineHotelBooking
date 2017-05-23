@@ -43,7 +43,7 @@
                             <span asp-validation-for="Musteriler[i].Soyadi" class="text-danger"></span>
                         </div>
                         <div class="col-sm-3 input-group date p5" style="padding-right:5px;padding-left:5px;">
-                            <input type="text" class="form-control text-center" name="DogumTarihi" data-name="Musteriler[@i].DogumTarihi" value="@(musteri.DogumTarihi == null || musteri.DogumTarihi == DateTime.MinValue ? "" : musteri.DogumTarihi.ToString("dd.MM.yyyy"))" placeholder="Doğum Tarihi"/>
+                            <input type="text" autocomplete="off" class="form-control text-center" name="DogumTarihi" data-name="Musteriler[@i].DogumTarihi" value="@(musteri.DogumTarihi == null || musteri.DogumTarihi == DateTime.MinValue ? "" : musteri.DogumTarihi.ToString("dd.MM.yyyy"))" placeholder="Doğum Tarihi"/>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -81,6 +81,7 @@
                         <span asp-validation-for="FaturaBilgileri.Telefon" class="text-danger"></span>
                     </div>
                 </div>
+                <input type="hidden" asp-for="FaturaBilgileri.MusteriId" />
             </div>
 
 
@@ -158,9 +159,6 @@
                 <label><input asp-for="SozleymeOnay" type="checkbox">Satış sözleşmesini okudum kabul ediyorum.</label>
                 <div style="margin-left:20px"><span asp-validation-for="SozleymeOnay" class="text-danger"></span></div>
             </div>
-            <div class="checkbox">
-                <label><input asp-for="FaturaBilgileri.KampanyaBildirimOnay" type="checkbox">Fırsat ve kampanyalardan haberdar olmak istiyorum.</label>
-            </div>
         </div>
     </div>
 
@@ -171,6 +169,7 @@
     <input type="hidden" asp-for="Giris" />
     <input type="hidden" asp-for="Cikis" />
     <input type="hidden" asp-for="ToplamTutar" value="@Model.OtelFiyat?.ToplamFiyat"/>
+    <input type="hidden" asp-for="OdaFiyati" value="@Model.OtelFiyat?.FiyatYetiskin" />
     <input type="hidden" asp-for="OtelFiyat.OtelFiyatId" />
 
     <div class="row">

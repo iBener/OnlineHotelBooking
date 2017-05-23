@@ -57,7 +57,7 @@ namespace OnlineBooking.Data
         {
             var rez = (Rezervasyon)model;
             InsertOrUpdate(rez, rez.RezervasyonId);
-
+            
             foreach (var musteri in model.Musteriler)
             {
                 var misafir = new RezervasyonMisafir()
@@ -68,6 +68,22 @@ namespace OnlineBooking.Data
                     DogumTarihi = musteri.DogumTarihi,
                 };
                 Insert(misafir);
+
+                if (model.FaturaBilgileri.MusteriId != 0 && model.FaturaBilgileri.Adi == musteri.Adi && model.FaturaBilgileri.Soyadi == musteri.Soyadi)
+                {
+                    if ((model.FaturaBilgileri.DogumTarihi == null || model.FaturaBilgileri.DogumTarihi == DateTime.MinValue || model.FaturaBilgileri.DogumTarihi == new DateTime(1900, 1, 1)))
+                    {
+                        Connection.Execute("update Musteri set DogumTarihi = @DogumTarihi where MusteriId = @MusteriId",
+                                           new { DogumTarihi = musteri.DogumTarihi, MusteriId = model.FaturaBilgileri.MusteriId });
+                    }
+                    if (String.IsNullOrEmpty(model.FaturaBilgileri.Cinsiyeti))
+                    {
+                        Connection.Execute("update Musteri set Cinsiyeti = @Cinsiyeti where MusteriId = @MusteriId",
+                                           new { Cinsiyeti = musteri.Cinsiyeti, MusteriId = model.FaturaBilgileri.MusteriId });
+                    }
+                    Connection.Execute("update Musteri set Adres = @Adres, Telefon = @Telefon where MusteriId = @MusteriId",
+                                        new { Adres = model.FaturaBilgileri.Adres, Telefon = model.FaturaBilgileri.Telefon, MusteriId = model.FaturaBilgileri.MusteriId });
+                }
             }
         }
     }
