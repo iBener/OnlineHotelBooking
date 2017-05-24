@@ -62,10 +62,10 @@ namespace OnlineBooking.Data
             var otel = FindWithId(otelId);
             var model = new OtelViewModel(otel);
             var query =
-                "select f.*, o.OdaTipiAdi, k.KonaklamaTuruAdi, r.ImageUrl \n" +
+                "select f.*, o.OdaTipiAdi, k.KonaklamaTuruAdi, '' ImageUrl \n" +
                 "from OdaTipi o join OtelFiyat f on f.OdaTipiId = o.OdaTipiId \n" +
                 "join KonaklamaTuru k on k.KonaklamaTuruId = f.KonaklamaId \n" +
-                "left join OtelResim r on r.OtelId = @OtelId and r.OdaTipiId = f.OdaTipiId \n" +
+                "--left join OtelResim r on r.OtelId = @OtelId and r.OdaTipiId = f.OdaTipiId \n" +
                 "where f.OtelId=@OtelId and f.FiyatYetiskin<>0 order by f.KonaklamaId,f.OdaTipiId \n";
 
             model.Fiyat = Connection.Query<OtelFiyatViewModel>(query, new { OtelId = otelId });
@@ -78,6 +78,9 @@ namespace OnlineBooking.Data
                 fiyat.Gece = gece;
                 fiyat.Yetiskin = yetiskin;
                 fiyat.Cocuk = cocuk;
+                fiyat.ImageUrl = Connection.ExecuteScalar<string>(
+                    "select top 1 ImageUrl from OtelResim where OtelId = @otelId and OdaTipiId = @odaTipiId ",
+                    new { otelId, odaTipiId = fiyat.OdaTipiId });
             }
             var tesis = new TesisCommands(Model, Connection);
             model.Resim = tesis.GetOtelResimleri(otelId);
