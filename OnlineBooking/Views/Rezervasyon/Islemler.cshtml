@@ -1,0 +1,56 @@
+﻿@model IEnumerable<OnlineBooking.ViewModels.RezervasyonViewModel>
+
+@{
+    ViewData["Title"] = "Rezervasyon İşlem Geçmişi";
+}
+
+@Html.Partial("_HataMesaji", (string)ViewBag.HataMesaji ?? "")
+
+<table class="table table-responsive">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Otel.OtelAdi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Otel.Yildiz)
+            </th>
+            <th>
+                Konum
+            </th>
+            <th class="text-center">
+                Yetişkin / Çocuk
+            </th>
+            <th class="text-right">
+                Toplam Tutar
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Otel.OtelAdi)
+                </td>
+                <td style="color:#ffa800">
+                    @Html.Partial("Yildiz", item.Otel.Yildiz)
+                </td>
+                <td>
+                    @item.Otel.IlAdi, @item.Otel.IlceAdi
+                </td>
+                <td class="text-center">
+                    @item.Yetiskin / @item.Cocuk
+                </td>
+                <td class="text-right">
+                    @item.ToplamTutar.ToString("n0") <i class="fa fa-try" aria-hidden="true"></i>
+                </td>
+                <td>
+                    <a asp-action="Index" asp-route-id="@item.RezervasyonId">Detay</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

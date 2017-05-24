@@ -56,6 +56,7 @@ namespace OnlineBooking.Data
         public void RezervasyonKaydet(RezervasyonViewModel model)
         {
             var rez = (Rezervasyon)model;
+            rez.MusteriId = model.FaturaBilgileri.MusteriId;
             InsertOrUpdate(rez, rez.RezervasyonId);
             
             foreach (var musteri in model.Musteriler)
@@ -85,6 +86,39 @@ namespace OnlineBooking.Data
                                         new { Adres = model.FaturaBilgileri.Adres, Telefon = model.FaturaBilgileri.Telefon, MusteriId = model.FaturaBilgileri.MusteriId });
                 }
             }
+        }
+
+        public IEnumerable<RezervasyonViewModel> GetIslemListesi(int kullaniciId)
+        {
+            var tesis = new TesisCommands(Model, Connection);
+            var query =
+                "select r.* from Rezervasyon r \n" +
+                "join Musteri m on m.MusteriId = r.MusteriId \n" +
+                "where m.KullaniciId = @kullaniciId \n";
+            var rezervasyonlar = Connection.Query<Rezervasyon>(query, new { kullaniciId });
+            var sonuc = new List<RezervasyonViewModel>();
+            foreach (var rezervasyon in rezervasyonlar)
+            {
+                var item = new RezervasyonViewModel(rezervasyon)
+                {
+                    Otel = tesis.GetOtelViewModel(rezervasyon.OtelId),
+                    FaturaBilgileri = FindWithId<Musteri>(rezervasyon.MusteriId),
+                    Musteriler = new List<Musteri>()
+                };
+                var musteriler = Connection.Query<dynamic>(
+                    "select * from RezervasyonMisafir where RezervasyonId = @id ", new { id = rezervasyon.RezervasyonId });
+                foreach (var musteri in musteriler)
+                {
+                    item.Musteriler.Add(new Musteri()
+                    {
+                        Adi = musteri.AdiSoyadi,
+                        DogumTarihi = musteri.DogumTarihi,
+                        Cinsiyeti = musteri.Cinsiyeti,
+                    });
+                }
+                sonuc.Add(item);
+            }
+            return sonuc;
         }
     }
 }

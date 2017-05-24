@@ -32,13 +32,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="AnaSayfa" asp-action="Index" class="navbar-brand">Online Hotel Booking</a>
+                <div id="logo"><img src="~/images/star_yellow_view.png" alt="" /></div>
+                <a asp-controller="AnaSayfa" asp-action="Index" class="navbar-brand">Online Hotel Booking</a>
             </div>
             <div class="navbar-collapse collapse" style="max-width:1024px;">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="AnaSayfa" asp-action="Index"><i class="glyphicon glyphicon-bed"></i> Otel Bul</a></li>
-                    @*<li><a asp-area="" asp-controller="AnaSayfa" asp-action="Hakkinda">Hakkında</a></li>
-                        <li><a asp-area="" asp-controller="AnaSayfa" asp-action="Iletisim">İletişim</a></li>*@
+                    <li><a asp-controller="AnaSayfa" asp-action="Index"><i class="glyphicon glyphicon-bed"></i> Otel Bul</a></li>
+                    <li><a asp-controller="Rezervasyon" asp-action="Islemler"><i class="fa fa-try"></i> İşlem Geçmişi</a></li>
+                    @*<li><a asp-controller="AnaSayfa" asp-action="Hakkinda">Hakkında</a></li>
+                      <li><a asp-controller="AnaSayfa" asp-action="Iletisim">İletişim</a></li>*@
                 </ul>
                 @if (User.Identity.IsAuthenticated)
                 {

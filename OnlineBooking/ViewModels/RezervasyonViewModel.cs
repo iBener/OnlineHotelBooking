@@ -14,14 +14,22 @@ namespace OnlineBooking.ViewModels
         public RezervasyonViewModel(int yetiskin) 
             : this()
         {
+            Yetiskin = yetiskin;
+            MusteriListesiOlustur();
+        }
+
+        public RezervasyonViewModel(Rezervasyon rezervasyon) : base(rezervasyon)
+        {
+        }
+
+        private void MusteriListesiOlustur()
+        {
             Musteriler = new List<Musteri>();
-            for (int i = 0; i < yetiskin; i++)
+            for (int i = 0; i < Yetiskin; i++)
             {
                 Musteriler.Add(new Musteri());
             }
         }
-
-        public RezervasyonViewModel(Rezervasyon rezervasyon) : base(rezervasyon) { }
 
         public OtelViewModel Otel { get; set; }
 

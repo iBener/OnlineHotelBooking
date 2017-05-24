@@ -45,14 +45,23 @@ namespace OnlineBooking.Controllers
                 }
                 else if (User.Identity.IsAuthenticated)
                 {
-                    var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
-                    if (userId != null && Int32.TryParse(userId.Value, out int kullaniciid))
+                    var userId = GetKullaniciId();
+                    if (userId != 0)
                     {
-                        var kullanici = db.Kullanici.GetKullanici(kullaniciid);
+                        var kullanici = db.Kullanici.GetKullanici(userId);
                         SetModelMusteri(model, kullanici.Musteri);
                     }
                 }
                 return View(model);
+            }
+        }
+
+        public ActionResult Islemler()
+        {
+            var kullaniciId = GetKullaniciId();
+            using (var db = new DbModel(VeriTabani))
+            {
+                return View(db.Rezervasyon.GetIslemListesi(kullaniciId));
             }
         }
 
