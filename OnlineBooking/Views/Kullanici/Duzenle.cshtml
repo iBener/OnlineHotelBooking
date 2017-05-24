@@ -10,6 +10,8 @@
 
 @Html.Partial("_HataMesaji", (string)ViewBag.HataMesaji ?? "")
 
+@Html.ValidationSummary()
+
 <div class="row">
     <form class="col-sm-6" role="form" asp-controller="Kullanici" asp-action="Duzenle">
         <fieldset>

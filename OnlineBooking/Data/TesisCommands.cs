@@ -21,7 +21,7 @@ namespace OnlineBooking.Data
             var otel = FindWithId(id);
             if (otel == null)
             {
-                return null;
+                return new OtelViewModel(new Otel());
             }
             var model = new OtelViewModel(otel)
             {
@@ -46,6 +46,26 @@ namespace OnlineBooking.Data
             return fiyatlar;
         }
 
+        public IEnumerable<OtelListesiViewModel> GetOtelListesiViewModel(int kullaniciid)
+        {
+            var kullanici = FindWithId<Kullanici>(kullaniciid);
+            var query = "select o.OtelId, o.OtelAdi, o.Yildiz, o.IlAdi, o.IlceAdi, \n" +
+                        "       case when m.KullaniciId is null then k.KullaniciAdi \n" +
+                        "            else m.Adi + ' ' + m.Soyadi end KullaniciAdi \n" + 
+                        "from Otel o \n" +
+                        "left join KullaniciOtel ko on ko.OtelId = o.OtelId \n" +
+                        "left join Kullanici k on k.KullaniciId = ko.KullaniciId \n" +
+                        "left join Musteri m on m.KullaniciId = ko.KullaniciId \n";
+            int KullaniciId = 0;
+            if (kullanici != null && kullanici.Rol != "Admin" && kullanici.KullaniciId != 0)
+            {
+                query += "where ko.KullaniciId = @KullaniciId \n";
+                KullaniciId = kullanici.KullaniciId;
+            }
+            var result = Connection.Query<OtelListesiViewModel>(query, new { KullaniciId } );
+            return result;
+        }
+
         public IEnumerable<OtelResim> GetOtelResimleri(int otelId, int odaTipi = -1)
         {
             if (odaTipi >= 0)
@@ -53,6 +73,13 @@ namespace OnlineBooking.Data
                 return Query<OtelResim>(new { OtelId = otelId, OdaTipiId = odaTipi });
             }
             return Query<OtelResim>(new { OtelId = otelId});
+        }
+
+        public void SetKullaniciOtel(int kullaniciId, int otelId)
+        {
+            Connection.Execute(
+                "insert into KullaniciOtel (KullaniciId, OtelId) values (@kullaniciId, @otelId)",
+                new { kullaniciId, otelId });
         }
 
         public IEnumerable<OtelFiyatViewModel> GetFiyatListesi(int otelId, int konaklamaId)

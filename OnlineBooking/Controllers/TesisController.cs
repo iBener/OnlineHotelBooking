@@ -10,6 +10,7 @@ using OnlineBooking.Models;
 using OnlineBooking.Data;
 using OnlineBooking.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace OnlineBooking.Controllers
 {
@@ -35,7 +36,15 @@ namespace OnlineBooking.Controllers
         // GET: Tesis
         public IActionResult Index()
         {
-            return View();
+            using (var db = new DbModel(VeriTabani))
+            {
+                var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+                if (userId != null && Int32.TryParse(userId.Value, out int kullaniciid))
+                {
+                    return View(db.Tesis.GetOtelListesiViewModel(kullaniciid));
+                }
+            }
+            return RedirectToHataMesaji("Kullanýcý bilgilerine ulaþýlamadý!");
         }
 
         public IActionResult Detay(int id)
@@ -68,9 +77,18 @@ namespace OnlineBooking.Controllers
                 using (var db = new DbModel(VeriTabani))
                 {
                     if (tesis.OtelId == 0)
+                    {
                         db.Tesis.Insert(tesis);
+                        var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+                        if (userId != null && Int32.TryParse(userId.Value, out int kullaniciid))
+                        {
+                            db.Tesis.SetKullaniciOtel(kullaniciid, tesis.OtelId);
+                        }
+                    }
                     else
+                    {
                         db.Tesis.Update(tesis);
+                    }
                 }
                 return RedirectToAction("Detay", new { id = tesis.OtelId });
             }

@@ -1,0 +1,54 @@
+﻿@model IEnumerable<OnlineBooking.ViewModels.OtelListesiViewModel>
+
+@{
+    ViewData["Title"] = "Rezervasyon";
+}
+
+@Html.Partial("_HataMesaji", (string)ViewBag.HataMesaji ?? "")
+
+<h1>Otel Tesis Tanımları</h1>
+
+<a asp-action="Duzelt" asp-route-id="0" class="btn btn-default">Yeni Otel</a>
+
+<table class="table table-responsive">
+    <thead>
+        <tr>
+            <th>
+                Kullanıcı Adı
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OtelAdi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Yildiz)
+            </th>
+            <th>
+                Konum
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KullaniciAdi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OtelAdi)
+                </td>
+                <td style="color:#ffa800">
+                    @Html.Partial("Yildiz", item.Yildiz)
+                </td>
+                <td>
+                    @item.IlAdi, @item.IlceAdi
+                </td>
+                <td>
+                    <a asp-action="Detay" asp-route-id="@item.OtelId">Detay</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
