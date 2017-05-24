@@ -1,0 +1,118 @@
+﻿@model OnlineBooking.ViewModels.RezervasyonViewModel
+
+@{
+    ViewData["Title"] = "Rezervasyon";
+}
+
+@Html.Partial("_HataMesaji", (string)ViewBag.HataMesaji ?? "")
+
+<h1>@Model.Otel.OtelAdi</h1>
+<div class="mrg-btm-10" style="color:#ffa800">
+    @Html.Partial("Yildiz", Model.Otel.Yildiz)
+</div>
+<div class="mrg-btm-10"><i class="fa fa-map-marker"></i> @Model.Otel.IlAdi, @Model.Otel.IlceAdi</div>
+
+<div class="row">
+    <div class="col-sm-7">
+        <div class="ohb-tesis-alan">
+            <h3 style="display:inline-block">Konaklama Bilgileri</h3>
+            <div class="ohb-tesis-img-prev" style="width:100%">
+                @if (Model.Otel.Resim.Count() > 0)
+                {
+                    <img src="@Model.Otel.Resim.ToArray()[0].ImageUrl" style="width:97%" />
+                }
+            </div>
+            <h4>@Model.Otel.OtelAdi</h4>
+            <h5>@Model.OtelFiyat?.OdaTipiAdi, @Model.OtelFiyat?.KonaklamaTuruAdi</h5>
+            <hr style="border-top-color:gray;" />
+            <div style="width:97%;margin-bottom:5px;"><span>Giriş Tarihi</span><div class="pull-right"><strong>@Model.Giris.ToString("D")</strong></div></div>
+            <div style="width:97%;margin-bottom:5px;"><span>Çıkış Tarihi</span><div class="pull-right"><strong>@Model.Cikis.ToString("D")</strong></div></div>
+            <div style="width:97%;margin-bottom:5px;"><span>Gece Sayısı</span><div class="pull-right"><strong>@Model.OtelFiyat?.Gece Gece, @(Model.OtelFiyat?.Gece + 1) Gün</strong></div></div>
+            <div style="width:97%;margin-bottom:5px;"><span>Kişi Sayısı</span><div class="pull-right"><strong>@Model.OtelFiyat?.Yetiskin Yetişkin@(Model.OtelFiyat?.Cocuk == 0 ? "" : ", " + Model.OtelFiyat?.Cocuk + " Çocuk")</strong></div></div>
+            <div style="width:97%;margin-bottom:5px;"><span>Oda Fiyatı</span><div class="pull-right"><strong>@Model.OtelFiyat?.FiyatYetiskin.ToString("n0") TL @(Model.OtelFiyat?.Cocuk == 0 ? "" : "Yetişkin, " + Model.OtelFiyat?.FiyatCocuk + " TL Çocuk")</strong></div></div>
+            <hr style="border-top-color:gray;margin-bottom:5px;" />
+            <div style="width:97%;"><h4 style="display:inline-block">Toplam Fiyat</h4><div class="pull-right"><h4><strong>@Model.OtelFiyat?.ToplamFiyat.ToString("n0") TL</strong></h4></div></div>
+        </div>
+
+        <div class="ohb-tesis-alan">
+            <h3 style="display:inline-block">Konaklayacak Kişi Bilgileri</h3>
+            @for (int i = 0; i < Model.Musteriler.Count; i++)
+            {
+                var musteri = Model.Musteriler[i];
+
+                <div class="panel panel-default row m08">
+                    <div class="panel-heading">
+                        @(i + 1). Yetişkin
+                    </div>
+                    <div class="col-sm-3 p5">
+                        <div class="form-control">@musteri.Cinsiyeti</div>
+                    </div>
+                    <div class="col-sm-6 p5">
+                        <div class="form-control">@musteri.Adi</div>
+                    </div>
+                    <div class="col-sm-3 p5" style="padding-right:5px;padding-left:5px;">
+                        <div class="form-control">@musteri.DogumTarihi.ToString("dd.MM.yyyy")</div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="ohb-tesis-alan">
+            <h3 style="display:inline-block">Fatura Bilgileri</h3>
+            <div class="panel panel-default row m08">
+                <div class="col-sm-4 p5">
+                    <div class="form-control">@Model.FaturaBilgileri.Adi</div>
+                </div>
+                <div class="col-sm-4 p5">
+                    <div class="form-control">@Model.FaturaBilgileri.Soyadi</div>
+                </div>
+                <div class="col-sm-4 p5">
+                    <div class="form-control">@Model.FaturaBilgileri.EPosta</div>
+                </div>
+                <div class="col-sm-8 p5">
+                    <div class="form-control">@Model.FaturaBilgileri.Adres</div>
+                </div>
+                <div class="col-sm-4 p5">
+                    <div class="form-control">@Model.FaturaBilgileri.Telefon</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .m08 {
+            margin-left: 0px;
+            margin-right: 8px;
+        }
+
+        .p5 {
+            padding: 5px;
+        }
+
+        .r {
+            padding-right: 20px;
+        }
+
+        .l {
+            padding-left: 15px;
+        }
+
+        .tarih {
+            background: #fff;
+            cursor: pointer;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            width: 100%
+        }
+
+        .demo {
+            position: absolute;
+            bottom: 10px;
+            right: 24px;
+            top: auto;
+            cursor: pointer;
+        }
+    </style>
+}

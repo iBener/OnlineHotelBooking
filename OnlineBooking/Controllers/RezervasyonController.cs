@@ -56,6 +56,14 @@ namespace OnlineBooking.Controllers
             }
         }
 
+        public ActionResult Detay(int id)
+        {
+            using (var db = new DbModel(VeriTabani))
+            {
+                return View(db.Rezervasyon.GetRezervasyonViewModel(id));
+            }
+        }
+
         public ActionResult Islemler()
         {
             var kullaniciId = GetKullaniciId();

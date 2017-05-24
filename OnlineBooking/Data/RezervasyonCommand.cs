@@ -103,8 +103,8 @@ namespace OnlineBooking.Data
                 var item = new RezervasyonViewModel(rezervasyon)
                 {
                     Otel = tesis.GetOtelViewModel(rezervasyon.OtelId),
+                    Musteriler = new List<Musteri>(),
                     FaturaBilgileri = FindWithId<Musteri>(rezervasyon.MusteriId),
-                    Musteriler = new List<Musteri>()
                 };
                 var musteriler = Connection.Query<dynamic>(
                     "select * from RezervasyonMisafir where RezervasyonId = @id ", new { id = rezervasyon.RezervasyonId });
@@ -124,20 +124,26 @@ namespace OnlineBooking.Data
 
         public RezervasyonViewModel GetRezervasyonViewModel(int rezervasyonId)
         {
+            var tesis = new TesisCommands(Model, Connection);
             var rezervasyon = FindWithId(rezervasyonId);
             var model = new RezervasyonViewModel(rezervasyon)
             {
-                Otel = Model.Otel.OtelModelOku(rezervasyon.OtelId, "1900-01-01", "1900-01-01", 0, 0),
-                FaturaBilgileri = new Musteri(),
-                KrediKarti = new KrediKartiViewModel(),
-                SozleymeOnay = false,
-                //OtelFiyat = FiyatBilgisiOku(otelId, otelFiyatId, tgiris, tcikis, yetiskin, cocuk),
-                //Giris = tgiris,
-                //Cikis = tcikis,
-                //Yetiskin = yetiskin,
-                //Cocuk = cocuk,
+                Otel = tesis.GetOtelViewModel(rezervasyon.OtelId),
+                Musteriler = new List<Musteri>(),
+                FaturaBilgileri = FindWithId<Musteri>(rezervasyon.MusteriId),
+                OtelFiyat = FiyatBilgisiOku(rezervasyon.OtelId, rezervasyon.OtelFiyatId, rezervasyon.Giris, rezervasyon.Cikis, rezervasyon.Yetiskin, rezervasyon.Cocuk),
             };
-
+            var musteriler = Connection.Query<dynamic>(
+                "select * from RezervasyonMisafir where RezervasyonId = @id ", new { id = rezervasyon.RezervasyonId });
+            foreach (var musteri in musteriler)
+            {
+                model.Musteriler.Add(new Musteri()
+                {
+                    Adi = musteri.AdiSoyadi,
+                    DogumTarihi = musteri.DogumTarihi,
+                    Cinsiyeti = musteri.Cinsiyeti,
+                });
+            }
             return model;
         }
     }
