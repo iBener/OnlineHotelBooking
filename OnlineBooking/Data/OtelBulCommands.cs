@@ -28,11 +28,30 @@ namespace OnlineBooking.Data
                 int[] sonuc = konaklama.Select(x => (int)x).ToArray();
                 w_konaklama = " and f.KonaklamaId in(" + String.Join(",", sonuc) + ")";
             }
+
+            var l_fiyat = new List<string>();
+            foreach (var f in fiyat)
+            {
+                switch (f)
+                {
+                    case "0-249":
+                        l_fiyat.Add("f.FiyatYetiskin between 0 and 249");
+                        break;
+                    case "250-499":
+                        l_fiyat.Add("f.FiyatYetiskin between 250 and 499");
+                        break;
+                    default: //500+
+                        l_fiyat.Add("f.FiyatYetiskin >= 500");
+                        break;
+                }
+            }
+            var w_fiyat = l_fiyat.Count > 0 ? " and (" + String.Join(" or ", l_fiyat) + ")" : "";
+
             var query =
                 "select distinct o.* from Otel o \n" +
                 "inner join OtelFiyat f on f.OtelId = o.OtelId \n" +
                 "where (o.BolgeAdi like '%'+@bolge+'%' or o.IlAdi like '%'+@bolge+'%' or o.IlceAdi like '%'+@bolge+'%') \n" +
-                "and f.FiyatYetiskin<>0 " + w_konaklama;
+                "and f.FiyatYetiskin<>0 " + w_konaklama + w_fiyat;
 
             var oteller = Connection.Query<OtelViewModel>(query, new { bolge });
             var tgiris = Convert.ToDateTime(giris);
