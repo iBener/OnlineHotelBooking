@@ -16,6 +16,7 @@ namespace OnlineBooking.Models
             RezervasyonId = rezervasyon.RezervasyonId;
             OtelId = rezervasyon.OtelId;
             MusteriId = rezervasyon.MusteriId;
+            OtelFiyatId = rezervasyon.OtelFiyatId;
             Giris = rezervasyon.Giris;
             Cikis = rezervasyon.Cikis;
             Yetiskin = rezervasyon.Yetiskin;
@@ -31,6 +32,8 @@ namespace OnlineBooking.Models
         public int OtelId { get; set; }
 
         public int MusteriId { get; set; }
+
+        public int OtelFiyatId { get; set; }
 
         public DateTime Giris { get; set; }
 

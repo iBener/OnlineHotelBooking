@@ -15,7 +15,7 @@ namespace OnlineBooking.Data
         {
         }
 
-        public RezervasyonViewModel GetRezervasyonViewModel(int id, int otelId, int otelFiyatId, string giris, string cikis, int yetiskin, int cocuk)
+        public RezervasyonViewModel GetRezervasyonViewModel(int otelId, int otelFiyatId, string giris, string cikis, int yetiskin, int cocuk)
         {
             var tgiris = Convert.ToDateTime(giris);
             var tcikis = Convert.ToDateTime(cikis);
@@ -57,8 +57,9 @@ namespace OnlineBooking.Data
         {
             var rez = (Rezervasyon)model;
             rez.MusteriId = model.FaturaBilgileri.MusteriId;
+            rez.OtelFiyatId = model.OtelFiyat.OtelFiyatId;
             InsertOrUpdate(rez, rez.RezervasyonId);
-            
+
             foreach (var musteri in model.Musteriler)
             {
                 var misafir = new RezervasyonMisafir()

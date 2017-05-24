@@ -24,7 +24,7 @@ namespace OnlineBooking.Controllers
         }
 
         // GET: /<controller>/
-        public IActionResult Index(int id, int otelId, int otelFiyatId, string giris, string cikis, int yetiskin, int cocuk)
+        public IActionResult Index(int otelId, int otelFiyatId, string giris, string cikis, int yetiskin, int cocuk)
         {
             if (otelId == 0)
             {
@@ -32,7 +32,7 @@ namespace OnlineBooking.Controllers
             }
             using (var db = new DbModel(VeriTabani))
             {
-                var model = db.Rezervasyon.GetRezervasyonViewModel(id, otelId, otelFiyatId, giris, cikis, yetiskin, cocuk);
+                var model = db.Rezervasyon.GetRezervasyonViewModel(otelId, otelFiyatId, giris, cikis, yetiskin, cocuk);
                 if (model.OtelFiyat == null)
                 {
                     ViewBag.HataMesaji = "Otel fiyat bilgisi bulunamadı!";
