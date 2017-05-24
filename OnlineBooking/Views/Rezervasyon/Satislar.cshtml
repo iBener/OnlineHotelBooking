@@ -1,0 +1,62 @@
+﻿@model IEnumerable<OnlineBooking.ViewModels.RezervasyonViewModel>
+
+@{
+    ViewData["Title"] = "Rezervasyon Satış Raporu";
+}
+
+@Html.Partial("_HataMesaji", (string)ViewBag.HataMesaji ?? "")
+
+<table class="table table-responsive">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Otel.OtelAdi)
+            </th>
+            <th>
+                Müşteri
+            </th>
+            <th>
+                Giriş / Çıkış
+            </th>
+            <th class="text-center">
+                Gece / Gün
+            </th>
+            <th class="text-center">
+                Yetişkin / Çocuk
+            </th>
+            <th class="text-right">
+                Toplam Tutar
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Otel.OtelAdi)
+                </td>
+                <td>
+                    @item.FaturaBilgileri.Adi @item.FaturaBilgileri.Soyadi
+                </td>
+                <td>
+                    @item.Giris.ToString("dd.MM.yyyy") / @item.Cikis.ToString("dd.MM.yyyy")
+                </td>
+                <td class="text-center">
+                    @((item.Cikis - item.Giris).TotalDays) / @((item.Cikis - item.Giris).TotalDays + 1)
+                </td>
+                <td class="text-center">
+                    @item.Yetiskin / @item.Cocuk
+                </td>
+                <td class="text-right">
+                    @item.ToplamTutar.ToString("n0") <i class="fa fa-try" aria-hidden="true"></i>
+                </td>
+                <td>
+                    <a asp-action="Detay" asp-route-id="@item.RezervasyonId">Detay</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
