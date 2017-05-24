@@ -91,12 +91,17 @@ namespace OnlineBooking.Data
 
         public IEnumerable<RezervasyonViewModel> GetIslemListesi(int kullaniciId)
         {
-            var tesis = new TesisCommands(Model, Connection);
             var query =
                 "select r.* from Rezervasyon r \n" +
                 "join Musteri m on m.MusteriId = r.MusteriId \n" +
                 "where m.KullaniciId = @kullaniciId \n";
             var rezervasyonlar = Connection.Query<Rezervasyon>(query, new { kullaniciId });
+            return GetRezervasyonViewModeList(rezervasyonlar);
+        }
+
+        private IEnumerable<RezervasyonViewModel> GetRezervasyonViewModeList(IEnumerable<Rezervasyon> rezervasyonlar)
+        {
+            var tesis = new TesisCommands(Model, Connection);
             var sonuc = new List<RezervasyonViewModel>();
             foreach (var rezervasyon in rezervasyonlar)
             {
@@ -145,6 +150,22 @@ namespace OnlineBooking.Data
                 });
             }
             return model;
+        }
+
+        public IEnumerable<RezervasyonViewModel> GetSatisRapor(int kullaniciId)
+        {
+            var kullanici = FindWithId<Kullanici>(kullaniciId);
+            var w_kullanici = "";
+            if (kullanici.Rol != "Admin")
+            {
+                w_kullanici = "where ko.KullaniciId = @kullaniciId \n";
+            }
+            var query =
+                "select r.* from Rezervasyon r \n" +
+                "join KullaniciOtel ko on ko.OtelId = r.OtelId \n" +
+                w_kullanici;
+            var rezervasyonlar = Connection.Query<Rezervasyon>(query, new { kullaniciId });
+            return GetRezervasyonViewModeList(rezervasyonlar);
         }
     }
 }
