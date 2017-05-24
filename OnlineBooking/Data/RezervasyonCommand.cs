@@ -121,5 +121,24 @@ namespace OnlineBooking.Data
             }
             return sonuc;
         }
+
+        public RezervasyonViewModel GetRezervasyonViewModel(int rezervasyonId)
+        {
+            var rezervasyon = FindWithId(rezervasyonId);
+            var model = new RezervasyonViewModel(rezervasyon)
+            {
+                Otel = Model.Otel.OtelModelOku(rezervasyon.OtelId, "1900-01-01", "1900-01-01", 0, 0),
+                FaturaBilgileri = new Musteri(),
+                KrediKarti = new KrediKartiViewModel(),
+                SozleymeOnay = false,
+                //OtelFiyat = FiyatBilgisiOku(otelId, otelFiyatId, tgiris, tcikis, yetiskin, cocuk),
+                //Giris = tgiris,
+                //Cikis = tcikis,
+                //Yetiskin = yetiskin,
+                //Cocuk = cocuk,
+            };
+
+            return model;
+        }
     }
 }

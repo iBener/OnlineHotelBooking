@@ -40,9 +40,6 @@ namespace OnlineBooking.ViewModels
         public Musteri FaturaBilgileri { get; set; }
 
         [Required]
-        public int OtelFiyatId { get; set; }
-
-        [Required]
         public OtelFiyatViewModel OtelFiyat { get; set; }
 
         [Required]
