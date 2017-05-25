@@ -50,7 +50,7 @@ namespace OnlineBooking.Data
             var query =
                 "select distinct o.* from Otel o \n" +
                 "inner join OtelFiyat f on f.OtelId = o.OtelId \n" +
-                "where (o.BolgeAdi like '%'+@bolge+'%' or o.IlAdi like '%'+@bolge+'%' or o.IlceAdi like '%'+@bolge+'%') \n" +
+                "where (o.OtelAdi like '%'+@bolge+'%' or o.BolgeAdi like '%'+@bolge+'%' or o.IlAdi like '%'+@bolge+'%' or o.IlceAdi like '%'+@bolge+'%') \n" +
                 "and f.FiyatYetiskin<>0 " + w_konaklama + w_fiyat;
 
             var oteller = Connection.Query<OtelViewModel>(query, new { bolge });
