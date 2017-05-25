@@ -73,6 +73,15 @@ namespace OnlineBooking.Controllers
             }
         }
 
+        public ActionResult Satislar()
+        {
+            var kullaniciId = GetKullaniciId();
+            using (var db = new DbModel(VeriTabani))
+            {
+                return View(db.Rezervasyon.GetSatisRapor(kullaniciId));
+            }
+        }
+
         private void SetModelMusteri(RezervasyonViewModel model, Musteri musteri)
         {
             if (model.Musteriler.Count > 0)

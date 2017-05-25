@@ -47,6 +47,7 @@
                     <ul class="nav navbar-nav">
                         @if (User.IsInRole("Admin") || User.IsInRole("OtelAdmin"))
                         {
+                            <li><a asp-controller="Rezervasyon" asp-action="Satislar"><i class="fa fa-money"></i> Satış Raporu</a></li>
                             <li><a asp-controller="Tesis" asp-action="Index"><i class="fa fa-hotel"></i> Oteller</a></li>
                         }
                         @if (User.IsInRole("Admin"))
