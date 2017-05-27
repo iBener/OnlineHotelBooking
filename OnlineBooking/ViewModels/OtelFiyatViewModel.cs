@@ -37,10 +37,7 @@ namespace OnlineBooking.ViewModels
         private int yetiskin;
         public int Yetiskin
         {
-            get
-            {
-                return yetiskin;
-            }
+            get { return yetiskin; }
             set
             {
                 yetiskin = value;
@@ -51,10 +48,7 @@ namespace OnlineBooking.ViewModels
         private int cocuk;
         public int Cocuk
         {
-            get
-            {
-                return cocuk;
-            }
+            get { return cocuk; }
             set
             {
                 cocuk = value;

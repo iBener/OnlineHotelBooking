@@ -65,7 +65,7 @@ namespace OnlineBooking.ViewModels
                 {
                     yield return new ValidationResult("Lütfen müşteri soyadını belirtiniz!", new[] { "Musteriler[" + i + "].Soyadi" });
                 }
-                if (musteri.DogumTarihi == null || musteri.DogumTarihi == DateTime.MinValue)
+                if (musteri.DogumTarihi == null || musteri.DogumTarihi == DateTime.MinValue || musteri.DogumTarihi == new DateTime(1900, 1, 1))
                 {
                     yield return new ValidationResult("Lütfen müşteri doğum tarihini belirtiniz!", new[] { "Musteriler[" + i + "].DogumTarihi" });
                 }
@@ -90,11 +90,11 @@ namespace OnlineBooking.ViewModels
             }
             if (String.IsNullOrWhiteSpace(FaturaBilgileri.Adres))
             {
-                yield return new ValidationResult("Lütfen bir adres belirtiniz!", new[] { "FaturaBilgileri.Adresi" });
+                yield return new ValidationResult("Lütfen bir adres belirtiniz!", new[] { "FaturaBilgileri.Adres" });
             }
             if (String.IsNullOrWhiteSpace(FaturaBilgileri.Telefon))
             {
-                yield return new ValidationResult("Lütfen bir telefon numarası belirtiniz!", new[] { "FaturaBilgileri.Telefonu" });
+                yield return new ValidationResult("Lütfen bir telefon numarası belirtiniz!", new[] { "FaturaBilgileri.Telefon" });
             }
 
             if (String.IsNullOrWhiteSpace(KrediKarti.AdSoyad))
