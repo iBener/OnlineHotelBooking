@@ -41,7 +41,7 @@
                 <div class="form-group col-sm-6">
                     <label asp-for="Musteri.DogumTarihi" class="control-label"></label>
                     <div class="input-group date">
-                        <input id="dogumTarihi" type="text" class="form-control text-center" name="dogumTarihi" value="@(Model.Musteri.DogumTarihi == null || Model.Musteri.DogumTarihi == DateTime.MinValue || Model.Musteri.DogumTarihi == new DateTime(1900, 1, 1) ? "" : Model.Musteri.DogumTarihi.ToString("dd.MM.yyyy"))" placeholder="Doğum Tarihi" />
+                        <input id="dogumTarihi" type="text" class="form-control text-center" name="dogumTarihi" value="@(Model.Musteri?.DogumTarihi == null || Model.Musteri?.DogumTarihi == DateTime.MinValue || Model.Musteri?.DogumTarihi == new DateTime(1900, 1, 1) ? "" : Model.Musteri.DogumTarihi.ToString("dd.MM.yyyy"))" placeholder="Doğum Tarihi" />
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -112,8 +112,15 @@
             $("#dogumTarihi").daterangepicker({
                 singleDatePicker: true,
                 showDropdowns: true,
+                autoUpdateInput: false,
             }, function (start, end) {
                 $("#Musteri_DogumTarihi").val(start.format('YYYY-MM-DD'));
+            });
+            $("#dogumTarihi").on("apply.daterangepicker", function (ev, picker) {
+                $(this).val(picker.startDate.format("DD.MM.YYYY"));
+            });
+            $("#dogumTarihi").on("cancel.daterangepicker", function (ev, picker) {
+                $(this).val("");
             });
         });
     </script>
