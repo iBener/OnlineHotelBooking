@@ -67,6 +67,6 @@
 # ortaya çıkması için. 
 # bkz: https://github.community/t/how-to-change-the-category/2261
 ###############################################################################
-*.js linguist-detectable=false
+# *.js linguist-detectable=false
 *.html linguist-detectable=false
-*.cs linguist-detectable=true
+# *.cs linguist-detectable=true
