@@ -63,7 +63,9 @@
 #*.RTF   diff=astextplain
 
 ###############################################################################
-# js dosyalarının ignore edilerek repository dilinin c# olduğunun ortaya 
-# çıkması için. bkz: https://github.community/t/how-to-change-the-category/2261
+# js ve html dosyalarının ignore edilerek repository dilinin c# olduğunun 
+# ortaya çıkması için. 
+# bkz: https://github.community/t/how-to-change-the-category/2261
 ###############################################################################
 *.js linguist-detectable=false
+*.html linguist-detectable=false
